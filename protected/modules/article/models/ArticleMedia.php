@@ -307,7 +307,7 @@ class ArticleMedia extends CActiveRecord
 			}
 			
 			$media = CUploadedFile::getInstance($this, 'media');
-			if($currentAction != 'media/ajaxadd' && $this->article_type == 1 && $media->name != '') {
+			if($currentAction != 'media/ajaxadd' && $this->article->article_type == 1 && $media->name != '') {
 				$extension = pathinfo($media->name, PATHINFO_EXTENSION);
 				if(!in_array($extension, array('bmp','gif','jpg','png')))
 					$this->addError('media', 'The file "'.$media->name.'" cannot be uploaded. Only files with these extensions are allowed: bmp, gif, jpg, png.');

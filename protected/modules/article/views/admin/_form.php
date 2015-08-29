@@ -149,7 +149,7 @@ EOP;
 							<span class="small-px">http://www.youtube.com/watch?v=<strong>HOAqSoDZSho</strong></span>
 						</div>
 					</div>
-				<?php}?>
+				<?php }?>
 		
 				<?php if(!$model->isNewRecord || ($model->isNewRecord && $setting->meta_keyword != '')) {?>
 				<div class="clearfix">
