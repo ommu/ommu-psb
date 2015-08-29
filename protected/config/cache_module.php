@@ -15,6 +15,7 @@ personal
 pose
 product
 project
+psb
 publication
 quicknews
 report
