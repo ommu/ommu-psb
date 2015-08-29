@@ -1,27 +1,26 @@
 <?php
 /**
-* SiteController
-* Handle SiteController
-* Copyright (c) 2013, Ommu Platform (ommu.co). All rights reserved.
-* version: 2.5.0
-* Reference start
-*
-* TOC :
-*	Index
-*	View
-*	Download
-*	Feed
-*
-*	LoadModel
-*	performAjaxValidation
-*
-* @author Putra Sudaryanto <putra.sudaryanto@gmail.com>
-* @copyright Copyright (c) 2012 Ommu Platform (ommu.co)
-* @link http://company.ommu.co
-* @contact (+62)856-299-4114
-*
-*----------------------------------------------------------------------------------------------------------
-*/
+ * Site1Controller
+ * @var $this Site1Controller
+ * @var $model Articles * @var $form CActiveForm
+ * Copyright (c) 2013, Ommu Platform (ommu.co). All rights reserved.
+ * version: 0.0.1
+ * Reference start
+ *
+ * TOC :
+ *	Index
+ *	View
+ *
+ *	LoadModel
+ *	performAjaxValidation
+ *
+ * @author Putra Sudaryanto <putra.sudaryanto@gmail.com>
+ * @copyright Copyright (c) 2014 Ommu Platform (ommu.co)
+ * @link http://company.ommu.co
+ * @contect (+62)856-299-4114
+ *
+ *----------------------------------------------------------------------------------------------------------
+ */
 
 class SiteController extends Controller
 {
@@ -37,13 +36,9 @@ class SiteController extends Controller
 	 */
 	public function init() 
 	{
-		if(ArticleSetting::getInfo('permission') == 1) {
-			$arrThemes = Utility::getCurrentTemplate('public');
-			Yii::app()->theme = $arrThemes['folder'];
-			$this->layout = $arrThemes['layout'];
-		} else {
-			$this->redirect(Yii::app()->createUrl('site/index'));
-		}
+		$arrThemes = Utility::getCurrentTemplate('public');
+		Yii::app()->theme = $arrThemes['folder'];
+		$this->layout = $arrThemes['layout'];
 	}
 
 	/**
@@ -66,13 +61,14 @@ class SiteController extends Controller
 	{
 		return array(
 			array('allow',  // allow all users to perform 'index' and 'view' actions
-				'actions'=>array('index','view','download'),
+				'actions'=>array('index','view'),
 				'users'=>array('*'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
 				'actions'=>array(),
 				'users'=>array('@'),
 				'expression'=>'isset(Yii::app()->user->level)',
+				//'expression'=>'isset(Yii::app()->user->level) && (Yii::app()->user->level != 1)',
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
 				'actions'=>array(),
@@ -94,38 +90,31 @@ class SiteController extends Controller
 	 */
 	public function actionIndex() 
 	{
-		$category = 9;
 		$setting = ArticleSetting::model()->findByPk(1,array(
-			'select' => 'meta_keyword',
+			'select' => 'meta_description, meta_keyword',
 		));
-		
-		$title = ArticleCategory::model()->findByPk($category);
-		
+
 		$criteria=new CDbCriteria;
-		$criteria->condition = 'publish = :publish AND published_date <= curdate()';
-		$criteria->params = array(
-			':publish'=>1,
-		);
-		$criteria->order = 'published_date DESC';
-		$criteria->compare('cat_id',$category);
+		$criteria->condition = 'publish = :publish';
+		$criteria->params = array(':publish'=>1);
+		$criteria->order = 'creation_date DESC';
 
 		$dataProvider = new CActiveDataProvider('Articles', array(
 			'criteria'=>$criteria,
 			'pagination'=>array(
-				'pageSize'=>7,
+				'pageSize'=>10,
 			),
 		));
 		
 		$this->pageTitleShow = true;
-		$this->pageTitle = Phrase::trans($title->name, 2);
-		$this->pageDescription = Phrase::trans($title->desc, 2);
+		$this->pageTitle = 'Articles';
+		$this->pageDescription = $setting->meta_description;
 		$this->pageMeta = $setting->meta_keyword;
-		
-		$this->render('/site/news_index_list',array(
+		$this->render('front_index',array(
 			'dataProvider'=>$dataProvider,
 		));
 	}
-
+	
 	/**
 	 * Displays a particular model.
 	 * @param integer $id the ID of the model to be displayed
@@ -137,35 +126,13 @@ class SiteController extends Controller
 		));
 
 		$model=$this->loadModel($id);
-		Articles::model()->updateByPk($id, array('view'=>$model->view + 1));
-		
-		$this->pageTitleShow = true;
-		$this->pageTitle = $model->title;
-		$this->pageDescription = Utility::shortText(Utility::hardDecode($model->body),300);
-		$this->pageMeta = ArticleTag::getKeyword($setting->meta_keyword, $id);
-		if($model->media_id != 0 && $model->cover->media != '') {
-			if(in_array($model->article_type, array('1','3'))) {
-				$media = Yii::app()->request->baseUrl.'/public/article/'.$id.'/'.$model->cover->media;
-			} else if($model->article_type == 2) {
-				$media = 'http://www.youtube.com/watch?v='.$model->cover->media;
-			}
-			$this->pageImage = $media;
-		}
-		
-		$this->render('/site/news_view',array(
+
+		$this->pageTitle = 'View Articles';
+		$this->pageDescription = '';
+		$this->pageMeta = $setting->meta_keyword;
+		$this->render('front_view',array(
 			'model'=>$model,
 		));
-	}
-
-	/**
-	 * Displays a particular model.
-	 * @param integer $id the ID of the model to be displayed
-	 */
-	public function actionDownload($id) 
-	{
-		$model=$this->loadModel($id);
-		Articles::model()->updateByPk($id, array('download'=>$model->download + 1));
-		$this->redirect(Yii::app()->request->baseUrl.'/public/article/'.$id.'/'.$model->media_file);
 	}
 
 	/**

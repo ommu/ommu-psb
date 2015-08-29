@@ -25,10 +25,6 @@ class ArticleModule extends CWebModule
 				'media',
 				'search',
 				'site',
-				'announcement/site',
-				'archive/site',
-				'news/site',
-				'regulation/site',
 			);
 			
 			// pake ini untuk set theme per action di controller..
