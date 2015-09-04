@@ -90,7 +90,7 @@ if(isset($_GET['protocol']) && $_GET['protocol'] == 'script') {
   <meta charset="UTF-8" />
   <title><?php echo $title;?></title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="author" content="Ommu Platform (ommu@sudaryanto.me)" />
+  <meta name="author" content="Ommu Platform (support@ommu.co)" />
   <script type="text/javascript">
 	var baseUrl = '<?php echo BASEURL;?>';
 	var lastTitle = '<?php echo $title;?>';

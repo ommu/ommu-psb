@@ -309,7 +309,9 @@
 				</ul>
 				<?php }?>
 			</li>
+			<?php /*
 			<li <?php echo $controller == 'statistic' ? 'class="selected"' : '' ?>><a href="<?php echo Yii::app()->createUrl('users/statistic/manage');?>" title="<?php echo Phrase::trans(16241,1);?>"><?php echo Phrase::trans(16241,1);?></a></li>
+			*/?>
 			<?php }
 		}?>
 
