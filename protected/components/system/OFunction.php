@@ -16,9 +16,13 @@ class OFunction
 	/**
 	 * get data provider pager
 	 */
-	public static function getDataProviderPager($dataProvider)
+	public static function getDataProviderPager($dataProvider, $attr=true)
 	{
-		$data = $dataProvider->getPagination();
+		if($attr == true)
+			$data = $dataProvider->getPagination();
+		else
+			$data = $dataProvider;
+		
 		$pageCount = $data->itemCount >= $data->pageSize ? ($data->itemCount % $data->pageSize === 0 ? (int)($data->itemCount/$data->pageSize) : (int)($data->itemCount/$data->pageSize)+1) : 1;
 		$currentPage = $data->itemCount != 0 ? $data->currentPage+1 : 0;
 		$nextPage = (($pageCount != $currentPage) && ($pageCount > $currentPage)) ? $currentPage+1 : 0;

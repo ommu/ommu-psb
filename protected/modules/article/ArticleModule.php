@@ -21,10 +21,8 @@ class ArticleModule extends CWebModule
 			// you may place customized code here
 			//list public controller in this module
 			$publicControllers = array(
-				'like',
-				'media',
-				'search',
 				'site',
+				'search',
 			);
 			
 			// pake ini untuk set theme per action di controller..

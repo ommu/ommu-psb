@@ -26,7 +26,7 @@
 	<span class="view"><i class="fa fa-eye"></i>&nbsp;<?php echo $model->view;?></span>
 </div>
 
-<?php if($model->media_id != 0) {?>
+<?php if($model->media_id != 0 && !in_array($model->cat_id, array(23,24,25))) {?>
 	<img class="headline" src="<?php echo Utility::getTimThumb($images, 600, 1024, 3);?>" alt="<?php echo $model->title;?>" />
 <?php }?>
 
@@ -57,5 +57,30 @@
 <?php }?>
 
 <div class="box-content clearfix">
+	<?php if($model->media_id != 0 && in_array($model->cat_id, array(23,24,25))) {?>
+		<img class="headline" src="<?php echo $images;?>" alt="<?php echo $model->title;?>" />		
+	<?php }?>
 	<?php echo $model->body;?>
 </div>
+
+<?php if($random != null) {?>	
+<div class="box list random">
+	<div class="title clearfix">
+		<h2><?php echo Phrase::trans($model->cat->name,2);?></h2>
+	</div>
+	
+	<div class="list-view clearfix">
+		<?php 
+		foreach($random as $key => $row) { ?>
+			<div class="sep">
+				<a class="title" href="<?php echo Yii::app()->controller->createUrl('view', array('id'=>$row->article_id,'t'=>Utility::getUrlTitle($row->title)));?>" title="<?php echo $row->title;?>"><?php echo Utility::shortText(Utility::hardDecode($row->title),40);?></a>
+				<div class="meta-date photo clearfix">
+					<span class="date"><i class="fa fa-calendar"></i>&nbsp;<?php echo Utility::dateFormat($row->published_date, true);?></span>
+					<span class="view"><i class="fa fa-eye"></i>&nbsp;<?php echo $row->view;?></span>
+				</div>
+				<p><?php echo Utility::shortText(Utility::hardDecode($row->body),100);?></p>
+			</div>
+		<?php }?>
+	</div>
+</div>	
+<?php }?>

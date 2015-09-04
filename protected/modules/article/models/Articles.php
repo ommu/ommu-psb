@@ -176,7 +176,7 @@ class Articles extends CActiveRecord
 		} else {
 			$criteria->addInCondition('t.publish',array(0,1));
 			$criteria->compare('t.publish',$this->publish);
-		}			
+		}
 		if(isset($_GET['category'])) {
 			$criteria->compare('t.cat_id',$_GET['category']);
 		} else {
@@ -296,6 +296,7 @@ class Articles extends CActiveRecord
 					'filter'=> ArticleCategory::getCategory(),
 					'type' => 'raw',
 				);
+
 			}
 			$this->defaultColumns[] = array(
 				'name' => 'user_search',

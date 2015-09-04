@@ -237,6 +237,7 @@ class Controller extends CController
 	public function actionError()
 	{
 		$this->pageGuest = true;
+		$this->adsSidebar = false;
 		if($error=Yii::app()->errorHandler->error)
 		{
 			if(Yii::app()->request->isAjaxRequest)

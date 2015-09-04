@@ -1,26 +1,27 @@
 <?php
 /**
- * Site1Controller
- * @var $this Site1Controller
- * @var $model Articles * @var $form CActiveForm
- * Copyright (c) 2013, Ommu Platform (ommu.co). All rights reserved.
- * version: 0.0.1
- * Reference start
- *
- * TOC :
- *	Index
- *	View
- *
- *	LoadModel
- *	performAjaxValidation
- *
- * @author Putra Sudaryanto <putra.sudaryanto@gmail.com>
- * @copyright Copyright (c) 2014 Ommu Platform (ommu.co)
- * @link http://company.ommu.co
- * @contect (+62)856-299-4114
- *
- *----------------------------------------------------------------------------------------------------------
- */
+* SiteController
+* Handle SiteController
+* Copyright (c) 2013, Ommu Platform (ommu.co). All rights reserved.
+* version: 2.5.0
+* Reference start
+*
+* TOC :
+*	Index
+*	View
+*	Download
+*	Feed
+*
+*	LoadModel
+*	performAjaxValidation
+*
+* @author Putra Sudaryanto <putra.sudaryanto@gmail.com>
+* @copyright Copyright (c) 2012 Ommu Platform (ommu.co)
+* @link http://company.ommu.co
+* @contact (+62)856-299-4114
+*
+*----------------------------------------------------------------------------------------------------------
+*/
 
 class SiteController extends Controller
 {
@@ -36,9 +37,13 @@ class SiteController extends Controller
 	 */
 	public function init() 
 	{
-		$arrThemes = Utility::getCurrentTemplate('public');
-		Yii::app()->theme = $arrThemes['folder'];
-		$this->layout = $arrThemes['layout'];
+		if(ArticleSetting::getInfo('permission') == 1) {
+			$arrThemes = Utility::getCurrentTemplate('public');
+			Yii::app()->theme = $arrThemes['folder'];
+			$this->layout = $arrThemes['layout'];
+		} else {
+			$this->redirect(Yii::app()->createUrl('site/index'));
+		}
 	}
 
 	/**
@@ -61,14 +66,13 @@ class SiteController extends Controller
 	{
 		return array(
 			array('allow',  // allow all users to perform 'index' and 'view' actions
-				'actions'=>array('index','view'),
+				'actions'=>array('index','view','download'),
 				'users'=>array('*'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
 				'actions'=>array(),
 				'users'=>array('@'),
 				'expression'=>'isset(Yii::app()->user->level)',
-				//'expression'=>'isset(Yii::app()->user->level) && (Yii::app()->user->level != 1)',
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
 				'actions'=>array(),
@@ -93,28 +97,58 @@ class SiteController extends Controller
 		$setting = ArticleSetting::model()->findByPk(1,array(
 			'select' => 'meta_description, meta_keyword',
 		));
-
-		$criteria=new CDbCriteria;
-		$criteria->condition = 'publish = :publish';
-		$criteria->params = array(':publish'=>1);
-		$criteria->order = 'creation_date DESC';
-
-		$dataProvider = new CActiveDataProvider('Articles', array(
-			'criteria'=>$criteria,
-			'pagination'=>array(
-				'pageSize'=>10,
-			),
-		));
 		
-		$this->pageTitleShow = true;
-		$this->pageTitle = 'Articles';
-		$this->pageDescription = $setting->meta_description;
+		if(isset($_GET['category'])) {
+			$cat = ArticleCategory::model()->findByPk($_GET['category']);
+			$title = Phrase::trans($cat->name, 2);
+			$desc = Phrase::trans($cat->desc, 2);
+		} else {
+			$title = 'Artikel';
+			$desc = 'Artikel';
+		}
+		
+		$this->pageTitle = $title;
+		$this->pageDescription = $desc;
 		$this->pageMeta = $setting->meta_keyword;
-		$this->render('front_index',array(
-			'dataProvider'=>$dataProvider,
-		));
+		
+		if(isset($_GET['category'])) {				
+			$this->pageTitleShow = true;
+			
+			$criteria=new CDbCriteria;
+			$criteria->condition = 'publish = :publish AND published_date <= curdate()';
+			$criteria->params = array(
+				':publish'=>1,
+			);
+			$criteria->order = 'published_date DESC';
+			$criteria->compare('cat_id',$_GET['category']);
+
+			$dataProvider = new CActiveDataProvider('Articles', array(
+				'criteria'=>$criteria,
+				'pagination'=>array(
+					'pageSize'=>7,
+				),
+			));
+			
+			$this->render('front_index_list',array(
+				'dataProvider'=>$dataProvider,
+			));
+			
+		} else {
+			$criteria=new CDbCriteria;
+			$criteria->condition = 'publish = :publish';
+			$criteria->params = array(
+				':publish'=>1,
+			);
+			$criteria->order = 'orders ASC';
+			
+			$category = ArticleCategory::model()->findAll($criteria);
+			
+			$this->render('front_index',array(
+				'category'=>$category,
+			));				
+		}
 	}
-	
+
 	/**
 	 * Displays a particular model.
 	 * @param integer $id the ID of the model to be displayed
@@ -126,13 +160,48 @@ class SiteController extends Controller
 		));
 
 		$model=$this->loadModel($id);
-
-		$this->pageTitle = 'View Articles';
-		$this->pageDescription = '';
-		$this->pageMeta = $setting->meta_keyword;
-		$this->render('front_view',array(
+		Articles::model()->updateByPk($id, array('view'=>$model->view + 1));
+		
+		$criteria=new CDbCriteria;
+		$criteria->condition = 'publish = :publish AND published_date <= curdate() AND article_id <> :id';
+		$criteria->params = array(
+			':publish'=>1,
+			':id'=>$id,
+		);
+		$criteria->order = 'RAND()';
+		$criteria->addInCondition('cat_id',array(9));
+		$criteria->limit = 4;
+		
+		$random = Articles::model()->findAll($criteria);
+		
+		$this->pageTitleShow = true;
+		$this->pageTitle = $model->title;
+		$this->pageDescription = Utility::shortText(Utility::hardDecode($model->body),300);
+		$this->pageMeta = ArticleTag::getKeyword($setting->meta_keyword, $id);
+		if($model->media_id != 0 && $model->cover->media != '') {
+			if(in_array($model->article_type, array('1','3'))) {
+				$media = Yii::app()->request->baseUrl.'/public/article/'.$id.'/'.$model->cover->media;
+			} else if($model->article_type == 2) {
+				$media = 'http://www.youtube.com/watch?v='.$model->cover->media;
+			}
+			$this->pageImage = $media;
+		}
+		
+		$this->render('/site/news_view',array(
 			'model'=>$model,
+			'random'=>$random,
 		));
+	}
+
+	/**
+	 * Displays a particular model.
+	 * @param integer $id the ID of the model to be displayed
+	 */
+	public function actionDownload($id) 
+	{
+		$model=$this->loadModel($id);
+		Articles::model()->updateByPk($id, array('download'=>$model->download + 1));
+		$this->redirect(Yii::app()->request->baseUrl.'/public/article/'.$id.'/'.$model->media_file);
 	}
 
 	/**

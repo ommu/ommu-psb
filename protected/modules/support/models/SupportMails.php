@@ -183,16 +183,22 @@ class SupportMails extends CActiveRecord
 				'header' => 'No',
 				'value' => '$this->grid->dataProvider->pagination->currentPage*$this->grid->dataProvider->pagination->pageSize + $row+1'
 			);
+			$this->defaultColumns[] = array(
+				'name' => 'subject',
+				'value' => '$data->subject != "" ? $data->subject : "-"',
+			);
 			$this->defaultColumns[] = 'email';
 			$this->defaultColumns[] = array(
 				'name' => 'displayname',
-				'value' => '$data->user_id != 0 ? $data->displayname : "-"',
+				'value' => '$data->user_id != 0 ? $data->displayname : ($data->displayname != "" ? $data->displayname : "-")',
 			);
-			$this->defaultColumns[] = 'phone';
-			$this->defaultColumns[] = 'subject';
+			$this->defaultColumns[] = array(
+				'name' => 'phone',
+				'value' => '$data->phone != "" ? $data->phone : "-"',
+			);
 			$this->defaultColumns[] = array(
 				'name' => 'creation_date',
-				'value' => 'Utility::dateFormat($data->creation_date)',
+				'value' => 'Utility::dateFormat($data->creation_date, true)',
 				'htmlOptions' => array(
 					'class' => 'center',
 				),

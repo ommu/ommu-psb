@@ -62,6 +62,7 @@ class SiteController extends Controller
 	 */
 	public function actionError()
 	{
+		$this->pageGuest = true;
 		$this->adsSidebar = false;
 		if($error=Yii::app()->errorHandler->error)
 		{

@@ -142,6 +142,7 @@ class SiteController extends Controller
 		$this->pageMeta = $setting->meta_keyword;
 		$this->render('front_view',array(
 			'model'=>$model,
+			'photo'=>$photo,
 		));
 	}
 
