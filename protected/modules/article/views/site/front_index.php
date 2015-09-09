@@ -26,7 +26,7 @@ foreach($category as $key => $val) {
 	);
 	$criteria->order = 'article_id DESC';
 	$criteria->compare('cat_id',$val->cat_id);
-	$criteria->limit = $i == 1 ? 3 : 1;
+	$criteria->limit = $i == 1 ? 3 : 2;
 
 	$article = Articles::model()->findAll($criteria);
 	

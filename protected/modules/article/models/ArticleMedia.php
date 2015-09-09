@@ -341,7 +341,7 @@ class ArticleMedia extends CActiveRecord
 					}
 					if($this->media == '') {
 						$this->media = $this->old_media;
-					}				
+					}
 				} else if($this->article->article_type == 2) {
 					$this->media = $this->video;
 				}

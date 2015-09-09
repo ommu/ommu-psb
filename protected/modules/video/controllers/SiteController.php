@@ -107,7 +107,7 @@ class SiteController extends Controller
 		));
 		
 		$this->pageTitleShow = true;
-		$this->pageTitle = 'Video Albums';;
+		$this->pageTitle = 'Video Albums';
 		$this->pageDescription = $setting->meta_description;
 		$this->pageMeta = $setting->meta_keyword;
 		$this->render('front_index',array(

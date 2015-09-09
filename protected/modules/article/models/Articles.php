@@ -296,7 +296,6 @@ class Articles extends CActiveRecord
 					'filter'=> ArticleCategory::getCategory(),
 					'type' => 'raw',
 				);
-
 			}
 			$this->defaultColumns[] = array(
 				'name' => 'user_search',

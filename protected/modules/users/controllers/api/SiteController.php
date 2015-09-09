@@ -100,7 +100,7 @@ class SiteController extends Controller
 					if(isset($_POST['access'])) {
 						Users::model()->updateByPk($record->user_id, array(
 							'lastlogin_date'=>$logindate, 
-							'lastlogin_ip'=>$_SERVER['REMOTE_ADDR'],
+							'lastlogin_ip'=>isset($_POST['ipaddress']) ? $_POST['ipaddress'] : $_SERVER['REMOTE_ADDR'],
 							'lastlogin_from'=>isset($_POST['token']) ? '@'.$_POST['access'] : $_POST['access'],
 						));
 					}					
@@ -109,7 +109,7 @@ class SiteController extends Controller
 			echo CJSON::encode($return);
 			
 		} else
-			$this->redirect(Yii::app()->createUrl('admin/index'));
+			$this->redirect(Yii::app()->createUrl('site/index'));
 	}
 
 	/**
