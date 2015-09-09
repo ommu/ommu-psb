@@ -210,12 +210,8 @@ div.dialog#apps .dialog-box .content .boxed {
 .body span:hover  > i.fa {
 	color: #375ebc !important;	
 }
-.body .banner.top {
+.body .banner {
 	margin: 0 0 20px 0;
-}
-.body .banner img {
-	display: block;
-	width: 100%;
 }
 
 /* Error Page */
