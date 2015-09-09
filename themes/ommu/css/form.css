@@ -37,7 +37,6 @@ textarea.small {height: 100px;}
 textarea.medium {height: 150px;}
 textarea.large {height: 200px;}
 
-
 /* =Input
 -------------------------------------------------------------*/
 input, button, select, textarea {
@@ -796,6 +795,12 @@ div.submit-button input {
 	color: transparent;
 }
 */
+
+ul.ui-autocomplete,
+div.ui-datepicker,
+div.ui-datepicker * {
+	z-index: 999 !important;
+}
 
 /* =Responsive
 -------------------------------------------------------------- */
