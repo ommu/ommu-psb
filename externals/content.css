@@ -276,7 +276,7 @@ div.dialog#apps .dialog-box .content .boxed {
 
 /* == */
 #article .box {
-	margin: 0 0 35px 0;
+	margin: 0 0 30px 0;
 }
 #article .box:first-child:last-child,
 #article .box:last-child {
@@ -284,19 +284,27 @@ div.dialog#apps .dialog-box .content .boxed {
 }
 #article .box div.title,
 #article .box div.title * {
-	color: #fff;
-	font-size: 14px;
-	line-height: 19px;
+	font-size: 16px;
+	line-height: 16px;
 	text-transform: uppercase;
 	text-decoration: none;
 }
 #article .box div.title {
-	margin: 0 0 20px 0;
-	background: #375ebc;
+	position: relative;
+	margin: 0 0 15px 0;
+	border-bottom: 2px solid #375ebc;
+}
+#article .box div.title:before {	
+	content: '';
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	border-bottom: 2px solid red;
+	width: 100px;
 }
 #article .box h2,
 #article .box div.title a {
-	padding: 10px 15px 10px 15px;
+	padding: 0 0 10px 0;
 }
 #article .box h2 {
 	float: left;
@@ -305,7 +313,11 @@ div.dialog#apps .dialog-box .content .boxed {
 #article .box div.title a {
 	float: right;
 	display: block;
-	background: #4ca5e8;
+	padding: 0 10px 10px 10px;
+	font-family: 'Droid Serif', 'Open Sans', Helvetica, Arial, sans-serif;
+	text-transform: none;
+	font-size: 13px;
+	line-height: 13px;
 }
 #article .box div.title a:hover {
 	
@@ -322,20 +334,20 @@ div.dialog#apps .dialog-box .content .boxed {
 	-webkit-box-sizing: border-box;	
 	float: left;
 	width: 50%;
-	padding: 0 20px 0 0;
+	padding: 0 10px 0 0;
 }
 #article .box .list-view.glossary .sep {
 	margin: 20px 0 0 0;
 }
 #article .box .list-view .sep:nth-child(2n) {
-	padding: 0 0 0 20px;
+	padding: 0 0 0 10px;
 }
 #article .box .list-view.glossary .sep:first-child,
 #article .box .list-view.glossary .sep:nth-child(2) {
 	margin: 0 0 0 0;
 }
 #article .box.list .list-view .sep {
-	margin: 0 0 20px 0;
+	margin: 0 0 10px 0;
 }
 #article .box.list .list-view .sep.full {
 	float: none;
@@ -353,10 +365,10 @@ div.dialog#apps .dialog-box .content .boxed {
 	-webkit-box-sizing: border-box;	
 	float: left;
 	width: 50%;
-	padding: 0 20px 0 0;
+	padding: 0 10px 0 0;
 }
 #article .box-frame .box:nth-child(2n) {
-	padding: 0 0 0 20px;
+	padding: 0 0 0 10px;
 }
 #article .box-frame .box .list-view .sep {
 	float: none;

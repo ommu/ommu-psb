@@ -335,10 +335,16 @@ header .mainmenu .search input:focus {
 	text-transform: uppercase;
 	font-family: 'Droid Serif', 'Open Sans', Helvetica, Arial, sans-serif;
 }
+.body .container {
+	padding: 20px 20px 25px 20px;	
+}
 
 /* Table Condition */
 .body .box-wrap {
 	margin: 0 0 30px 0;
+}
+.body .box-wrap:last-child {
+	margin: 0 0 0 0;
 }
 .body .box-wrap.ads-on {
 	display: table;
@@ -401,7 +407,7 @@ header .mainmenu .search input:focus {
 	width: 310px;
 }
 .body .sidebar .boxed {
-	padding: 0 0 0 40px;
+	padding: 0 0 0 30px;
 }
 
 /* Recent News */
@@ -493,7 +499,7 @@ header .mainmenu .search input:focus {
 /* =Content
 -------------------------------------------------------------- */
 .body .content .boxed {
-	padding: 0 30px 0 0 !important;
+	padding: 0 20px 0 0 !important;
 }
 
 /* =Footer
@@ -620,6 +626,9 @@ footer .copyright span.powered {
 	/* Header */
 	header .mainmenu {
 		padding: 0 15px 0 15px;
+	}
+	.body .container {
+		padding: 15px 15px 25px 15px;	
 	}
 }
 
@@ -851,6 +860,9 @@ footer .copyright span.powered {
 	}
 	header .mainmenu {
 		padding: 0 10px 0 10px;
+	}
+	.body .container {
+		padding: 10px 10px 25px 10px;	
 	}
 	
 	/* Loading and Dialog */
