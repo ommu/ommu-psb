@@ -187,7 +187,7 @@ class SiteController extends Controller
 			$this->pageImage = $media;
 		}
 		
-		$this->render('/site/news_view',array(
+		$this->render('front_view',array(
 			'model'=>$model,
 			'random'=>$random,
 		));

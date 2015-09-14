@@ -11,10 +11,10 @@
 		if($results[$i]->title != '') {?>
 			<div class="sep <?php echo $results[$i]->media != '' ? 'images' : '';?>">
 				<?php if($results[$i]->media != '') {?>
-					<img src="<?php echo Utility::getTimThumb($results[$i]->media, 200, 150, 1);?>" alt="<?php echo CHtml::encode($results[$i]->title);?>">
+					<img src="<?php echo Utility::getTimThumb($results[$i]->media, 200, 120, 1);?>" alt="<?php echo CHtml::encode($results[$i]->title);?>">
 				<?php }
 				echo CHtml::link($query->highlightMatches($results[$i]->title), CHtml::encode($results[$i]->url), array('class'=>'title'));
-				echo $results[$i]->body != '' ? $query->highlightMatches(CHtml::encode(Utility::shortText($results[$i]->body,300))) : '';
+				echo $results[$i]->body != '' ? $query->highlightMatches(CHtml::encode(Utility::shortText($results[$i]->body,400))) : '';
 				?>
 				<div><i class="fa fa-link"></i><?php echo CHtml::link($query->highlightMatches(CHtml::encode($results[$i]->url)), CHtml::encode($results[$i]->url)); ?></div>
 			</div>

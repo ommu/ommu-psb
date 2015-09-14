@@ -19,7 +19,11 @@
 			$class = $controller;
 		}
 	} else {
-		if($controller == 'site') {
+		if(in_array($currentModule, array('album/site','article/site','video/site'))) {
+			$class = 'article';
+		} else if(in_array($currentModule, array('album/search','article/search','video/search'))) {
+			$class = 'search';
+		} else if($controller == 'site') {
 			$class = $module;
 		} else if(in_array($module, array('album','video'))) {
 			$class = 'article';

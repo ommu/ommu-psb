@@ -94,25 +94,43 @@ class SiteController extends Controller
 			'select' => 'meta_description, meta_keyword',
 		));
 		
-		$this->pageTitleShow = true;		
-		$this->pageTitle = 'Photo Albums';
-		$this->pageDescription = $setting->meta_description;
-		$this->pageMeta = $setting->meta_keyword;
+		if(isset($_GET['type'])) {
+			$this->pageTitleShow = true;
+			$title = 'Photo Albums';
+		} else {
+			$title = 'Galeri';
+		}
 		
-		$criteria=new CDbCriteria;
-		$criteria->condition = 'publish = :publish';
-		$criteria->params = array(':publish'=>1);
-		$criteria->order = 'creation_date DESC';
+		$this->pageTitle = $title;
+		$desc = $setting->meta_description;
+		$keyword = $setting->meta_keyword;
+		
+		if(isset($_GET['type'])) {		
+			$criteria=new CDbCriteria;
+			$criteria->condition = 'publish = :publish';
+			$criteria->params = array(':publish'=>1);
+			$criteria->order = 'creation_date DESC';
 
-		$dataProvider = new CActiveDataProvider('Albums', array(
-			'criteria'=>$criteria,
-			'pagination'=>array(
-				'pageSize'=>7,
-			),
-		));
-		$this->render('front_index',array(
-			'dataProvider'=>$dataProvider,
-		));
+			$dataProvider = new CActiveDataProvider('Albums', array(
+				'criteria'=>$criteria,
+				'pagination'=>array(
+					'pageSize'=>7,
+				),
+			));
+			$this->render('front_index_list',array(
+				'dataProvider'=>$dataProvider,
+			));
+			
+		} else {
+			$modelArray = array(
+				'video'=>'Video',
+				'photo'=>'Photo',
+			);
+			
+			$this->render('front_index',array(
+				'model'=>$modelArray,
+			));
+		}
 	}
 	
 	/**

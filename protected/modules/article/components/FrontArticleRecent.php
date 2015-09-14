@@ -11,11 +11,15 @@ class FrontArticleRecent extends CWidget
 	}
 
 	protected function renderContent() {
+		$module = strtolower(Yii::app()->controller->module->id);
 		$controller = strtolower(Yii::app()->controller->id);
+		$action = strtolower(Yii::app()->controller->action->id);
+		$currentAction = strtolower(Yii::app()->controller->id.'/'.Yii::app()->controller->action->id);
 		
 		//import model
 		Yii::import('application.modules.article.models.Articles');
 		Yii::import('application.modules.article.models.ArticleCategory');
+		Yii::import('application.modules.article.models.ArticleMedia');
 		
 		$criteria=new CDbCriteria;
 		$criteria->condition = 'publish = :publish AND published_date <= curdate()';
@@ -25,7 +29,7 @@ class FrontArticleRecent extends CWidget
 		$criteria->order = 'published_date DESC';
 		//$criteria->addInCondition('cat_id',array(18));
 		//$criteria->compare('cat_id',18);
-		$criteria->limit = 3;
+		$criteria->limit = ($module == null && $currentAction == 'site/index') ? 4 : 5;
 			
 		$model = Articles::model()->findAll($criteria);
 
