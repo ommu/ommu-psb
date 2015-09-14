@@ -220,9 +220,8 @@ if(isset($_GET['protocol']) && $_GET['protocol'] == 'script') {
 					<ul>
 						<li><a href="<?php echo Yii::app()->createUrl('page/view', array('id'=>1,'t'=>Utility::getUrlTitle(Phrase::trans(1501, 2))))?>" title="<?php echo Phrase::trans(1501, 2);?>"><?php echo Phrase::trans(1501, 2);?></a></li>
 						<li><a href="<?php echo Yii::app()->createUrl('page/view', array('id'=>5,'t'=>Utility::getUrlTitle(Phrase::trans(1509, 2))))?>" title="<?php echo Phrase::trans(1509, 2);?>"><?php echo Phrase::trans(1509, 2);?></a></li>
+						<li><a href="<?php echo Yii::app()->createUrl('page/view', array('id'=>7,'t'=>Utility::getUrlTitle(Phrase::trans(1545, 2))))?>" title="<?php echo Phrase::trans(1545, 2);?>"><?php echo Phrase::trans(1545, 2);?></a></li>
 						<li><a href="<?php echo Yii::app()->createUrl('page/view', array('id'=>6,'t'=>Utility::getUrlTitle(Phrase::trans(1541, 2))))?>" title="<?php echo Phrase::trans(1541, 2);?>"><?php echo Phrase::trans(1541, 2);?></a></li>
-						<li><a href="<?php echo Yii::app()->createUrl('album/site/index')?>" title="TMIP Photo Albums">TMIP Photo</a></li>
-						<li><a href="<?php echo Yii::app()->createUrl('video/site/index')?>" title="TMIP Video Albums">TMIP Video</a></li>
 						<li><a href="<?php echo Yii::app()->createUrl('support/contact/feedback')?>" title="Kontak Kami">Kontak Kami</a></li>
 					</ul>		
 				</div>
@@ -233,6 +232,8 @@ if(isset($_GET['protocol']) && $_GET['protocol'] == 'script') {
 						<li><a href="<?php echo Yii::app()->createUrl('article/site/index', array('category'=>1,'t'=>Utility::getUrlTitle(Phrase::trans(1531, 2))));?>" title="<?php echo Phrase::trans(1531, 2);?>"><?php echo Phrase::trans(1531, 2);?></a></li>
 						<li><a href="<?php echo Yii::app()->createUrl('article/site/index', array('category'=>2,'t'=>Utility::getUrlTitle(Phrase::trans(1533, 2))));?>" title="<?php echo Phrase::trans(1533, 2);?>"><?php echo Phrase::trans(1533, 2);?></a></li>
 						<li><a href="<?php echo Yii::app()->createUrl('article/site/index', array('category'=>3,'t'=>Utility::getUrlTitle(Phrase::trans(1535, 2))));?>" title="<?php echo Phrase::trans(1535, 2);?>"><?php echo Phrase::trans(1535, 2);?></a></li>
+						<li><a href="<?php echo Yii::app()->createUrl('album/site/index')?>" title="TMIP Photo Albums">TMIP Photo</a></li>
+						<li><a href="<?php echo Yii::app()->createUrl('video/site/index')?>" title="TMIP Video Albums">TMIP Video</a></li>
 						<li><a href="<?php echo Yii::app()->createUrl('psb/site/index')?>" title="Penerimaan Siswa Baru">Penerimaan Siswa Baru</a></li>
 					</ul>		
 				</div>

@@ -19,7 +19,9 @@
 			$class = $controller;
 		}
 	} else {
-		if(in_array($module, array('album','video'))) {
+		if($controller == 'site') {
+			$class = $module;
+		} else if(in_array($module, array('album','video'))) {
 			$class = 'article';
 		} else {
 			$class = $module.'-'.$controller;
