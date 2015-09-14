@@ -143,7 +143,7 @@ class PageController extends Controller
 			$model=$this->loadModel($id);
 			
 			$this->pageTitleShow = true;
-			if($id == 7)
+			if($id == 6)
 				$this->adsSidebar = false;
 			$this->pageTitle = Phrase::trans($model->name,2);
 			$this->pageDescription = Utility::shortText(Utility::hardDecode(Phrase::trans($model->desc,2)),300);
