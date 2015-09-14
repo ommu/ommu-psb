@@ -16,8 +16,7 @@
 	);
 ?>
 
-<p>Silahkan mengisi fasilitas buku tamu kami. Mohon masukan dan pertanyaan disampaikan secara bijak dengan kata-kata yang baik. Komentar yang berupa spam, kata-kata kotor, link tidak bermanfaat akan segera kami hapus. <br/><br/>
-Untuk komentar yang bersifat keluhan atau pertanyaan dan memerlukan jawaban, akan segera kami tanggapi, kecuali keluhan/pertanyaan yang memerlukan koordinasi dengan instansi yang berwenang.</p>
+<p>Silahkan mengisi fasilitas buku tamu kami. Mohon masukan dan pertanyaan disampaikan secara bijak dengan kata-kata yang baik. Komentar yang berupa spam, kata-kata kotor tidak akan kami jawab.</p>
 
 <div class="sep-form">
 <?php if(!isset($_GET['email'])) {
