@@ -48,7 +48,14 @@
 		</div>
 		<div class="sidebar">
 			<div class="boxed clearfix">
-			sidebar
+				<?php
+				if($module != 'article') 
+					$this->widget('application.modules.article.components.FrontArticleRecent');
+				if($module != 'album')
+					$this->widget('application.modules.album.components.FrontAlbumRecents');
+				if($module != 'video')
+					$this->widget('application.modules.video.components.FrontVideoRecents');
+				?>
 			</div>
 		</div>
 	<?php } else {
