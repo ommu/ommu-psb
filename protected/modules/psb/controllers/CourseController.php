@@ -9,6 +9,7 @@
  *
  * TOC :
  *	Index
+*	Suggest
  *	Manage
  *	Add
  *	Edit
@@ -76,7 +77,7 @@ class CourseController extends Controller
 				'users'=>array('*'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
-				'actions'=>array(),
+				'actions'=>array('suggest'),
 				'users'=>array('@'),
 				'expression'=>'isset(Yii::app()->user->level)',
 				//'expression'=>'isset(Yii::app()->user->level) && (Yii::app()->user->level != 1)',
@@ -102,6 +103,33 @@ class CourseController extends Controller
 	public function actionIndex() 
 	{
 		$this->redirect(array('manage'));
+	}
+	
+	/**
+	 * Updates a particular model.
+	 * If update is successful, the browser will be redirected to the 'view' page.
+	 * @param integer $id the ID of the model to be updated
+	 */
+	public function actionSuggest($limit=10) {
+		if(isset($_GET['term'])) {
+			$criteria = new CDbCriteria;
+			$criteria->condition = 'course_name LIKE :course_name';
+			$criteria->select	= "course_id, course_name";
+			$criteria->limit = $limit;
+			$criteria->order = "course_id ASC";
+			$criteria->params = array(':course_name' => '%' . strtolower($_GET['term']) . '%');
+			$model = PsbCourses::model()->findAll($criteria);
+
+			if($model) {
+				foreach($model as $items) {
+					$result[] = array('id' => $items->course_id, 'value' => ucwords($items->course_name));
+				}
+			} else {
+				$result[] = array('id' => 0, 'value' => $_GET['term']);
+			}
+		}
+		echo CJSON::encode($result);
+		Yii::app()->end();
 	}
 
 	/**

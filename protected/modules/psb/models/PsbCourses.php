@@ -31,6 +31,9 @@
 class PsbCourses extends CActiveRecord
 {
 	public $defaultColumns = array();
+	
+	// Variable Search
+	public $creation_search;
 
 	/**
 	 * Returns the static model of the specified AR class.
@@ -59,12 +62,14 @@ class PsbCourses extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('course_name, course_desc, creation_date, creation_id', 'required'),
+			array('course_name', 'required'),
 			array('course_name', 'length', 'max'=>32),
 			array('creation_id', 'length', 'max'=>11),
+			array('course_desc', 'safe'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('course_id, course_name, course_desc, creation_date, creation_id', 'safe', 'on'=>'search'),
+			array('course_id, course_name, course_desc, creation_date, creation_id,
+				creation_search', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -76,7 +81,8 @@ class PsbCourses extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'ommuPsbYearCourses' => array(self::HAS_MANY, 'OmmuPsbYearCourse', 'course_id'),
+			'courses' => array(self::HAS_MANY, 'PsbYearCourse', 'course_id'),
+			'creation_relation' => array(self::BELONGS_TO, 'Users', 'creation_id'),
 		);
 	}
 
@@ -91,6 +97,7 @@ class PsbCourses extends CActiveRecord
 			'course_desc' => 'Course Desc',
 			'creation_date' => 'Creation Date',
 			'creation_id' => 'Creation',
+			'creation_search' => 'Creation',
 		);
 	}
 
@@ -118,6 +125,15 @@ class PsbCourses extends CActiveRecord
 		if($this->creation_date != null && !in_array($this->creation_date, array('0000-00-00 00:00:00', '0000-00-00')))
 			$criteria->compare('date(t.creation_date)',date('Y-m-d', strtotime($this->creation_date)));
 		$criteria->compare('t.creation_id',$this->creation_id,true);
+		
+		// Custom Search
+		$criteria->with = array(
+			'creation_relation' => array(
+				'alias'=>'creation_relation',
+				'select'=>'displayname'
+			),
+		);
+		$criteria->compare('creation_relation.displayname',strtolower($this->creation_search), true);
 
 		if(!isset($_GET['PsbCourses_sort']))
 			$criteria->order = 'course_id DESC';
@@ -163,20 +179,19 @@ class PsbCourses extends CActiveRecord
 	 */
 	protected function afterConstruct() {
 		if(count($this->defaultColumns) == 0) {
-			/*
-			$this->defaultColumns[] = array(
-				'class' => 'CCheckBoxColumn',
-				'name' => 'id',
-				'selectableRows' => 2,
-				'checkBoxHtmlOptions' => array('name' => 'trash_id[]')
-			);
-			*/
 			$this->defaultColumns[] = array(
 				'header' => 'No',
 				'value' => '$this->grid->dataProvider->pagination->currentPage*$this->grid->dataProvider->pagination->pageSize + $row+1'
 			);
-			$this->defaultColumns[] = 'course_name';
+			$this->defaultColumns[] = array(
+				'name' => 'course_name',
+				'value' => 'ucwords($data->course_name)',
+			);
 			$this->defaultColumns[] = 'course_desc';
+			$this->defaultColumns[] = array(
+				'name' => 'creation_search',
+				'value' => '$data->creation_relation->displayname',
+			);
 			$this->defaultColumns[] = array(
 				'name' => 'creation_date',
 				'value' => 'Utility::dateFormat($data->creation_date)',
@@ -203,7 +218,6 @@ class PsbCourses extends CActiveRecord
 					),
 				), true),
 			);
-			$this->defaultColumns[] = 'creation_id';
 		}
 		parent::afterConstruct();
 	}
@@ -228,68 +242,23 @@ class PsbCourses extends CActiveRecord
 	/**
 	 * before validate attributes
 	 */
-	/*
 	protected function beforeValidate() {
 		if(parent::beforeValidate()) {
-			// Create action
+			if($this->isNewRecord) {
+				$this->creation_id = Yii::app()->user->id;	
+			}
 		}
 		return true;
 	}
-	*/
-
-	/**
-	 * after validate attributes
-	 */
-	/*
-	protected function afterValidate()
-	{
-		parent::afterValidate();
-			// Create action
-		return true;
-	}
-	*/
 	
 	/**
 	 * before save attributes
 	 */
-	/*
 	protected function beforeSave() {
 		if(parent::beforeSave()) {
-		}
-		return true;	
-	}
-	*/
-	
-	/**
-	 * After save attributes
-	 */
-	/*
-	protected function afterSave() {
-		parent::afterSave();
-		// Create action
-	}
-	*/
-
-	/**
-	 * Before delete attributes
-	 */
-	/*
-	protected function beforeDelete() {
-		if(parent::beforeDelete()) {
-			// Create action
+			$this->course_name = strtolower($this->course_name);
 		}
 		return true;
 	}
-	*/
-
-	/**
-	 * After delete attributes
-	 */
-	/*
-	protected function afterDelete() {
-		parent::afterDelete();
-		// Create action
-	}
-	*/
 
 }
