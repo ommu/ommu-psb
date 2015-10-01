@@ -80,7 +80,7 @@ class YearcourseController extends Controller
 				//'expression'=>'isset(Yii::app()->user->level) && (Yii::app()->user->level != 1)',
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
-				'actions'=>array('manage','delete'),
+				'actions'=>array('manage','add','delete'),
 				'users'=>array('@'),
 				'expression'=>'isset(Yii::app()->user->level) && (Yii::app()->user->level == 1)',
 			),
@@ -100,6 +100,34 @@ class YearcourseController extends Controller
 	public function actionIndex() 
 	{
 		$this->redirect(array('manage'));
+	}
+
+	/**
+	 * Creates a new model.
+	 * If creation is successful, the browser will be redirected to the 'view' page.
+	 */
+	public function actionAdd() 
+	{
+		$model=new PsbYearCourse;
+
+		// Uncomment the following line if AJAX validation is needed
+		$this->performAjaxValidation($model);
+
+		if(isset($_POST['year_id'], $_POST['course_id'], $_POST['body'])) {
+			$model->year_id = $_POST['year_id'];
+			$model->course_id = $_POST['course_id'];
+			$model->body = $_POST['body'];
+
+			if($model->save()) {
+				if(isset($_GET['type']) && $_GET['type'] == 'year')
+					$url = Yii::app()->controller->createUrl('delete',array('id'=>$model->id,'type'=>'year'));
+				else 
+					$url = Yii::app()->controller->createUrl('delete',array('id'=>$model->id));
+				echo CJSON::encode(array(
+					'data' => '<div>'.ucwords($model->course_relation->course_name).'<a href="'.$url.'" title="'.Phrase::trans(173,0).'">'.Phrase::trans(173,0).'</a></div>',
+				));
+			}
+		}
 	}
 
 	/**
@@ -126,7 +154,7 @@ class YearcourseController extends Controller
 		$this->pageTitle = 'Psb Year Courses Manage';
 		$this->pageDescription = '';
 		$this->pageMeta = '';
-		$this->render('admin_manage',array(
+		$this->render('/year_course/admin_manage',array(
 			'model'=>$model,
 			'columns' => $columns,
 		));
@@ -145,24 +173,30 @@ class YearcourseController extends Controller
 			// we only allow deletion via POST request
 			if(isset($id)) {
 				if($model->delete()) {
-					echo CJSON::encode(array(
-						'type' => 5,
-						'get' => Yii::app()->controller->createUrl('manage'),
-						'id' => 'partial-psb-year-course',
-						'msg' => '<div class="errorSummary success"><strong>PsbYearCourse success deleted.</strong></div>',
-					));
+					if(isset($_GET['type']) && $_GET['type'] == 'year') {
+						echo CJSON::encode(array(
+							'type' => 4,
+						));
+					} else {
+						echo CJSON::encode(array(
+							'type' => 5,
+							'get' => Yii::app()->controller->createUrl('manage'),
+							'id' => 'partial-psb-year-course',
+							'msg' => '<div class="errorSummary success"><strong>PsbYearCourse success deleted.</strong></div>',
+						));
+					}
 				}
 			}
 
 		} else {
 			$this->dialogDetail = true;
-			$this->dialogGroundUrl = Yii::app()->controller->createUrl('manage');
+			$this->dialogGroundUrl = (isset($_GET['type']) && $_GET['type'] == 'year') ? Yii::app()->controller->createUrl('year/edit', array('id'=>$model->year_id)) : Yii::app()->controller->createUrl('manage');
 			$this->dialogWidth = 350;
 
 			$this->pageTitle = 'PsbYearCourse Delete.';
 			$this->pageDescription = '';
 			$this->pageMeta = '';
-			$this->render('admin_delete');
+			$this->render('/year_course/admin_delete');
 		}
 	}
 

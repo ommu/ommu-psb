@@ -32,6 +32,12 @@
 class PsbYearCourse extends CActiveRecord
 {
 	public $defaultColumns = array();
+	public $body;
+	
+	// Variable Search
+	public $year_search;
+	public $course_search;
+	public $creation_search;
 
 	/**
 	 * Returns the static model of the specified AR class.
@@ -60,11 +66,14 @@ class PsbYearCourse extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('year_id, course_id, creation_date, creation_id', 'required'),
+			array('year_id, course_id', 'required'),
 			array('year_id, course_id, creation_id', 'length', 'max'=>11),
+			array('
+				body', 'safe'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, year_id, course_id, creation_date, creation_id', 'safe', 'on'=>'search'),
+			array('id, year_id, course_id, creation_date, creation_id,
+				year_search, course_search, creation_search', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -76,8 +85,9 @@ class PsbYearCourse extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'year' => array(self::BELONGS_TO, 'OmmuPsbYears', 'year_id'),
-			'course' => array(self::BELONGS_TO, 'OmmuPsbCourses', 'course_id'),
+			'year_relation' => array(self::BELONGS_TO, 'PsbYears', 'year_id'),
+			'course_relation' => array(self::BELONGS_TO, 'PsbCourses', 'course_id'),
+			'creation_relation' => array(self::BELONGS_TO, 'Users', 'creation_id'),
 		);
 	}
 
@@ -92,6 +102,10 @@ class PsbYearCourse extends CActiveRecord
 			'course_id' => 'Course',
 			'creation_date' => 'Creation Date',
 			'creation_id' => 'Creation',
+			'body' => 'Course Name',
+			'year_search' => 'Year',
+			'course_search' => 'Course',
+			'creation_search' => 'Creation',
 		);
 	}
 
@@ -127,6 +141,25 @@ class PsbYearCourse extends CActiveRecord
 		if($this->creation_date != null && !in_array($this->creation_date, array('0000-00-00 00:00:00', '0000-00-00')))
 			$criteria->compare('date(t.creation_date)',date('Y-m-d', strtotime($this->creation_date)));
 		$criteria->compare('t.creation_id',$this->creation_id,true);
+		
+		// Custom Search
+		$criteria->with = array(
+			'year_relation' => array(
+				'alias'=>'year_relation',
+				'select'=>'years'
+			),
+			'course_relation' => array(
+				'alias'=>'course_relation',
+				'select'=>'course_name'
+			),
+			'creation_relation' => array(
+				'alias'=>'creation_relation',
+				'select'=>'displayname'
+			),
+		);
+		$criteria->compare('year_relation.years',strtolower($this->year_search), true);
+		$criteria->compare('course_relation.course_name',strtolower($this->course_search), true);
+		$criteria->compare('creation_relation.displayname',strtolower($this->creation_search), true);
 
 		if(!isset($_GET['PsbYearCourse_sort']))
 			$criteria->order = 'id DESC';
@@ -138,7 +171,6 @@ class PsbYearCourse extends CActiveRecord
 			),
 		));
 	}
-
 
 	/**
 	 * Get column for CGrid View
@@ -172,20 +204,22 @@ class PsbYearCourse extends CActiveRecord
 	 */
 	protected function afterConstruct() {
 		if(count($this->defaultColumns) == 0) {
-			/*
-			$this->defaultColumns[] = array(
-				'class' => 'CCheckBoxColumn',
-				'name' => 'id',
-				'selectableRows' => 2,
-				'checkBoxHtmlOptions' => array('name' => 'trash_id[]')
-			);
-			*/
 			$this->defaultColumns[] = array(
 				'header' => 'No',
 				'value' => '$this->grid->dataProvider->pagination->currentPage*$this->grid->dataProvider->pagination->pageSize + $row+1'
 			);
-			$this->defaultColumns[] = 'year_id';
-			$this->defaultColumns[] = 'course_id';
+			$this->defaultColumns[] = array(
+				'name' => 'year_search',
+				'value' => '$data->year_relation->years',
+			);
+			$this->defaultColumns[] = array(
+				'name' => 'course_search',
+				'value' => 'ucwords($data->course_relation->course_name)',
+			);
+			$this->defaultColumns[] = array(
+				'name' => 'creation_search',
+				'value' => '$data->creation_relation->displayname',
+			);
 			$this->defaultColumns[] = array(
 				'name' => 'creation_date',
 				'value' => 'Utility::dateFormat($data->creation_date)',
@@ -212,7 +246,6 @@ class PsbYearCourse extends CActiveRecord
 					),
 				), true),
 			);
-			$this->defaultColumns[] = 'creation_id';
 		}
 		parent::afterConstruct();
 	}
@@ -237,68 +270,42 @@ class PsbYearCourse extends CActiveRecord
 	/**
 	 * before validate attributes
 	 */
-	/*
 	protected function beforeValidate() {
 		if(parent::beforeValidate()) {
-			// Create action
+			if($this->isNewRecord) {
+				$this->creation_id = Yii::app()->user->id;	
+			}
 		}
 		return true;
 	}
-	*/
-
-	/**
-	 * after validate attributes
-	 */
-	/*
-	protected function afterValidate()
-	{
-		parent::afterValidate();
-			// Create action
-		return true;
-	}
-	*/
 	
 	/**
 	 * before save attributes
 	 */
-	/*
 	protected function beforeSave() {
 		if(parent::beforeSave()) {
-		}
-		return true;	
-	}
-	*/
-	
-	/**
-	 * After save attributes
-	 */
-	/*
-	protected function afterSave() {
-		parent::afterSave();
-		// Create action
-	}
-	*/
-
-	/**
-	 * Before delete attributes
-	 */
-	/*
-	protected function beforeDelete() {
-		if(parent::beforeDelete()) {
-			// Create action
+			if($this->isNewRecord) {
+				if($this->course_id == 0) {
+					$course = PsbCourses::model()->find(array(
+						'select' => 'course_id, course_name',
+						'condition' => 'course_name = :course_name',
+						'params' => array(
+							':course_name' => strtolower($this->body),
+						),
+					));
+					if($course != null) {
+						$this->course_id = $course->course_id;
+					} else {
+						$data = new PsbCourses;
+						$data->course_name = $this->body;
+						if($data->save()) {
+							$this->course_id = $data->course_id;
+						}
+					}					
+				}
+			}
 		}
 		return true;
 	}
-	*/
-
-	/**
-	 * After delete attributes
-	 */
-	/*
-	protected function afterDelete() {
-		parent::afterDelete();
-		// Create action
-	}
-	*/
 
 }
