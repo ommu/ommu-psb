@@ -24,49 +24,22 @@
 <?php //begin.Messages ?>
 
 <fieldset>
-
-	<div class="clearfix publish">
-		<?php echo $form->labelEx($model,'status'); ?>
-		<div class="desc">
-			<?php echo $form->checkBox($model,'status'); ?>
-			<?php echo $form->labelEx($model,'status'); ?>
-			<?php echo $form->error($model,'status'); ?>
-			<?php /*<div class="small-px silent"></div>*/?>
-		</div>
-	</div>
-
-	<div class="clearfix">
-		<?php echo $form->labelEx($model,'year_id'); ?>
-		<div class="desc">
-			<?php echo $form->textField($model,'year_id',array('size'=>11,'maxlength'=>11)); ?>
-			<?php echo $form->error($model,'year_id'); ?>
-			<?php /*<div class="small-px silent"></div>*/?>
-		</div>
-	</div>
-
 	<div class="clearfix">
 		<?php echo $form->labelEx($model,'batch_id'); ?>
 		<div class="desc">
-			<?php echo $form->textField($model,'batch_id',array('size'=>11,'maxlength'=>11)); ?>
+			<?php echo $form->textField($model,'batch_id',array('maxlength'=>11)); ?>
 			<?php echo $form->error($model,'batch_id'); ?>
 			<?php /*<div class="small-px silent"></div>*/?>
 		</div>
 	</div>
+</fieldset>	
 
+<fieldset>
 	<div class="clearfix">
 		<?php echo $form->labelEx($model,'register_name'); ?>
 		<div class="desc">
-			<?php echo $form->textField($model,'register_name',array('size'=>32,'maxlength'=>32)); ?>
+			<?php echo $form->textField($model,'register_name',array('maxlength'=>32)); ?>
 			<?php echo $form->error($model,'register_name'); ?>
-			<?php /*<div class="small-px silent"></div>*/?>
-		</div>
-	</div>
-
-	<div class="clearfix">
-		<?php echo $form->labelEx($model,'birth_province'); ?>
-		<div class="desc">
-			<?php echo $form->textField($model,'birth_province'); ?>
-			<?php echo $form->error($model,'birth_province'); ?>
 			<?php /*<div class="small-px silent"></div>*/?>
 		</div>
 	</div>
@@ -74,7 +47,7 @@
 	<div class="clearfix">
 		<?php echo $form->labelEx($model,'birth_city'); ?>
 		<div class="desc">
-			<?php echo $form->textField($model,'birth_city',array('size'=>11,'maxlength'=>11)); ?>
+			<?php echo $form->textField($model,'birth_city',array('maxlength'=>11)); ?>
 			<?php echo $form->error($model,'birth_city'); ?>
 			<?php /*<div class="small-px silent"></div>*/?>
 		</div>
@@ -137,11 +110,13 @@
 			<?php /*<div class="small-px silent"></div>*/?>
 		</div>
 	</div>
+</fieldset>
 
+<fieldset>
 	<div class="clearfix">
 		<?php echo $form->labelEx($model,'parent_name'); ?>
 		<div class="desc">
-			<?php echo $form->textField($model,'parent_name',array('size'=>32,'maxlength'=>32)); ?>
+			<?php echo $form->textField($model,'parent_name',array('maxlength'=>32)); ?>
 			<?php echo $form->error($model,'parent_name'); ?>
 			<?php /*<div class="small-px silent"></div>*/?>
 		</div>
@@ -150,7 +125,7 @@
 	<div class="clearfix">
 		<?php echo $form->labelEx($model,'parent_work'); ?>
 		<div class="desc">
-			<?php echo $form->textField($model,'parent_work',array('size'=>32,'maxlength'=>32)); ?>
+			<?php echo $form->textField($model,'parent_work',array('maxlength'=>32)); ?>
 			<?php echo $form->error($model,'parent_work'); ?>
 			<?php /*<div class="small-px silent"></div>*/?>
 		</div>
@@ -173,11 +148,13 @@
 			<?php /*<div class="small-px silent"></div>*/?>
 		</div>
 	</div>
+</fieldset>
 
+<fieldset>
 	<div class="clearfix">
 		<?php echo $form->labelEx($model,'school_id'); ?>
 		<div class="desc">
-			<?php echo $form->textField($model,'school_id',array('size'=>11,'maxlength'=>11)); ?>
+			<?php echo $form->textField($model,'school_id',array('maxlength'=>11)); ?>
 			<?php echo $form->error($model,'school_id'); ?>
 			<?php /*<div class="small-px silent"></div>*/?>
 		</div>
@@ -186,17 +163,8 @@
 	<div class="clearfix">
 		<?php echo $form->labelEx($model,'school_un_rank'); ?>
 		<div class="desc">
-			<?php echo $form->textField($model,'school_un_rank',array('size'=>32,'maxlength'=>32)); ?>
+			<?php echo $form->textField($model,'school_un_rank',array('maxlength'=>32)); ?>
 			<?php echo $form->error($model,'school_un_rank'); ?>
-			<?php /*<div class="small-px silent"></div>*/?>
-		</div>
-	</div>
-
-	<div class="clearfix">
-		<?php echo $form->labelEx($model,'creation_date'); ?>
-		<div class="desc">
-			<?php echo $form->textField($model,'creation_date'); ?>
-			<?php echo $form->error($model,'creation_date'); ?>
 			<?php /*<div class="small-px silent"></div>*/?>
 		</div>
 	</div>

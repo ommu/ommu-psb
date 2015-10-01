@@ -21,7 +21,7 @@
  *----------------------------------------------------------------------------------------------------------
  */
 
-class Site1Controller extends Controller
+class SiteController extends Controller
 {
 	/**
 	 * @var string the default layout for the views. Defaults to '//layouts/column2', meaning
@@ -60,7 +60,7 @@ class Site1Controller extends Controller
 	{
 		return array(
 			array('allow',  // allow all users to perform 'index' and 'view' actions
-				'actions'=>array('index'),
+				'actions'=>array('index','add'),
 				'users'=>array('*'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
@@ -89,6 +89,14 @@ class Site1Controller extends Controller
 	 */
 	public function actionIndex() 
 	{
+		$this->redirect(array('add'));
+	}
+	
+	/**
+	 * Lists all models.
+	 */
+	public function actionAdd()
+	{
 		$model=new PsbRegisters;
 
 		// Uncomment the following line if AJAX validation is needed
@@ -106,7 +114,7 @@ class Site1Controller extends Controller
 		$this->pageTitle = 'Psb Registers';
 		$this->pageDescription = '';
 		$this->pageMeta = '';
-		$this->render('front_index',array(
+		$this->render('front_add',array(
 			'model'=>$model,
 		));
 	}

@@ -20,6 +20,7 @@
  *
  * The followings are the available columns in table 'ommu_psb_registers':
  * @property string $register_id
+ * @property string $author_id
  * @property integer $status
  * @property string $year_id
  * @property string $batch_id
@@ -47,6 +48,11 @@
 class PsbRegisters extends CActiveRecord
 {
 	public $defaultColumns = array();
+	
+	// Variable Search
+	public $year_search;
+	public $batch_search;
+	public $school_search;
 
 	/**
 	 * Returns the static model of the specified AR class.
@@ -75,15 +81,16 @@ class PsbRegisters extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('status, year_id, batch_id, register_name, birth_province, birth_city, address, address_phone, address_yogya, address_yogya_phone, parent_name, parent_work, parent_address, parent_phone, school_id, school_un_rank, creation_date', 'required'),
+			array('batch_id, register_name, birth_city, birth_date, address, address_phone, address_yogya, address_yogya_phone, parent_name, parent_work, parent_address, parent_phone, school_id', 'required'),
 			array('status, birth_province', 'numerical', 'integerOnly'=>true),
 			array('year_id, batch_id, birth_city, school_id', 'length', 'max'=>11),
 			array('register_name, parent_name, parent_work, school_un_rank', 'length', 'max'=>32),
 			array('address_phone, address_yogya_phone, parent_phone', 'length', 'max'=>15),
-			array('birth_date', 'safe'),
+			array('author_id, status, school_un_rank', 'safe'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('register_id, status, year_id, batch_id, register_name, birth_province, birth_city, birth_date, address, address_phone, address_yogya, address_yogya_phone, parent_name, parent_work, parent_address, parent_phone, school_id, school_un_rank, creation_date', 'safe', 'on'=>'search'),
+			array('register_id, author_id, status, year_id, batch_id, register_name, birth_province, birth_city, birth_date, address, address_phone, address_yogya, address_yogya_phone, parent_name, parent_work, parent_address, parent_phone, school_id, school_un_rank, creation_date,
+				year_search, batch_search, school_search', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -95,9 +102,9 @@ class PsbRegisters extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'batch' => array(self::BELONGS_TO, 'OmmuPsbYearBatch', 'batch_id'),
-			'year' => array(self::BELONGS_TO, 'OmmuPsbYears', 'year_id'),
-			'school' => array(self::BELONGS_TO, 'OmmuPsbSchools', 'school_id'),
+			'year_relation' => array(self::BELONGS_TO, 'PsbYears', 'year_id'),
+			'batch_relation' => array(self::BELONGS_TO, 'PsbYearBatch', 'batch_id'),
+			'school_relation' => array(self::BELONGS_TO, 'PsbSchools', 'school_id'),
 		);
 	}
 
@@ -108,6 +115,7 @@ class PsbRegisters extends CActiveRecord
 	{
 		return array(
 			'register_id' => 'Register',
+			'author_id' => 'Author',
 			'status' => 'Status',
 			'year_id' => 'Year',
 			'batch_id' => 'Batch',
@@ -126,6 +134,9 @@ class PsbRegisters extends CActiveRecord
 			'school_id' => 'School',
 			'school_un_rank' => 'School Un Rank',
 			'creation_date' => 'Creation Date',
+			'year_search' => 'Year',
+			'batch_search' => 'Batch',
+			'school_search' => 'School',
 		);
 	}
 
@@ -148,6 +159,11 @@ class PsbRegisters extends CActiveRecord
 		$criteria=new CDbCriteria;
 
 		$criteria->compare('t.register_id',$this->register_id,true);
+		if(isset($_GET['author'])) {
+			$criteria->compare('t.author_id',$_GET['author']);
+		} else {
+			$criteria->compare('t.author_id',$this->author_id);
+		}
 		$criteria->compare('t.status',$this->status);
 		if(isset($_GET['year'])) {
 			$criteria->compare('t.year_id',$_GET['year']);
@@ -180,6 +196,25 @@ class PsbRegisters extends CActiveRecord
 		$criteria->compare('t.school_un_rank',$this->school_un_rank,true);
 		if($this->creation_date != null && !in_array($this->creation_date, array('0000-00-00 00:00:00', '0000-00-00')))
 			$criteria->compare('date(t.creation_date)',date('Y-m-d', strtotime($this->creation_date)));
+		
+		// Custom Search
+		$criteria->with = array(
+			'year_relation' => array(
+				'alias'=>'year_relation',
+				'select'=>'years'
+			),
+			'batch_relation' => array(
+				'alias'=>'batch_relation',
+				'select'=>'batch_name'
+			),
+			'school_relation' => array(
+				'alias'=>'school_relation',
+				'select'=>'school_name'
+			),
+		);
+		$criteria->compare('year_relation.years',strtolower($this->year_search), true);
+		$criteria->compare('batch_relation.batch_name',strtolower($this->batch_search), true);
+		$criteria->compare('school_relation.school_name',strtolower($this->school_search), true);
 
 		if(!isset($_GET['PsbRegisters_sort']))
 			$criteria->order = 'register_id DESC';
@@ -211,6 +246,7 @@ class PsbRegisters extends CActiveRecord
 			}
 		} else {
 			//$this->defaultColumns[] = 'register_id';
+			$this->defaultColumns[] = 'author_id';
 			$this->defaultColumns[] = 'status';
 			$this->defaultColumns[] = 'year_id';
 			$this->defaultColumns[] = 'batch_id';
@@ -239,73 +275,30 @@ class PsbRegisters extends CActiveRecord
 	 */
 	protected function afterConstruct() {
 		if(count($this->defaultColumns) == 0) {
-			/*
-			$this->defaultColumns[] = array(
-				'class' => 'CCheckBoxColumn',
-				'name' => 'id',
-				'selectableRows' => 2,
-				'checkBoxHtmlOptions' => array('name' => 'trash_id[]')
-			);
-			*/
 			$this->defaultColumns[] = array(
 				'header' => 'No',
 				'value' => '$this->grid->dataProvider->pagination->currentPage*$this->grid->dataProvider->pagination->pageSize + $row+1'
 			);
-			if(!isset($_GET['type'])) {
-				$this->defaultColumns[] = array(
-					'name' => 'status',
-					'value' => 'Utility::getPublish(Yii::app()->controller->createUrl("status",array("id"=>$data->register_id)), $data->status, 1)',
-					'htmlOptions' => array(
-						'class' => 'center',
-					),
-					'filter'=>array(
-						1=>Phrase::trans(588,0),
-						0=>Phrase::trans(589,0),
-					),
-					'type' => 'raw',
-				);
-			}
-			$this->defaultColumns[] = 'year_id';
-			$this->defaultColumns[] = 'batch_id';
-			$this->defaultColumns[] = 'register_name';
-			$this->defaultColumns[] = 'birth_province';
-			$this->defaultColumns[] = 'birth_city';
 			$this->defaultColumns[] = array(
-				'name' => 'birth_date',
-				'value' => 'Utility::dateFormat($data->birth_date)',
-				'htmlOptions' => array(
-					'class' => 'center',
-				),
-				'filter' => Yii::app()->controller->widget('zii.widgets.jui.CJuiDatePicker', array(
-					'model'=>$this,
-					'attribute'=>'birth_date',
-					'language' => 'ja',
-					'i18nScriptFile' => 'jquery.ui.datepicker-en.js',
-					//'mode'=>'datetime',
-					'htmlOptions' => array(
-						'id' => 'birth_date_filter',
-					),
-					'options'=>array(
-						'showOn' => 'focus',
-						'dateFormat' => 'dd-mm-yy',
-						'showOtherMonths' => true,
-						'selectOtherMonths' => true,
-						'changeMonth' => true,
-						'changeYear' => true,
-						'showButtonPanel' => true,
-					),
-				), true),
+				'name' => 'year_search',
+				'value' => '$data->year_relation->years',
 			);
-			$this->defaultColumns[] = 'address';
-			$this->defaultColumns[] = 'address_phone';
-			$this->defaultColumns[] = 'address_yogya';
-			$this->defaultColumns[] = 'address_yogya_phone';
-			$this->defaultColumns[] = 'parent_name';
-			$this->defaultColumns[] = 'parent_work';
-			$this->defaultColumns[] = 'parent_address';
-			$this->defaultColumns[] = 'parent_phone';
-			$this->defaultColumns[] = 'school_id';
-			$this->defaultColumns[] = 'school_un_rank';
+			$this->defaultColumns[] = array(
+				'name' => 'batch_search',
+				'value' => '$data->batch_relation->batch_name',
+			);
+			$this->defaultColumns[] = array(
+				'name' => 'register_name',
+				'value' => '$data->register_name."<br/><span>".$data->address."</span>"',
+				'htmlOptions' => array(
+					'class' => 'bold',
+				),
+				'type' => 'raw',
+			);
+			$this->defaultColumns[] = array(
+				'name' => 'school_search',
+				'value' => '$data->school_relation->school_name',
+			);
 			$this->defaultColumns[] = array(
 				'name' => 'creation_date',
 				'value' => 'Utility::dateFormat($data->creation_date)',
@@ -332,6 +325,20 @@ class PsbRegisters extends CActiveRecord
 					),
 				), true),
 			);
+			if(!isset($_GET['type'])) {
+				$this->defaultColumns[] = array(
+					'name' => 'status',
+					'value' => 'Utility::getPublish(Yii::app()->controller->createUrl("status",array("id"=>$data->register_id)), $data->status, 1)',
+					'htmlOptions' => array(
+						'class' => 'center',
+					),
+					'filter'=>array(
+						1=>Phrase::trans(588,0),
+						0=>Phrase::trans(589,0),
+					),
+					'type' => 'raw',
+				);
+			}
 		}
 		parent::afterConstruct();
 	}
@@ -352,73 +359,5 @@ class PsbRegisters extends CActiveRecord
 			return $model;			
 		}
 	}
-
-	/**
-	 * before validate attributes
-	 */
-	/*
-	protected function beforeValidate() {
-		if(parent::beforeValidate()) {
-			// Create action
-		}
-		return true;
-	}
-	*/
-
-	/**
-	 * after validate attributes
-	 */
-	/*
-	protected function afterValidate()
-	{
-		parent::afterValidate();
-			// Create action
-		return true;
-	}
-	*/
-	
-	/**
-	 * before save attributes
-	 */
-	/*
-	protected function beforeSave() {
-		if(parent::beforeSave()) {
-			//$this->birth_date = date('Y-m-d', strtotime($this->birth_date));
-		}
-		return true;	
-	}
-	*/
-	
-	/**
-	 * After save attributes
-	 */
-	/*
-	protected function afterSave() {
-		parent::afterSave();
-		// Create action
-	}
-	*/
-
-	/**
-	 * Before delete attributes
-	 */
-	/*
-	protected function beforeDelete() {
-		if(parent::beforeDelete()) {
-			// Create action
-		}
-		return true;
-	}
-	*/
-
-	/**
-	 * After delete attributes
-	 */
-	/*
-	protected function afterDelete() {
-		parent::afterDelete();
-		// Create action
-	}
-	*/
 
 }
