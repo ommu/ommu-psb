@@ -9,6 +9,7 @@
  * @contect (+62)856-299-4114
  *
  */
+	$currentAction = strtolower(Yii::app()->controller->id.'/'.Yii::app()->controller->action->id);
 ?>
 
 <?php $form=$this->beginWidget('application.components.system.OActiveForm', array(
@@ -28,8 +29,25 @@
 		<div class="clearfix">
 			<?php echo $form->labelEx($model,'year_id'); ?>
 			<div class="desc">
-				<?php echo $form->textField($model,'year_id',array('size'=>11,'maxlength'=>11)); ?>
+				<?php
+				if($model->isNewRecord && isset($_GET['id']))
+					$model->year_id = $_GET['id'];
+				$year = PsbYears::getYear();
+				if($year != null) {
+					echo $form->dropDownList($model,'year_id', $year);					
+				} else {
+					echo $form->dropDownList($model,'year_id', array('prompt'=>'No Years'));					
+				} ?>
 				<?php echo $form->error($model,'year_id'); ?>
+				<?php /*<div class="small-px silent"></div>*/?>
+			</div>
+		</div>
+
+		<div class="clearfix">
+			<?php echo $form->labelEx($model,'batch_name'); ?>
+			<div class="desc">
+				<?php echo $form->textField($model,'batch_name',array('class'=>'span-6','maxlength'=>32)); ?>
+				<?php echo $form->error($model,'batch_name'); ?>
 				<?php /*<div class="small-px silent"></div>*/?>
 			</div>
 		</div>
@@ -48,7 +66,7 @@
 						'dateFormat' => 'dd-mm-yy',
 					),
 					'htmlOptions'=>array(
-						'class' => 'span-4',
+						'class' => 'span-6',
 					 ),
 				)); ?>
 				<?php echo $form->error($model,'batch_start'); ?>
@@ -70,19 +88,10 @@
 						'dateFormat' => 'dd-mm-yy',
 					),
 					'htmlOptions'=>array(
-						'class' => 'span-4',
+						'class' => 'span-6',
 					 ),
 				)); ?>
 				<?php echo $form->error($model,'batch_finish'); ?>
-				<?php /*<div class="small-px silent"></div>*/?>
-			</div>
-		</div>
-
-		<div class="clearfix">
-			<?php echo $form->labelEx($model,'modified_id'); ?>
-			<div class="desc">
-				<?php echo $form->textField($model,'modified_id',array('size'=>11,'maxlength'=>11)); ?>
-				<?php echo $form->error($model,'modified_id'); ?>
 				<?php /*<div class="small-px silent"></div>*/?>
 			</div>
 		</div>
