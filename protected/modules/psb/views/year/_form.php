@@ -28,9 +28,9 @@
 		<div class="clearfix">
 			<?php echo $form->labelEx($model,'years'); ?>
 			<div class="desc">
-				<?php echo $form->textField($model,'years',array('size'=>9,'maxlength'=>9)); ?>
+				<?php echo $form->textField($model,'years',array('class'=>'span-5','maxlength'=>9)); ?>
 				<?php echo $form->error($model,'years'); ?>
-				<?php /*<div class="small-px silent"></div>*/?>
+				<div class="small-px silent">Contoh: 2015/2016</div>
 			</div>
 		</div>
 

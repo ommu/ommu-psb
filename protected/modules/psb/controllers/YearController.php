@@ -157,7 +157,7 @@ class YearController extends Controller
 					if($model->save()) {
 						echo CJSON::encode(array(
 							'type' => 5,
-							'get' => Yii::app()->controller->createUrl('manage'),
+							'get' => Yii::app()->controller->createUrl('edit', array('id'=>$model->year_id)),
 							'id' => 'partial-psb-years',
 							'msg' => '<div class="errorSummary success"><strong>PsbYears success created.</strong></div>',
 						));
@@ -190,6 +190,28 @@ class YearController extends Controller
 	public function actionEdit($id) 
 	{
 		$model=$this->loadModel($id);
+		$course = PsbYearCourse::model()->findAll(array(
+			'condition' => 'year_id = :id',
+			'params' => array(
+				':id' => $model->year_id,
+			),
+		));
+		
+		$batch=new PsbYearBatch('search');
+		$batch->unsetAttributes();  // clear any default values
+		if(isset($_GET['PsbYearBatch'])) {
+			$batch->attributes=$_GET['PsbYearBatch'];
+		}
+
+		$columnTemp = array();
+		if(isset($_GET['GridColumn'])) {
+			foreach($_GET['GridColumn'] as $key => $val) {
+				if($_GET['GridColumn'][$key] == 1) {
+					$columnTemp[] = $key;
+				}
+			}
+		}
+		$columns = $batch->getGridColumn($columnTemp);
 
 		// Uncomment the following line if AJAX validation is needed
 		$this->performAjaxValidation($model);
@@ -218,15 +240,14 @@ class YearController extends Controller
 			Yii::app()->end();
 			
 		} else {
-			$this->dialogDetail = true;
-			$this->dialogGroundUrl = Yii::app()->controller->createUrl('manage');
-			$this->dialogWidth = 600;
-
 			$this->pageTitle = 'Update Psb Years';
 			$this->pageDescription = '';
 			$this->pageMeta = '';
 			$this->render('admin_edit',array(
 				'model'=>$model,
+				'course'=>$course,
+				'batch'=>$batch,
+				'columns' => $columns,
 			));			
 		}
 	}

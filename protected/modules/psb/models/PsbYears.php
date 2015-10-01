@@ -35,6 +35,10 @@
 class PsbYears extends CActiveRecord
 {
 	public $defaultColumns = array();
+	public $course_input;
+	
+	// Variable Search
+	public $creation_search;
 
 	/**
 	 * Returns the static model of the specified AR class.
@@ -63,13 +67,18 @@ class PsbYears extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('years, batchs, courses, registers, creation_date, creation_id', 'required'),
+			array('years', 'required'),
+			array('years', 'required'),
 			array('batchs, courses, registers', 'numerical', 'integerOnly'=>true),
 			array('years', 'length', 'max'=>9),
 			array('creation_id', 'length', 'max'=>11),
+			array('
+				course_input', 'length', 'max'=>32),
+			array('creation_id', 'safe'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('year_id, years, batchs, courses, registers, creation_date, creation_id', 'safe', 'on'=>'search'),
+			array('year_id, years, batchs, courses, registers, creation_date, creation_id,
+				creation_search', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -81,9 +90,10 @@ class PsbYears extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'ommuPsbRegisters' => array(self::HAS_MANY, 'OmmuPsbRegisters', 'year_id'),
-			'ommuPsbYearBatches' => array(self::HAS_MANY, 'OmmuPsbYearBatch', 'year_id'),
-			'ommuPsbYearCourses' => array(self::HAS_MANY, 'OmmuPsbYearCourse', 'year_id'),
+			'registers' => array(self::HAS_MANY, 'PsbRegisters', 'year_id'),
+			'batches' => array(self::HAS_MANY, 'PsbYearBatch', 'year_id'),
+			'courses' => array(self::HAS_MANY, 'PsbYearCourse', 'year_id'),
+			'creation_relation' => array(self::BELONGS_TO, 'Users', 'creation_id'),
 		);
 	}
 
@@ -100,6 +110,8 @@ class PsbYears extends CActiveRecord
 			'registers' => 'Registers',
 			'creation_date' => 'Creation Date',
 			'creation_id' => 'Creation',
+			'course_input' => 'Courses',
+			'creation_search' => 'Creation',
 		);
 	}
 
@@ -129,6 +141,15 @@ class PsbYears extends CActiveRecord
 		if($this->creation_date != null && !in_array($this->creation_date, array('0000-00-00 00:00:00', '0000-00-00')))
 			$criteria->compare('date(t.creation_date)',date('Y-m-d', strtotime($this->creation_date)));
 		$criteria->compare('t.creation_id',$this->creation_id,true);
+		
+		// Custom Search
+		$criteria->with = array(
+			'creation_relation' => array(
+				'alias'=>'creation_relation',
+				'select'=>'displayname'
+			),
+		);
+		$criteria->compare('creation_relation.displayname',strtolower($this->creation_search), true);
 
 		if(!isset($_GET['PsbYears_sort']))
 			$criteria->order = 'year_id DESC';
@@ -176,48 +197,39 @@ class PsbYears extends CActiveRecord
 	 */
 	protected function afterConstruct() {
 		if(count($this->defaultColumns) == 0) {
-			/*
-			$this->defaultColumns[] = array(
-				'class' => 'CCheckBoxColumn',
-				'name' => 'id',
-				'selectableRows' => 2,
-				'checkBoxHtmlOptions' => array('name' => 'trash_id[]')
-			);
-			*/
 			$this->defaultColumns[] = array(
 				'header' => 'No',
 				'value' => '$this->grid->dataProvider->pagination->currentPage*$this->grid->dataProvider->pagination->pageSize + $row+1'
 			);
 			$this->defaultColumns[] = 'years';
-			if(!isset($_GET['type'])) {
-				$this->defaultColumns[] = array(
-					'name' => 'batchs',
-					'value' => 'Utility::getPublish(Yii::app()->controller->createUrl("batchs",array("id"=>$data->year_id)), $data->batchs, 1)',
-					'htmlOptions' => array(
-						'class' => 'center',
-					),
-					'filter'=>array(
-						1=>Phrase::trans(588,0),
-						0=>Phrase::trans(589,0),
-					),
-					'type' => 'raw',
-				);
-			}
-			if(!isset($_GET['type'])) {
-				$this->defaultColumns[] = array(
-					'name' => 'courses',
-					'value' => 'Utility::getPublish(Yii::app()->controller->createUrl("courses",array("id"=>$data->year_id)), $data->courses, 1)',
-					'htmlOptions' => array(
-						'class' => 'center',
-					),
-					'filter'=>array(
-						1=>Phrase::trans(588,0),
-						0=>Phrase::trans(589,0),
-					),
-					'type' => 'raw',
-				);
-			}
-			$this->defaultColumns[] = 'registers';
+			$this->defaultColumns[] = array(
+				'header' => 'batchs',
+				'value' => 'CHtml::link($data->batchs, Yii::app()->controller->createUrl("batch/manage",array("year"=>$data->year_id)))',
+				'htmlOptions' => array(
+					'class' => 'center',
+				),
+				'type' => 'raw',
+			);
+			$this->defaultColumns[] = array(
+				'header' => 'courses',
+				'value' => 'CHtml::link($data->courses, Yii::app()->controller->createUrl("yearcourse/manage",array("year"=>$data->year_id)))',
+				'htmlOptions' => array(
+					'class' => 'center',
+				),
+				'type' => 'raw',
+			);
+			$this->defaultColumns[] = array(
+				'header' => 'registers',
+				'value' => 'CHtml::link($data->registers, Yii::app()->controller->createUrl("admin/manage",array("year"=>$data->year_id)))',
+				'htmlOptions' => array(
+					'class' => 'center',
+				),
+				'type' => 'raw',
+			);
+			$this->defaultColumns[] = array(
+				'name' => 'creation_search',
+				'value' => '$data->creation_relation->displayname',
+			);
 			$this->defaultColumns[] = array(
 				'name' => 'creation_date',
 				'value' => 'Utility::dateFormat($data->creation_date)',
@@ -244,7 +256,6 @@ class PsbYears extends CActiveRecord
 					),
 				), true),
 			);
-			$this->defaultColumns[] = 'creation_id';
 		}
 		parent::afterConstruct();
 	}
@@ -267,70 +278,35 @@ class PsbYears extends CActiveRecord
 	}
 
 	/**
+	 * Get category
+	 * 0 = unpublish
+	 * 1 = publish
+	 */
+	public static function getYear() {
+		
+		$criteria=new CDbCriteria;		
+		$model = self::model()->findAll($criteria);
+
+		$items = array();
+		if($model != null) {
+			foreach($model as $key => $val) {
+				$items[$val->year_id] = $val->years;
+			}
+			return $items;
+		} else {
+			return false;
+		}
+	}
+
+	/**
 	 * before validate attributes
 	 */
-	/*
 	protected function beforeValidate() {
 		if(parent::beforeValidate()) {
-			// Create action
+			if($this->isNewRecord) {
+				$this->creation_id = Yii::app()->user->id;	
+			}
 		}
 		return true;
 	}
-	*/
-
-	/**
-	 * after validate attributes
-	 */
-	/*
-	protected function afterValidate()
-	{
-		parent::afterValidate();
-			// Create action
-		return true;
-	}
-	*/
-	
-	/**
-	 * before save attributes
-	 */
-	/*
-	protected function beforeSave() {
-		if(parent::beforeSave()) {
-		}
-		return true;	
-	}
-	*/
-	
-	/**
-	 * After save attributes
-	 */
-	/*
-	protected function afterSave() {
-		parent::afterSave();
-		// Create action
-	}
-	*/
-
-	/**
-	 * Before delete attributes
-	 */
-	/*
-	protected function beforeDelete() {
-		if(parent::beforeDelete()) {
-			// Create action
-		}
-		return true;
-	}
-	*/
-
-	/**
-	 * After delete attributes
-	 */
-	/*
-	protected function afterDelete() {
-		parent::afterDelete();
-		// Create action
-	}
-	*/
-
 }
