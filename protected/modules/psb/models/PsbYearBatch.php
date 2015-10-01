@@ -245,7 +245,7 @@ class PsbYearBatch extends CActiveRecord
 			);
 			$this->defaultColumns[] = array(
 				'name' => 'batch_name',
-				'value' => '$data->batch_name',
+				'value' => 'ucwords($data->batch_name)',
 			);
 			$this->defaultColumns[] = array(
 				'name' => 'batch_start',

@@ -26,9 +26,23 @@
 		<?php //begin.Messages ?>
 
 		<div class="clearfix">
+			<?php echo $form->labelEx($model,'school_status'); ?>
+			<div class="desc">
+				<?php echo $form->dropDownList($model,'school_status',array(
+					1=>'Negeri',
+					0=>'Swasta',					
+				)); ?>
+				<?php echo $form->error($model,'school_status'); ?>
+				<?php /*<div class="small-px silent"></div>*/?>
+			</div>
+		</div>
+
+		<div class="clearfix">
 			<?php echo $form->labelEx($model,'school_name'); ?>
 			<div class="desc">
-				<?php echo $form->textField($model,'school_name',array('size'=>60,'maxlength'=>64)); ?>
+				<?php
+				$model->school_name = ucwords($model->school_name);
+				echo $form->textField($model,'school_name',array('maxlength'=>64, 'class'=>'span-8')); ?>
 				<?php echo $form->error($model,'school_name'); ?>
 				<?php /*<div class="small-px silent"></div>*/?>
 			</div>
@@ -37,7 +51,7 @@
 		<div class="clearfix">
 			<?php echo $form->labelEx($model,'school_address'); ?>
 			<div class="desc">
-				<?php echo $form->textArea($model,'school_address',array('rows'=>6, 'cols'=>50)); ?>
+				<?php echo $form->textArea($model,'school_address',array('rows'=>6, 'cols'=>50, 'class'=>'span-11')); ?>
 				<?php echo $form->error($model,'school_address'); ?>
 				<?php /*<div class="small-px silent"></div>*/?>
 			</div>
@@ -46,18 +60,8 @@
 		<div class="clearfix">
 			<?php echo $form->labelEx($model,'school_phone'); ?>
 			<div class="desc">
-				<?php echo $form->textField($model,'school_phone',array('size'=>15,'maxlength'=>15)); ?>
+				<?php echo $form->textField($model,'school_phone',array('maxlength'=>15)); ?>
 				<?php echo $form->error($model,'school_phone'); ?>
-				<?php /*<div class="small-px silent"></div>*/?>
-			</div>
-		</div>
-
-		<div class="clearfix">
-			<?php echo $form->labelEx($model,'school_status'); ?>
-			<div class="desc">
-				<?php echo $form->textField($model,'school_status',array('size'=>32,'maxlength'=>32)); ?>
-				<?php echo $form->error($model,'school_status'); ?>
-				<?php /*<div class="small-px silent"></div>*/?>
 			</div>
 		</div>
 

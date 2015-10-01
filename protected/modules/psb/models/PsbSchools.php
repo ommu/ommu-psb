@@ -60,11 +60,12 @@ class PsbSchools extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('school_name, school_address, school_phone, school_status, registers', 'required'),
-			array('registers', 'numerical', 'integerOnly'=>true),
+			array('school_name', 'required'),
+			array('school_address, school_phone, school_status', 'required', 'on'=>'edit'),
+			array('school_status, registers', 'numerical', 'integerOnly'=>true),
 			array('school_name', 'length', 'max'=>64),
 			array('school_phone', 'length', 'max'=>15),
-			array('school_status', 'length', 'max'=>32),
+			array('school_address, school_phone, school_status, registers', 'safe'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
 			array('school_id, school_name, school_address, school_phone, school_status, registers', 'safe', 'on'=>'search'),
@@ -79,7 +80,7 @@ class PsbSchools extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'ommuPsbRegisters' => array(self::HAS_MANY, 'OmmuPsbRegisters', 'school_id'),
+			'registers' => array(self::HAS_MANY, 'PsbRegisters', 'school_id'),
 		);
 	}
 
@@ -120,7 +121,7 @@ class PsbSchools extends CActiveRecord
 		$criteria->compare('t.school_name',$this->school_name,true);
 		$criteria->compare('t.school_address',$this->school_address,true);
 		$criteria->compare('t.school_phone',$this->school_phone,true);
-		$criteria->compare('t.school_status',$this->school_status,true);
+		$criteria->compare('t.school_status',$this->school_status);
 		$criteria->compare('t.registers',$this->registers);
 
 		if(!isset($_GET['PsbSchools_sort']))
@@ -168,23 +169,33 @@ class PsbSchools extends CActiveRecord
 	 */
 	protected function afterConstruct() {
 		if(count($this->defaultColumns) == 0) {
-			/*
-			$this->defaultColumns[] = array(
-				'class' => 'CCheckBoxColumn',
-				'name' => 'id',
-				'selectableRows' => 2,
-				'checkBoxHtmlOptions' => array('name' => 'trash_id[]')
-			);
-			*/
 			$this->defaultColumns[] = array(
 				'header' => 'No',
 				'value' => '$this->grid->dataProvider->pagination->currentPage*$this->grid->dataProvider->pagination->pageSize + $row+1'
 			);
-			$this->defaultColumns[] = 'school_name';
+			$this->defaultColumns[] = array(
+				'name' => 'school_name',
+				'value' => 'ucwords($data->school_name)',
+			);
 			$this->defaultColumns[] = 'school_address';
 			$this->defaultColumns[] = 'school_phone';
-			$this->defaultColumns[] = 'school_status';
-			$this->defaultColumns[] = 'registers';
+			$this->defaultColumns[] = array(
+				'name' => 'school_status',
+				'value' => '$data->school_status == 1 ? "Negeri" : "Swasta"',
+				'htmlOptions' => array(
+					'class' => 'center',
+				),
+				'filter'=>array(
+					1=>'Negeri',
+					0=>'Swasta',
+				),
+				'type' => 'raw',
+			);
+			$this->defaultColumns[] = array(
+				'header' => 'registers',
+				'value' => 'CHtml::link($data->registers, Yii::app()->controller->createUrl("admin/manage",array("school"=>$data->school_id)))',
+				'type' => 'raw',
+			);
 		}
 		parent::afterConstruct();
 	}
@@ -207,70 +218,34 @@ class PsbSchools extends CActiveRecord
 	}
 
 	/**
-	 * before validate attributes
+	 * Get category
+	 * 0 = unpublish
+	 * 1 = publish
 	 */
-	/*
-	protected function beforeValidate() {
-		if(parent::beforeValidate()) {
-			// Create action
-		}
-		return true;
-	}
-	*/
+	public static function getSchool() {
+		
+		$criteria=new CDbCriteria;		
+		$model = self::model()->findAll($criteria);
 
-	/**
-	 * after validate attributes
-	 */
-	/*
-	protected function afterValidate()
-	{
-		parent::afterValidate();
-			// Create action
-		return true;
+		$items = array();
+		if($model != null) {
+			foreach($model as $key => $val) {
+				$items[$val->school_id] = $val->school_name;
+			}
+			return $items;
+		} else {
+			return false;
+		}
 	}
-	*/
 	
 	/**
 	 * before save attributes
 	 */
-	/*
 	protected function beforeSave() {
 		if(parent::beforeSave()) {
-		}
-		return true;	
-	}
-	*/
-	
-	/**
-	 * After save attributes
-	 */
-	/*
-	protected function afterSave() {
-		parent::afterSave();
-		// Create action
-	}
-	*/
-
-	/**
-	 * Before delete attributes
-	 */
-	/*
-	protected function beforeDelete() {
-		if(parent::beforeDelete()) {
-			// Create action
+			$this->school_name = strtolower($this->school_name);
 		}
 		return true;
 	}
-	*/
-
-	/**
-	 * After delete attributes
-	 */
-	/*
-	protected function afterDelete() {
-		parent::afterDelete();
-		// Create action
-	}
-	*/
 
 }
