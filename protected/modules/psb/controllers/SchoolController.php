@@ -72,7 +72,7 @@ class SchoolController extends Controller
 	{
 		return array(
 			array('allow',  // allow all users to perform 'index' and 'view' actions
-				'actions'=>array('index'),
+				'actions'=>array('index','suggest','ajaxget'),
 				'users'=>array('*'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
@@ -102,6 +102,49 @@ class SchoolController extends Controller
 	public function actionIndex() 
 	{
 		$this->redirect(array('manage'));
+	}
+	
+	/**
+	 * Updates a particular model.
+	 * If update is successful, the browser will be redirected to the 'view' page.
+	 * @param integer $id the ID of the model to be updated
+	 */
+	public function actionSuggest($limit=15) 
+	{
+		if(isset($_GET['term'])) {
+			$criteria = new CDbCriteria;
+			$criteria->condition = 'school_name LIKE :name';
+			$criteria->select	= "school_id, school_name";
+			$criteria->limit = $limit;
+			$criteria->order = "school_id ASC";
+			$criteria->params = array(':name' => '%' . strtolower($_GET['term']) . '%');
+			$model = PsbSchools::model()->findAll($criteria);
+
+			if($model) {
+				foreach($model as $items) {
+					$result[] = array('id' => $items->school_id, 'value' => ucwords($items->school_name));
+				}
+			}
+		}
+		echo CJSON::encode($result);
+		Yii::app()->end();
+	}
+	
+	/**
+	 * Creates a new model.
+	 * If creation is successful, the browser will be redirected to the 'view' page.
+	 */
+	public function actionAjaxGet() 
+	{
+		if(isset($_POST['school_id'])) {
+			$model=$this->loadModel($_POST['school_id']);
+			echo CJSON::encode(array(
+				'publisher_input' => ucwords($model->school_name),
+				'publisher_id' => $model->publisher_id,
+				'publisher_id' => $model->publisher_id,
+				'publisher_id' => $model->publisher_id,
+			));
+		}
 	}
 
 	/**
@@ -147,6 +190,7 @@ class SchoolController extends Controller
 
 		if(isset($_POST['PsbSchools'])) {
 			$model->attributes=$_POST['PsbSchools'];
+			$model->scenario='schoolmaster';
 			
 			$jsonError = CActiveForm::validate($model);
 			if(strlen($jsonError) > 2) {
@@ -196,7 +240,7 @@ class SchoolController extends Controller
 
 		if(isset($_POST['PsbSchools'])) {
 			$model->attributes=$_POST['PsbSchools'];
-			$model->scenario='edit';
+			$model->scenario='schoolmasterEdit';
 			
 			$jsonError = CActiveForm::validate($model);
 			if(strlen($jsonError) > 2) {

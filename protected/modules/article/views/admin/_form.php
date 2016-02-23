@@ -59,7 +59,7 @@ EOP;
 	<fieldset class="clearfix">
 		<div class="clear">
 			<div class="left">
-				<div class="clearfix <?php echo in_array($model->cat_id, array(16)) ? 'hide' : ''?>" id="type">
+				<div class="clearfix" id="type">
 					<?php echo $model->isNewRecord ? $form->labelEx($model,'article_type') : '<label>'.$model->getAttributeLabel('article_type').'</label>'; ?>
 					<div class="desc">
 						<?php
@@ -93,8 +93,10 @@ EOP;
 				<div class="clearfix">
 					<?php echo $form->labelEx($model,'cat_id'); ?>
 					<div class="desc">
-						<?php 						
-						$category = ArticleCategory::getCategory();						
+						<?php
+						$parent = null;				
+						$category = ArticleCategory::getCategory(null, $parent);
+
 						if($category != null) {
 							echo $form->dropDownList($model,'cat_id', $category);
 						} else {
@@ -128,9 +130,9 @@ EOP;
 						echo '</div>';
 					}
 				}?>
-	
-				<?php if($model->isNewRecord || (!$model->isNewRecord && $model->article_type == 1 && $setting->media_limit == 1)) {?>
-				<div id="media" class="clearfix filter <?php echo in_array($model->cat_id, array(16,19)) ? 'hide' : ''?>">
+
+				<?php if($model->isNewRecord || (!$model->isNewRecord && ($model->article_type == 1 && $setting->media_limit == 1))) {?>
+				<div id="media" class="clearfix filter">
 					<?php echo $form->labelEx($model,'media'); ?>
 					<div class="desc">
 						<?php echo $form->fileField($model,'media'); ?>
@@ -138,7 +140,7 @@ EOP;
 					</div>
 				</div>
 				<?php }?>
-	
+
 				<?php if($model->isNewRecord || (!$model->isNewRecord && $model->article_type == 2)) {?>
 					<div id="video" class="clearfix filter <?php echo $model->isNewRecord ? 'hide' : ''?>">
 						<label for="Articles_video"><?php echo $model->getAttributeLabel('video');?> <span class="required">*</span></label>
@@ -209,7 +211,7 @@ EOP;
 	
 			</div>
 	
-			<div class="right">			
+			<div class="right">
 				<?php
 				if(!$model->isNewRecord) {
 					$model->old_file = $model->media_file;
@@ -221,7 +223,7 @@ EOP;
 						echo '<div class="desc"><a href="'.$file.'" title="'.$model->media_file.'">'.$model->media_file.'</a></div>';
 						echo '</div>';
 					}
-				}?>				
+				}?>
 				<div class="clearfix">
 					<?php echo $form->labelEx($model,'file'); ?>
 					<div class="desc">
@@ -291,7 +293,7 @@ EOP;
 
 	<fieldset>
 		<?php if($model->isNewRecord || (!$model->isNewRecord && $model->article_type != 4)) {?>
-		<div class="clearfix <?php echo in_array($model->cat_id, array(16,19)) ? 'hide' : ''?>" id="quote">
+		<div class="clearfix" id="quote">
 			<?php echo $form->labelEx($model,'quote'); ?>
 			<div class="desc">
 				<?php 

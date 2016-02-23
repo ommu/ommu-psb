@@ -89,7 +89,19 @@ class SiteController extends Controller
 	 */
 	public function actionIndex() 
 	{
-		$this->redirect(array('add'));
+		$criteria=new CDbCriteria;
+		$criteria->condition = 'curdate() BETWEEN `batch_start` AND `batch_finish`';
+		$batch = PsbYearBatch::model()->find($criteria);
+		
+		if($batch != null)
+			$this->redirect(array('add'));
+		
+		else {
+			$this->pageTitle = 'Psb Registers';
+			$this->pageDescription = '';
+			$this->pageMeta = '';
+			$this->render('front_index');
+		}
 	}
 	
 	/**
@@ -97,26 +109,58 @@ class SiteController extends Controller
 	 */
 	public function actionAdd()
 	{
-		$model=new PsbRegisters;
+		$criteria=new CDbCriteria;
+		$criteria->condition = 'curdate() BETWEEN `batch_start` AND `batch_finish`';
+		$batch = PsbYearBatch::model()->find($criteria);
+		
+		if($batch == null)
+			$this->redirect(array('index'));
+		
+		else {
+			$model=new PsbRegisters;
+			$school=new PsbSchools;
+			$author=new OmmuAuthors;
 
-		// Uncomment the following line if AJAX validation is needed
-		$this->performAjaxValidation($model);
+			// Uncomment the following line if AJAX validation is needed
+			$this->performAjaxValidation($model);
 
-		if(isset($_POST['PsbRegisters'])) {
-			$model->attributes=$_POST['PsbRegisters'];
-			if($model->save()) {
-				Yii::app()->user->setFlash('success', 'PsbRegisters success created.');
-				//$this->redirect(array('view','id'=>$model->register_id));
-				$this->redirect(array('index'));
+			if(isset($_POST['PsbRegisters'])) {
+				$model->attributes=$_POST['PsbRegisters'];
+				$school->attributes=$_POST['PsbSchools'];
+				$author->attributes=$_POST['OmmuAuthors'];
+				
+				$authorModel = OmmuAuthors::model()->find(array(
+					'select' => 'author_id, email',
+					'condition' => 'publish = 1 AND email = :email',
+					'params' => array(
+						':email' => strtolower($author->email),
+					),
+				));
+				if($authorModel != null) {
+					$model->author_id = $authorModel->author_id;
+				} else {
+					if($author->save())
+						$model->author_id = $author->author_id;
+				}
+				
+				
+				if($model->save()) {
+					Yii::app()->user->setFlash('success', 'PsbRegisters success created.');
+					//$this->redirect(array('view','id'=>$model->register_id));
+					$this->redirect(array('index'));
+				}
 			}
-		}
 
-		$this->pageTitle = 'Psb Registers';
-		$this->pageDescription = '';
-		$this->pageMeta = '';
-		$this->render('front_add',array(
-			'model'=>$model,
-		));
+			$this->pageTitle = 'Psb Registers';
+			$this->pageDescription = '';
+			$this->pageMeta = '';
+			$this->render('front_add',array(
+				'model'=>$model,
+				'school'=>$school,
+				'author'=>$author,
+				'batch'=>$batch->batch_id,
+			));
+		}
 	}
 
 	/**

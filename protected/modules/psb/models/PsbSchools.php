@@ -60,12 +60,13 @@ class PsbSchools extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('school_name', 'required'),
+			array('school_name', 'required', 'on'=>'schoolmaster, schoolmasterEdit'),
+			array('school_address, school_phone, school_status', 'required', 'on'=>'schoolmasterEdit'),
 			array('school_address, school_phone, school_status', 'required', 'on'=>'edit'),
 			array('school_status, registers', 'numerical', 'integerOnly'=>true),
 			array('school_name', 'length', 'max'=>64),
 			array('school_phone', 'length', 'max'=>15),
-			array('school_address, school_phone, school_status, registers', 'safe'),
+			array('school_name, school_address, school_phone, school_status, registers', 'safe'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
 			array('school_id, school_name, school_address, school_phone, school_status, registers', 'safe', 'on'=>'search'),

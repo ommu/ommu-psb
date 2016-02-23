@@ -48,6 +48,7 @@
 class PsbRegisters extends CActiveRecord
 {
 	public $defaultColumns = array();
+	public $school_input;
 	
 	// Variable Search
 	public $year_search;
@@ -81,12 +82,16 @@ class PsbRegisters extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('batch_id, register_name, birth_city, birth_date, address, address_phone, address_yogya, address_yogya_phone, parent_name, parent_work, parent_address, parent_phone, school_id', 'required'),
+			array('batch_id, register_name, birth_city, birth_date, address, address_phone, address_yogya, address_yogya_phone, 
+				parent_name, parent_work, parent_address, parent_phone,
+				school_input', 'required'),
 			array('status, birth_province', 'numerical', 'integerOnly'=>true),
 			array('year_id, batch_id, birth_city, school_id', 'length', 'max'=>11),
-			array('register_name, parent_name, parent_work, school_un_rank', 'length', 'max'=>32),
 			array('address_phone, address_yogya_phone, parent_phone', 'length', 'max'=>15),
-			array('author_id, status, school_un_rank', 'safe'),
+			array('register_name, parent_name, parent_work, school_un_rank', 'length', 'max'=>32),
+			array('
+				school_input', 'length', 'max'=>64),
+			array('author_id, status, school_id, school_un_rank', 'safe'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
 			array('register_id, author_id, status, year_id, batch_id, register_name, birth_province, birth_city, birth_date, address, address_phone, address_yogya, address_yogya_phone, parent_name, parent_work, parent_address, parent_phone, school_id, school_un_rank, creation_date,
@@ -137,6 +142,7 @@ class PsbRegisters extends CActiveRecord
 			'year_search' => 'Year',
 			'batch_search' => 'Batch',
 			'school_search' => 'School',
+			'school_input' => 'School',
 		);
 	}
 

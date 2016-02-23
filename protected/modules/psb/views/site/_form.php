@@ -23,18 +23,12 @@
 </div>
 <?php //begin.Messages ?>
 
-<fieldset>
-	<div class="clearfix">
-		<?php echo $form->labelEx($model,'batch_id'); ?>
-		<div class="desc">
-			<?php echo $form->textField($model,'batch_id',array('maxlength'=>11)); ?>
-			<?php echo $form->error($model,'batch_id'); ?>
-			<?php /*<div class="small-px silent"></div>*/?>
-		</div>
-	</div>
-</fieldset>	
+<?php 
+$model->batch_id = $batch;
+echo $form->hiddenField($model,'batch_id'); ?>
 
 <fieldset>
+	<h3>Identitas Pendaftar</h3>
 	<div class="clearfix">
 		<?php echo $form->labelEx($model,'register_name'); ?>
 		<div class="desc">
@@ -113,6 +107,7 @@
 </fieldset>
 
 <fieldset>
+	<h3>Identitas Orangtua Pendaftar</h3>
 	<div class="clearfix">
 		<?php echo $form->labelEx($model,'parent_name'); ?>
 		<div class="desc">
@@ -151,20 +146,105 @@
 </fieldset>
 
 <fieldset>
+	<h3>Asal Sekolah</h3>
 	<div class="clearfix">
-		<?php echo $form->labelEx($model,'school_id'); ?>
+		<?php echo $form->labelEx($model,'school_input'); ?>
 		<div class="desc">
-			<?php echo $form->textField($model,'school_id',array('maxlength'=>11)); ?>
-			<?php echo $form->error($model,'school_id'); ?>
+			<?php //echo $form->textField($model,'school_input',array('maxlength'=>64));
+			$url = Yii::app()->controller->createUrl('school/ajaxget', array('type'=>'school'));
+			$this->widget('zii.widgets.jui.CJuiAutoComplete', array(
+				'model' => $model,
+				'attribute' => 'school_input',
+				'source' => Yii::app()->controller->createUrl('school/suggest'),
+				'options' => array(
+					//'delay '=> 50,
+					'minLength' => 1,
+					'showAnim' => 'fold',
+					'select' => "js:function(event, ui) {
+						$('form #PsbRegisters_school_input').val(ui.item.value);
+						$('form #PsbRegisters_school_id').val(ui.item.id);
+						$.ajax({
+							type: 'post',
+							url: '$url',
+							data: { school_id: ui.item.id},
+							dataType: 'json',
+							success: function(response) {
+								$('form #PsbSchools_school_address').val(response.school_address);
+								$('form #PsbSchools_school_phone').val(response.school_phone);
+								$('form #PsbSchools_school_status').val(response.school_status);
+							}
+						});
+					}"
+				),
+				'htmlOptions' => array(
+					'class'	=> 'span-8',
+					'maxlength'=>64,
+				),
+			));
+			echo $form->error($model,'school_input');
+			echo $form->hiddenField($model,'school_id');	
+			?>
+		</div>
+	</div>
+
+	<div class="clearfix">
+		<?php echo $form->labelEx($school,'school_address'); ?>
+		<div class="desc">
+			<?php echo $form->textArea($school,'school_address',array('rows'=>6, 'cols'=>50, 'class'=>'span-11')); ?>
+			<?php echo $form->error($school,'school_address'); ?>
 			<?php /*<div class="small-px silent"></div>*/?>
 		</div>
 	</div>
 
 	<div class="clearfix">
+		<?php echo $form->labelEx($school,'school_phone'); ?>
+		<div class="desc">
+			<?php echo $form->textField($school,'school_phone',array('maxlength'=>15)); ?>
+			<?php echo $form->error($school,'school_phone'); ?>
+		</div>
+	</div>
+
+	<div class="clearfix">
+		<?php echo $form->labelEx($school,'school_status'); ?>
+		<div class="desc">
+			<?php echo $form->dropDownList($school,'school_status',array(
+				1=>'Negeri',
+				0=>'Swasta',					
+			)); ?>
+			<?php echo $form->error($school,'school_status'); ?>
+		</div>
+	</div>
+</fieldset>
+
+<fieldset>
+	<h3>Nilai Ujian Nasional</h3>
+	<div class="clearfix">
 		<?php echo $form->labelEx($model,'school_un_rank'); ?>
 		<div class="desc">
 			<?php echo $form->textField($model,'school_un_rank',array('maxlength'=>32)); ?>
 			<?php echo $form->error($model,'school_un_rank'); ?>
+			<?php /*<div class="small-px silent"></div>*/?>
+		</div>
+	</div>
+
+</fieldset>
+
+<fieldset>
+	<h3>Author</h3>
+	<div class="clearfix">
+		<?php echo $form->labelEx($author,'name'); ?>
+		<div class="desc">
+			<?php echo $form->textField($author,'name',array('maxlength'=>32, 'class'=>'span-8')); ?>
+			<?php echo $form->error($author,'name'); ?>
+			<?php /*<div class="small-px silent"></div>*/?>
+		</div>
+	</div>
+
+	<div class="clearfix">
+		<?php echo $form->labelEx($author,'email'); ?>
+		<div class="desc">
+			<?php echo $form->textField($author,'email',array('maxlength'=>32, 'class'=>'span-8')); ?>
+			<?php echo $form->error($author,'email'); ?>
 			<?php /*<div class="small-px silent"></div>*/?>
 		</div>
 	</div>
