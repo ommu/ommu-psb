@@ -1,8 +1,8 @@
 <?php
 /**
- * BatchController
- * @var $this BatchController
- * @var $model PsbYearBatch * @var $form CActiveForm
+ * SchoolController
+ * @var $this SchoolController
+ * @var $model PsbSchools * @var $form CActiveForm
  * Copyright (c) 2013, Ommu Platform (ommu.co). All rights reserved.
  * version: 0.0.1
  * Reference start
@@ -25,7 +25,7 @@
  *----------------------------------------------------------------------------------------------------------
  */
 
-class BatchController extends Controller
+class SchoolController extends Controller
 {
 	/**
 	 * @var string the default layout for the views. Defaults to '//layouts/column2', meaning
@@ -109,10 +109,10 @@ class BatchController extends Controller
 	 */
 	public function actionManage() 
 	{
-		$model=new PsbYearBatch('search');
+		$model=new PsbSchools('search');
 		$model->unsetAttributes();  // clear any default values
-		if(isset($_GET['PsbYearBatch'])) {
-			$model->attributes=$_GET['PsbYearBatch'];
+		if(isset($_GET['PsbSchools'])) {
+			$model->attributes=$_GET['PsbSchools'];
 		}
 
 		$columnTemp = array();
@@ -125,7 +125,7 @@ class BatchController extends Controller
 		}
 		$columns = $model->getGridColumn($columnTemp);
 
-		$this->pageTitle = 'Psb Year Batches Manage';
+		$this->pageTitle = 'Psb Schools Manage';
 		$this->pageDescription = '';
 		$this->pageMeta = '';
 		$this->render('admin_manage',array(
@@ -140,13 +140,14 @@ class BatchController extends Controller
 	 */
 	public function actionAdd() 
 	{
-		$model=new PsbYearBatch;
+		$model=new PsbSchools;
 
 		// Uncomment the following line if AJAX validation is needed
 		$this->performAjaxValidation($model);
 
-		if(isset($_POST['PsbYearBatch'])) {
-			$model->attributes=$_POST['PsbYearBatch'];
+		if(isset($_POST['PsbSchools'])) {
+			$model->attributes=$_POST['PsbSchools'];
+			$model->scenario='schoolmaster';
 			
 			$jsonError = CActiveForm::validate($model);
 			if(strlen($jsonError) > 2) {
@@ -157,9 +158,9 @@ class BatchController extends Controller
 					if($model->save()) {
 						echo CJSON::encode(array(
 							'type' => 5,
-							'get' => (isset($_GET['type']) && $_GET['type'] == 'year') ? Yii::app()->controller->createUrl('year/edit', array('id'=>$model->year_id)) : Yii::app()->controller->createUrl('manage'),
-							'id' => 'partial-psb-year-batch',
-							'msg' => '<div class="errorSummary success"><strong>PsbYearBatch success created.</strong></div>',
+							'get' => Yii::app()->controller->createUrl('manage'),
+							'id' => 'partial-psb-schools',
+							'msg' => '<div class="errorSummary success"><strong>PsbSchools success created.</strong></div>',
 						));
 					} else {
 						print_r($model->getErrors());
@@ -170,10 +171,10 @@ class BatchController extends Controller
 			
 		} else {
 			$this->dialogDetail = true;
-			$this->dialogGroundUrl = (isset($_GET['type']) && $_GET['type'] == 'year') ? Yii::app()->controller->createUrl('year/edit', array('id'=>$_GET['id'])) : Yii::app()->controller->createUrl('manage');
+			$this->dialogGroundUrl = Yii::app()->controller->createUrl('manage');
 			$this->dialogWidth = 600;
-
-			$this->pageTitle = 'Create Psb Year Batches';
+			
+			$this->pageTitle = 'Create Psb Schools';
 			$this->pageDescription = '';
 			$this->pageMeta = '';
 			$this->render('admin_add',array(
@@ -194,8 +195,9 @@ class BatchController extends Controller
 		// Uncomment the following line if AJAX validation is needed
 		$this->performAjaxValidation($model);
 
-		if(isset($_POST['PsbYearBatch'])) {
-			$model->attributes=$_POST['PsbYearBatch'];
+		if(isset($_POST['PsbSchools'])) {
+			$model->attributes=$_POST['PsbSchools'];
+			$model->scenario='schoolmasterEdit';
 			
 			$jsonError = CActiveForm::validate($model);
 			if(strlen($jsonError) > 2) {
@@ -206,9 +208,9 @@ class BatchController extends Controller
 					if($model->save()) {
 						echo CJSON::encode(array(
 							'type' => 5,
-							'get' => (isset($_GET['type']) && $_GET['type'] == 'year') ? Yii::app()->controller->createUrl('year/edit', array('id'=>$model->year_id)) : Yii::app()->controller->createUrl('manage'),
-							'id' => 'partial-psb-year-batch',
-							'msg' => '<div class="errorSummary success"><strong>PsbYearBatch success updated.</strong></div>',
+							'get' => Yii::app()->controller->createUrl('manage'),
+							'id' => 'partial-psb-schools',
+							'msg' => '<div class="errorSummary success"><strong>PsbSchools success updated.</strong></div>',
 						));
 					} else {
 						print_r($model->getErrors());
@@ -219,10 +221,10 @@ class BatchController extends Controller
 			
 		} else {
 			$this->dialogDetail = true;
-			$this->dialogGroundUrl = (isset($_GET['type']) && $_GET['type'] == 'year') ? Yii::app()->controller->createUrl('year/edit', array('id'=>$model->year_id)) : Yii::app()->controller->createUrl('manage');
+			$this->dialogGroundUrl = Yii::app()->controller->createUrl('manage');
 			$this->dialogWidth = 600;
-
-			$this->pageTitle = 'Update Psb Year Batches';
+			
+			$this->pageTitle = 'Update Psb Schools';
 			$this->pageDescription = '';
 			$this->pageMeta = '';
 			$this->render('admin_edit',array(
@@ -246,19 +248,19 @@ class BatchController extends Controller
 				if($model->delete()) {
 					echo CJSON::encode(array(
 						'type' => 5,
-						'get' => (isset($_GET['type']) && $_GET['type'] == 'year') ? Yii::app()->controller->createUrl('year/edit', array('id'=>$model->year_id)) : Yii::app()->controller->createUrl('manage'),
-						'id' => 'partial-psb-year-batch',
-						'msg' => '<div class="errorSummary success"><strong>PsbYearBatch success deleted.</strong></div>',
+						'get' => Yii::app()->controller->createUrl('manage'),
+						'id' => 'partial-psb-schools',
+						'msg' => '<div class="errorSummary success"><strong>PsbSchools success deleted.</strong></div>',
 					));
 				}
 			}
 
 		} else {
 			$this->dialogDetail = true;
-			$this->dialogGroundUrl = (isset($_GET['type']) && $_GET['type'] == 'year') ? Yii::app()->controller->createUrl('year/edit', array('id'=>$model->year_id)) : Yii::app()->controller->createUrl('manage');
+			$this->dialogGroundUrl = Yii::app()->controller->createUrl('manage');
 			$this->dialogWidth = 350;
 
-			$this->pageTitle = 'PsbYearBatch Delete.';
+			$this->pageTitle = 'PsbSchools Delete.';
 			$this->pageDescription = '';
 			$this->pageMeta = '';
 			$this->render('admin_delete');
@@ -272,9 +274,9 @@ class BatchController extends Controller
 	 */
 	public function loadModel($id) 
 	{
-		$model = PsbYearBatch::model()->findByPk($id);
+		$model = PsbSchools::model()->findByPk($id);
 		if($model===null)
-			throw new CHttpException(404, Phrase::trans(193,0));
+			throw new CHttpException(404, Yii::t('phrase', 'The requested page does not exist.'));
 		return $model;
 	}
 
@@ -284,7 +286,7 @@ class BatchController extends Controller
 	 */
 	protected function performAjaxValidation($model) 
 	{
-		if(isset($_POST['ajax']) && $_POST['ajax']==='psb-year-batch-form') {
+		if(isset($_POST['ajax']) && $_POST['ajax']==='psb-schools-form') {
 			echo CActiveForm::validate($model);
 			Yii::app()->end();
 		}

@@ -1,8 +1,8 @@
 <?php
 /**
- * YearController
- * @var $this YearController
- * @var $model PsbYears * @var $form CActiveForm
+ * YearcourseController
+ * @var $this YearcourseController
+ * @var $model PsbYearCourse * @var $form CActiveForm
  * Copyright (c) 2013, Ommu Platform (ommu.co). All rights reserved.
  * version: 0.0.1
  * Reference start
@@ -10,8 +10,6 @@
  * TOC :
  *	Index
  *	Manage
- *	Add
- *	Edit
  *	Delete
  *
  *	LoadModel
@@ -25,7 +23,7 @@
  *----------------------------------------------------------------------------------------------------------
  */
 
-class YearController extends Controller
+class YearcourseController extends Controller
 {
 	/**
 	 * @var string the default layout for the views. Defaults to '//layouts/column2', meaning
@@ -82,7 +80,7 @@ class YearController extends Controller
 				//'expression'=>'isset(Yii::app()->user->level) && (Yii::app()->user->level != 1)',
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
-				'actions'=>array('manage','add','edit','delete'),
+				'actions'=>array('manage','add','delete'),
 				'users'=>array('@'),
 				'expression'=>'isset(Yii::app()->user->level) && (Yii::app()->user->level == 1)',
 			),
@@ -109,10 +107,10 @@ class YearController extends Controller
 	 */
 	public function actionManage() 
 	{
-		$model=new PsbYears('search');
+		$model=new PsbYearCourse('search');
 		$model->unsetAttributes();  // clear any default values
-		if(isset($_GET['PsbYears'])) {
-			$model->attributes=$_GET['PsbYears'];
+		if(isset($_GET['PsbYearCourse'])) {
+			$model->attributes=$_GET['PsbYearCourse'];
 		}
 
 		$columnTemp = array();
@@ -125,130 +123,40 @@ class YearController extends Controller
 		}
 		$columns = $model->getGridColumn($columnTemp);
 
-		$this->pageTitle = 'Psb Years Manage';
+		$this->pageTitle = 'Psb Year Courses Manage';
 		$this->pageDescription = '';
 		$this->pageMeta = '';
-		$this->render('admin_manage',array(
+		$this->render('/o/year_course/admin_manage',array(
 			'model'=>$model,
 			'columns' => $columns,
 		));
-	}	
-	
+	}
+
 	/**
 	 * Creates a new model.
 	 * If creation is successful, the browser will be redirected to the 'view' page.
 	 */
 	public function actionAdd() 
 	{
-		$model=new PsbYears;
+		$model=new PsbYearCourse;
 
 		// Uncomment the following line if AJAX validation is needed
 		$this->performAjaxValidation($model);
 
-		if(isset($_POST['PsbYears'])) {
-			$model->attributes=$_POST['PsbYears'];
-			
-			$jsonError = CActiveForm::validate($model);
-			if(strlen($jsonError) > 2) {
-				echo $jsonError;
+		if(isset($_POST['year_id'], $_POST['course_id'], $_POST['body'])) {
+			$model->year_id = $_POST['year_id'];
+			$model->course_id = $_POST['course_id'];
+			$model->body = $_POST['body'];
 
-			} else {
-				if(isset($_GET['enablesave']) && $_GET['enablesave'] == 1) {
-					if($model->save()) {
-						echo CJSON::encode(array(
-							'type' => 5,
-							'get' => Yii::app()->controller->createUrl('edit', array('id'=>$model->year_id)),
-							'id' => 'partial-psb-years',
-							'msg' => '<div class="errorSummary success"><strong>PsbYears success created.</strong></div>',
-						));
-					} else {
-						print_r($model->getErrors());
-					}
-				}
+			if($model->save()) {
+				if(isset($_GET['type']) && $_GET['type'] == 'year')
+					$url = Yii::app()->controller->createUrl('delete',array('id'=>$model->id,'type'=>'year'));
+				else 
+					$url = Yii::app()->controller->createUrl('delete',array('id'=>$model->id));
+				echo CJSON::encode(array(
+					'data' => '<div>'.ucwords($model->course_relation->course_name).'<a href="'.$url.'" title="'.Phrase::trans(173,0).'">'.Phrase::trans(173,0).'</a></div>',
+				));
 			}
-			Yii::app()->end();
-			
-		} else {
-			$this->dialogDetail = true;
-			$this->dialogGroundUrl = Yii::app()->controller->createUrl('manage');
-			$this->dialogWidth = 600;
-
-			$this->pageTitle = 'Create Psb Years';
-			$this->pageDescription = '';
-			$this->pageMeta = '';
-			$this->render('admin_add',array(
-				'model'=>$model,
-			));			
-		}
-	}
-
-	/**
-	 * Updates a particular model.
-	 * If update is successful, the browser will be redirected to the 'view' page.
-	 * @param integer $id the ID of the model to be updated
-	 */
-	public function actionEdit($id) 
-	{
-		$model=$this->loadModel($id);
-		$course = PsbYearCourse::model()->findAll(array(
-			'condition' => 'year_id = :id',
-			'params' => array(
-				':id' => $model->year_id,
-			),
-		));
-		
-		$batch=new PsbYearBatch('search');
-		$batch->unsetAttributes();  // clear any default values
-		if(isset($_GET['PsbYearBatch'])) {
-			$batch->attributes=$_GET['PsbYearBatch'];
-		}
-
-		$columnTemp = array();
-		if(isset($_GET['GridColumn'])) {
-			foreach($_GET['GridColumn'] as $key => $val) {
-				if($_GET['GridColumn'][$key] == 1) {
-					$columnTemp[] = $key;
-				}
-			}
-		}
-		$columns = $batch->getGridColumn($columnTemp);
-
-		// Uncomment the following line if AJAX validation is needed
-		$this->performAjaxValidation($model);
-
-		if(isset($_POST['PsbYears'])) {
-			$model->attributes=$_POST['PsbYears'];
-			
-			$jsonError = CActiveForm::validate($model);
-			if(strlen($jsonError) > 2) {
-				echo $jsonError;
-
-			} else {
-				if(isset($_GET['enablesave']) && $_GET['enablesave'] == 1) {
-					if($model->save()) {
-						echo CJSON::encode(array(
-							'type' => 5,
-							'get' => Yii::app()->controller->createUrl('manage'),
-							'id' => 'partial-psb-years',
-							'msg' => '<div class="errorSummary success"><strong>PsbYears success updated.</strong></div>',
-						));
-					} else {
-						print_r($model->getErrors());
-					}
-				}
-			}
-			Yii::app()->end();
-			
-		} else {
-			$this->pageTitle = 'Update Psb Years';
-			$this->pageDescription = '';
-			$this->pageMeta = '';
-			$this->render('admin_edit',array(
-				'model'=>$model,
-				'course'=>$course,
-				'batch'=>$batch,
-				'columns' => $columns,
-			));			
 		}
 	}
 
@@ -265,24 +173,30 @@ class YearController extends Controller
 			// we only allow deletion via POST request
 			if(isset($id)) {
 				if($model->delete()) {
-					echo CJSON::encode(array(
-						'type' => 5,
-						'get' => Yii::app()->controller->createUrl('manage'),
-						'id' => 'partial-psb-years',
-						'msg' => '<div class="errorSummary success"><strong>PsbYears success deleted.</strong></div>',
-					));
+					if(isset($_GET['type']) && $_GET['type'] == 'year') {
+						echo CJSON::encode(array(
+							'type' => 4,
+						));
+					} else {
+						echo CJSON::encode(array(
+							'type' => 5,
+							'get' => Yii::app()->controller->createUrl('manage'),
+							'id' => 'partial-psb-year-course',
+							'msg' => '<div class="errorSummary success"><strong>PsbYearCourse success deleted.</strong></div>',
+						));
+					}
 				}
 			}
 
 		} else {
 			$this->dialogDetail = true;
-			$this->dialogGroundUrl = Yii::app()->controller->createUrl('manage');
+			$this->dialogGroundUrl = (isset($_GET['type']) && $_GET['type'] == 'year') ? Yii::app()->controller->createUrl('year/edit', array('id'=>$model->year_id)) : Yii::app()->controller->createUrl('manage');
 			$this->dialogWidth = 350;
 
-			$this->pageTitle = 'PsbYears Delete.';
+			$this->pageTitle = 'PsbYearCourse Delete.';
 			$this->pageDescription = '';
 			$this->pageMeta = '';
-			$this->render('admin_delete');
+			$this->render('/o/year_course/admin_delete');
 		}
 	}
 
@@ -293,9 +207,9 @@ class YearController extends Controller
 	 */
 	public function loadModel($id) 
 	{
-		$model = PsbYears::model()->findByPk($id);
+		$model = PsbYearCourse::model()->findByPk($id);
 		if($model===null)
-			throw new CHttpException(404, Phrase::trans(193,0));
+			throw new CHttpException(404, Yii::t('phrase', 'The requested page does not exist.'));
 		return $model;
 	}
 
@@ -305,7 +219,7 @@ class YearController extends Controller
 	 */
 	protected function performAjaxValidation($model) 
 	{
-		if(isset($_POST['ajax']) && $_POST['ajax']==='psb-years-form') {
+		if(isset($_POST['ajax']) && $_POST['ajax']==='psb-year-course-form') {
 			echo CActiveForm::validate($model);
 			Yii::app()->end();
 		}
