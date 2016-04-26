@@ -37,11 +37,6 @@
 		</li>
 
 		<li>
-			<?php echo $model->getAttributeLabel('registers'); ?><br/>
-			<?php echo $form->textField($model,'registers'); ?>
-		</li>
-
-		<li>
 			<?php echo $model->getAttributeLabel('creation_date'); ?><br/>
 			<?php echo $form->textField($model,'creation_date'); ?>
 		</li>
@@ -62,7 +57,7 @@
 		</li>
 
 		<li class="submit">
-			<?php echo CHtml::submitButton(Phrase::trans(3,0)); ?>
+			<?php echo CHtml::submitButton(Yii::t('phrase', 'Search')); ?>
 		</li>
 	</ul>
 <?php $this->endWidget(); ?>

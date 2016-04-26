@@ -20,11 +20,11 @@
  *
  * The followings are the available columns in table 'ommu_psb_year_batch':
  * @property string $batch_id
+ * @property integer $publish
  * @property string $year_id
  * @property string $batch_name
  * @property string $batch_start
  * @property string $batch_finish
- * @property integer $registers
  * @property string $creation_date
  * @property string $creation_id
  * @property string $modified_date
@@ -71,12 +71,12 @@ class PsbYearBatch extends CActiveRecord
 		// will receive user inputs.
 		return array(
 			array('year_id, batch_name, batch_start, batch_finish', 'required'),
-			array('registers', 'numerical', 'integerOnly'=>true),
+			array('publish', 'numerical', 'integerOnly'=>true),
 			array('year_id, creation_id, modified_id', 'length', 'max'=>11),
-			array('batch_name, batch_start, batch_finish, registers, creation_date, creation_id, modified_date, modified_id', 'safe'),
+			array('batch_name, batch_start, batch_finish, creation_date, creation_id, modified_date, modified_id', 'safe'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('batch_id, year_id, batch_name, batch_start, batch_finish, registers, creation_date, creation_id, modified_date, modified_id,
+			array('batch_id, publish, year_id, batch_name, batch_start, batch_finish, creation_date, creation_id, modified_date, modified_id,
 				year_search, creation_search, modified_search', 'safe', 'on'=>'search'),
 		);
 	}
@@ -90,9 +90,9 @@ class PsbYearBatch extends CActiveRecord
 		// class name for the relations automatically generated below.
 		return array(
 			'registers' => array(self::HAS_MANY, 'PsbRegisters', 'batch_id'),
-			'year_relation' => array(self::BELONGS_TO, 'PsbYears', 'year_id'),
-			'creation_relation' => array(self::BELONGS_TO, 'Users', 'creation_id'),
-			'modified_relation' => array(self::BELONGS_TO, 'Users', 'modified_id'),
+			'year' => array(self::BELONGS_TO, 'PsbYears', 'year_id'),
+			'creation' => array(self::BELONGS_TO, 'Users', 'creation_id'),
+			'modified' => array(self::BELONGS_TO, 'Users', 'modified_id'),
 		);
 	}
 
@@ -103,11 +103,11 @@ class PsbYearBatch extends CActiveRecord
 	{
 		return array(
 			'batch_id' => 'Batch',
+			'publish' => Yii::t('attribute', 'Publish'),
 			'year_id' => 'Year',
 			'batch_name' => 'Batch Name',
 			'batch_start' => 'Batch Start',
 			'batch_finish' => 'Batch Finish',
-			'registers' => 'Registers',
 			'creation_date' => 'Creation Date',
 			'creation_id' => 'Creation',
 			'modified_date' => 'Modified Date',
@@ -138,10 +138,20 @@ class PsbYearBatch extends CActiveRecord
 		$criteria=new CDbCriteria;
 
 		$criteria->compare('t.batch_id',$this->batch_id,true);
-		if(isset($_GET['year'])) {
+		if(isset($_GET['type']) && $_GET['type'] == 'publish')
+			$criteria->compare('t.publish',1);
+		elseif(isset($_GET['type']) && $_GET['type'] == 'unpublish')
+			$criteria->compare('t.publish',0);
+		elseif(isset($_GET['type']) && $_GET['type'] == 'trash')
+			$criteria->compare('t.publish',2);
+		else {
+			$criteria->addInCondition('t.publish',array(0,1));
+			$criteria->compare('t.publish',$this->publish);
+		}
+		if(isset($_GET['year']))
 			$criteria->compare('t.year_id',$_GET['year']);
-		} else {
-			if($currentAction == 'year/edit' && isset($_GET['id']))
+		else {
+			if($currentAction == 'o/year/edit' && isset($_GET['id']))
 				$criteria->compare('t.year_id',$_GET['id']);
 			else				
 				$criteria->compare('t.year_id',$this->year_id);
@@ -151,7 +161,6 @@ class PsbYearBatch extends CActiveRecord
 			$criteria->compare('date(t.batch_start)',date('Y-m-d', strtotime($this->batch_start)));
 		if($this->batch_finish != null && !in_array($this->batch_finish, array('0000-00-00 00:00:00', '0000-00-00')))
 			$criteria->compare('date(t.batch_finish)',date('Y-m-d', strtotime($this->batch_finish)));
-		$criteria->compare('t.registers',$this->registers);
 		if($this->creation_date != null && !in_array($this->creation_date, array('0000-00-00 00:00:00', '0000-00-00')))
 			$criteria->compare('date(t.creation_date)',date('Y-m-d', strtotime($this->creation_date)));
 		$criteria->compare('t.creation_id',$this->creation_id,true);
@@ -161,22 +170,22 @@ class PsbYearBatch extends CActiveRecord
 		
 		// Custom Search
 		$criteria->with = array(
-			'year_relation' => array(
-				'alias'=>'year_relation',
+			'year' => array(
+				'alias'=>'year',
 				'select'=>'years'
 			),
-			'creation_relation' => array(
-				'alias'=>'creation_relation',
+			'creation' => array(
+				'alias'=>'creation',
 				'select'=>'displayname'
 			),
-			'modified_relation' => array(
-				'alias'=>'modified_relation',
+			'modified' => array(
+				'alias'=>'modified',
 				'select'=>'displayname'
 			),
 		);
-		$criteria->compare('year_relation.years',strtolower($this->year_search), true);
-		$criteria->compare('creation_relation.displayname',strtolower($this->creation_search), true);
-		$criteria->compare('modified_relation.displayname',strtolower($this->modified_search), true);
+		$criteria->compare('year.years',strtolower($this->year_search), true);
+		$criteria->compare('creation.displayname',strtolower($this->creation_search), true);
+		$criteria->compare('modified.displayname',strtolower($this->modified_search), true);
 
 		if(!isset($_GET['PsbYearBatch_sort']) && $currentAction != 'year/edit')
 			$criteria->order = 'batch_id DESC';
@@ -208,11 +217,11 @@ class PsbYearBatch extends CActiveRecord
 			}
 		} else {
 			//$this->defaultColumns[] = 'batch_id';
+			$this->defaultColumns[] = 'publish';
 			$this->defaultColumns[] = 'year_id';
 			$this->defaultColumns[] = 'batch_name';
 			$this->defaultColumns[] = 'batch_start';
 			$this->defaultColumns[] = 'batch_finish';
-			$this->defaultColumns[] = 'registers';
 			$this->defaultColumns[] = 'creation_date';
 			$this->defaultColumns[] = 'creation_id';
 			$this->defaultColumns[] = 'modified_date';
@@ -241,7 +250,7 @@ class PsbYearBatch extends CActiveRecord
 			);
 			$this->defaultColumns[] = array(
 				'name' => 'year_search',
-				'value' => '$data->year_relation->years',
+				'value' => '$data->year->years',
 			);
 			$this->defaultColumns[] = array(
 				'name' => 'batch_name',
@@ -299,14 +308,16 @@ class PsbYearBatch extends CActiveRecord
 					),
 				), true),
 			);
+			/*
 			$this->defaultColumns[] = array(
 				'header' => 'registers',
 				'value' => 'CHtml::link($data->registers, Yii::app()->controller->createUrl("admin/manage",array("batch"=>$data->batch_id)))',
 				'type' => 'raw',
 			);
+			*/
 			$this->defaultColumns[] = array(
 				'name' => 'creation_search',
-				'value' => '$data->creation_relation->displayname',
+				'value' => '$data->creation->displayname',
 			);
 			$this->defaultColumns[] = array(
 				'name' => 'creation_date',
@@ -334,6 +345,20 @@ class PsbYearBatch extends CActiveRecord
 					),
 				), true),
 			);
+			if(!isset($_GET['type'])) {
+				$this->defaultColumns[] = array(
+					'name' => 'publish',
+					'value' => 'Utility::getPublish(Yii::app()->controller->createUrl("publish",array("id"=>$data->batch_id)), $data->publish, 1)',
+					'htmlOptions' => array(
+						'class' => 'center',
+					),
+					'filter'=>array(
+						1=>Yii::t('phrase', 'Yes'),
+						0=>Yii::t('phrase', 'No'),
+					),
+					'type' => 'raw',
+				);
+			}
 		}
 		parent::afterConstruct();
 	}
@@ -362,11 +387,12 @@ class PsbYearBatch extends CActiveRecord
 		if(parent::beforeValidate()) {
 			$this->batch_start = date('Y-m-d', strtotime($this->batch_start));
 			$this->batch_finish = date('Y-m-d', strtotime($this->batch_finish));
-			if($this->isNewRecord) {
+			
+			if($this->isNewRecord)
 				$this->creation_id = Yii::app()->user->id;	
-			} else {
-				$this->modified_id = Yii::app()->user->id;					
-			}
+			else
+				$this->modified_id = Yii::app()->user->id;
+			
 			if($this->batch_start >= $this->batch_finish)
 				$this->addError('batch_finish', 'Batch Finish harus lebih besar dari Batch Start');
 		}
