@@ -69,3 +69,8 @@ content_menu	:
 	- urlTitle: Add Course
 		urlRules: {psb, o/course, manage, siteType: 0, userLevel: 1,2}
 		urlPath: {url: add, attr: -, icon: -}
+		
+# controller o/religion
+	- urlTitle: Add Religion
+		urlRules: {psb, o/religion, manage, siteType: 0, userLevel: 1,2}
+		urlPath: {url: add, attr: -, icon: -}

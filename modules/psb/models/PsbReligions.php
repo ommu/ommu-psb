@@ -34,6 +34,7 @@
 class PsbReligions extends CActiveRecord
 {
 	public $defaultColumns = array();
+	public $title;
 	
 	// Variable Search
 	public $creation_search;
@@ -66,14 +67,16 @@ class PsbReligions extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('religion_name', 'required'),
+			array('title', 'required'),
 			array('publish, religion_name', 'numerical', 'integerOnly'=>true),
 			array('creation_id, modified_id', 'length', 'max'=>11),
-			array('modified_date', 'safe'),
+			array('
+				title', 'length', 'max'=>32),
+			array('', 'safe'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
 			array('religion_id, publish, religion_name, creation_date, creation_id, modified_date, modified_id,
-				creation_search, modified_search', 'safe', 'on'=>'search'),
+				title, creation_search, modified_search', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -90,7 +93,7 @@ class PsbReligions extends CActiveRecord
 			'walireligion' => array(self::HAS_MANY, 'PsbReligions', 'wali_religion'),
 			'creation' => array(self::BELONGS_TO, 'Users', 'creation_id'),
 			'modified' => array(self::BELONGS_TO, 'Users', 'modified_id'),
-			'view' => array(self::BELONGS_TO, 'ViewPsbReligions', 'course_id'),
+			'view' => array(self::BELONGS_TO, 'ViewPsbReligions', 'religion_id'),
 		);
 	}
 
@@ -107,6 +110,7 @@ class PsbReligions extends CActiveRecord
 			'creation_id' => Yii::t('attribute', 'Creation'),
 			'modified_date' => Yii::t('attribute', 'Modified Date'),
 			'modified_id' => Yii::t('attribute', 'Modified'),
+			'title' => Yii::t('attribute', 'Religion Name'),
 			'creation_search' => Yii::t('attribute', 'Creation'),
 			'modified_search' => Yii::t('attribute', 'Modified'),
 		);
@@ -167,6 +171,9 @@ class PsbReligions extends CActiveRecord
 		
 		// Custom Search
 		$criteria->with = array(
+			'view' => array(
+				'alias'=>'view',
+			),
 			'creation' => array(
 				'alias'=>'creation',
 				'select'=>'displayname'
@@ -176,6 +183,7 @@ class PsbReligions extends CActiveRecord
 				'select'=>'displayname'
 			),
 		);
+		$criteria->compare('view.religion_name',strtolower($this->title), true);
 		$criteria->compare('creation.displayname',strtolower($this->creation_search), true);
 		$criteria->compare('modified.displayname',strtolower($this->modified_search), true);
 
@@ -237,7 +245,18 @@ class PsbReligions extends CActiveRecord
 				'header' => 'No',
 				'value' => '$this->grid->dataProvider->pagination->currentPage*$this->grid->dataProvider->pagination->pageSize + $row+1'
 			);
-			$this->defaultColumns[] = 'religion_name';
+			$this->defaultColumns[] = array(
+				'name' => 'title',
+				'value' => 'Phrase::trans($data->religion_name, 2)',
+			);
+			$this->defaultColumns[] = array(
+				'header' => 'registers',
+				'value' => 'CHtml::link($data->view->registers, Yii::app()->controller->createUrl("o/admin/manage",array("religion"=>$data->religion_id)))',
+				'htmlOptions' => array(
+					'class' => 'center',
+				),
+				'type' => 'raw',
+			);
 			$this->defaultColumns[] = array(
 				'name' => 'creation_search',
 				'value' => '$data->creation->displayname',
@@ -312,6 +331,29 @@ class PsbReligions extends CActiveRecord
 				$this->creation_id = Yii::app()->user->id;
 			else
 				$this->modified_id = Yii::app()->user->id;				
+		}
+		return true;
+	}
+	
+	/**
+	 * before save attributes
+	 */
+	protected function beforeSave() {
+		if(parent::beforeSave()) {
+			//Media Name and Description
+			if($this->isNewRecord) {
+				$location = strtolower(Yii::app()->controller->module->id.'/'.Yii::app()->controller->id);
+				$title=new OmmuSystemPhrase;
+				$title->location = $location.'_title';
+				$title->en_us = $this->title;
+				if($title->save())
+					$this->religion_name = $title->phrase_id;
+				
+			} else {
+				$title = OmmuSystemPhrase::model()->findByPk($this->religion_name);
+				$title->en_us = $this->title;
+				$title->save();
+			}
 		}
 		return true;
 	}

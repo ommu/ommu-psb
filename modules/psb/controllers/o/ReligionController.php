@@ -9,14 +9,12 @@
  *
  * TOC :
  *	Index
- *	View
  *	Manage
  *	Add
  *	Edit
  *	RunAction
  *	Delete
  *	Publish
- *	Headline
  *
  *	LoadModel
  *	performAjaxValidation
@@ -77,7 +75,7 @@ class ReligionController extends Controller
 	{
 		return array(
 			array('allow',  // allow all users to perform 'index' and 'view' actions
-				'actions'=>array('index','view'),
+				'actions'=>array('index'),
 				'users'=>array('*'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
@@ -87,7 +85,7 @@ class ReligionController extends Controller
 				//'expression'=>'isset(Yii::app()->user->level) && (Yii::app()->user->level != 1)',
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
-				'actions'=>array('manage','add','edit','runaction','delete','publish','headline'),
+				'actions'=>array('manage','add','edit','runaction','delete','publish'),
 				'users'=>array('@'),
 				'expression'=>'isset(Yii::app()->user->level) && in_array(Yii::app()->user->level, array(1,2))',
 			),
@@ -106,65 +104,8 @@ class ReligionController extends Controller
 	 */
 	public function actionIndex() 
 	{
-		$arrThemes = Utility::getCurrentTemplate('public');
-		Yii::app()->theme = $arrThemes['folder'];
-		$this->layout = $arrThemes['layout'];
-		Utility::applyCurrentTheme($this->module);
-		
-		$setting = PsbReligions::model()->findByPk(1,array(
-			'select' => 'meta_description, meta_keyword',
-		));
-
-		$criteria=new CDbCriteria;
-		$criteria->condition = 'publish = :publish';
-		$criteria->params = array(':publish'=>1);
-		$criteria->order = 'creation_date DESC';
-
-		$dataProvider = new CActiveDataProvider('PsbReligions', array(
-			'criteria'=>$criteria,
-			'pagination'=>array(
-				'pageSize'=>10,
-			),
-		));
-
-		$this->pageTitle = Yii::t('phrase', 'Psb Religions');
-		$this->pageDescription = $setting->meta_description;
-		$this->pageMeta = $setting->meta_keyword;
-		$this->render('front_index',array(
-			'dataProvider'=>$dataProvider,
-		));
-		//$this->redirect(array('manage'));
+		$this->redirect(array('manage'));
 	}
-	
-	/**
-	 * Displays a particular model.
-	 * @param integer $id the ID of the model to be displayed
-	 */
-	public function actionView($id) 
-	{
-		$arrThemes = Utility::getCurrentTemplate('public');
-		Yii::app()->theme = $arrThemes['folder'];
-		$this->layout = $arrThemes['layout'];
-		Utility::applyCurrentTheme($this->module);
-		
-		$setting = VideoSetting::model()->findByPk(1,array(
-			'select' => 'meta_keyword',
-		));
-
-		$model=$this->loadModel($id);
-
-		$this->pageTitle = Yii::t('phrase', 'View Psb Religions');
-		$this->pageDescription = '';
-		$this->pageMeta = $setting->meta_keyword;
-		$this->render('front_view',array(
-			'model'=>$model,
-		));
-		/*
-		$this->render('admin_view',array(
-			'model'=>$model,
-		));
-		*/
-	}	
 
 	/**
 	 * Manages all models.
@@ -209,23 +150,10 @@ class ReligionController extends Controller
 
 		if(isset($_POST['PsbReligions'])) {
 			$model->attributes=$_POST['PsbReligions'];
-
-			/* 
+			
 			$jsonError = CActiveForm::validate($model);
 			if(strlen($jsonError) > 2) {
-				//echo $jsonError;
-				$errors = $model->getErrors();
-				$summary['msg'] = "<div class='errorSummary'><strong>Please fix the following input errors:</strong>";
-				$summary['msg'] .= "<ul>";
-				foreach($errors as $key => $value) {
-					$summary['msg'] .= "<li>{$value[0]}</li>";
-				}
-				$summary['msg'] .= "</ul></div>";
-
-				$message = json_decode($jsonError, true);
-				$merge = array_merge_recursive($summary, $message);
-				$encode = json_encode($merge);
-				echo $encode;
+				echo $jsonError;
 
 			} else {
 				if(isset($_GET['enablesave']) && $_GET['enablesave'] == 1) {
@@ -242,16 +170,11 @@ class ReligionController extends Controller
 				}
 			}
 			Yii::app()->end();
-			*/
-
-			if(isset($_GET['enablesave']) && $_GET['enablesave'] == 1) {
-				if($model->save()) {
-					Yii::app()->user->setFlash('success', Yii::t('phrase', 'PsbReligions success created.'));
-					//$this->redirect(array('view','id'=>$model->religion_id));
-					$this->redirect(array('manage'));
-				}
-			}
 		}
+		
+		$this->dialogDetail = true;
+		$this->dialogGroundUrl = Yii::app()->controller->createUrl('manage');
+		$this->dialogWidth = 600;
 
 		$this->pageTitle = Yii::t('phrase', 'Create Psb Religions');
 		$this->pageDescription = '';
@@ -275,23 +198,10 @@ class ReligionController extends Controller
 
 		if(isset($_POST['PsbReligions'])) {
 			$model->attributes=$_POST['PsbReligions'];
-
-			/* 
+			
 			$jsonError = CActiveForm::validate($model);
 			if(strlen($jsonError) > 2) {
-				//echo $jsonError;
-				$errors = $model->getErrors();
-				$summary['msg'] = "<div class='errorSummary'><strong>Please fix the following input errors:</strong>";
-				$summary['msg'] .= "<ul>";
-				foreach($errors as $key => $value) {
-					$summary['msg'] .= "<li>{$value[0]}</li>";
-				}
-				$summary['msg'] .= "</ul></div>";
-
-				$message = json_decode($jsonError, true);
-				$merge = array_merge_recursive($summary, $message);
-				$encode = json_encode($merge);
-				echo $encode;
+				echo $jsonError;
 
 			} else {
 				if(isset($_GET['enablesave']) && $_GET['enablesave'] == 1) {
@@ -308,16 +218,11 @@ class ReligionController extends Controller
 				}
 			}
 			Yii::app()->end();
-			*/
-
-			if(isset($_GET['enablesave']) && $_GET['enablesave'] == 1) {
-				if($model->save()) {
-					Yii::app()->user->setFlash('success', Yii::t('phrase', 'PsbReligions success updated.'));
-					//$this->redirect(array('view','id'=>$model->religion_id));
-					$this->redirect(array('manage'));
-				}
-			}
 		}
+		
+		$this->dialogDetail = true;
+		$this->dialogGroundUrl = Yii::app()->controller->createUrl('manage');
+		$this->dialogWidth = 600;
 
 		$this->pageTitle = Yii::t('phrase', 'Update Psb Religions');
 		$this->pageDescription = '';
@@ -407,19 +312,10 @@ class ReligionController extends Controller
 		$model=$this->loadModel($id);
 		
 		if($model->publish == 1) {
-		//if($model->actived == 1) {
-		//if($model->enabled == 1) {
-		//if($model->status == 1) {
 			$title = Yii::t('phrase', 'Unpublish');
-			//$title = Yii::t('phrase', 'Deactived');
-			//$title = Yii::t('phrase', 'Disabled');
-			//$title = Yii::t('phrase', 'Unresolved');
 			$replace = 0;
 		} else {
 			$title = Yii::t('phrase', 'Publish');
-			//$title = Yii::t('phrase', 'Actived');
-			//$title = Yii::t('phrase', 'Enabled');
-			//$title = Yii::t('phrase', 'Resolved');
 			$replace = 1;
 		}
 
@@ -428,9 +324,6 @@ class ReligionController extends Controller
 			if(isset($id)) {
 				//change value active or publish
 				$model->publish = $replace;
-				//$model->actived = $replace;
-				//$model->enabled = $replace;
-				//$model->status = $replace;
 
 				if($model->update()) {
 					echo CJSON::encode(array(
@@ -454,44 +347,6 @@ class ReligionController extends Controller
 				'title'=>$title,
 				'model'=>$model,
 			));
-		}
-	}
-
-	/**
-	 * Deletes a particular model.
-	 * If deletion is successful, the browser will be redirected to the 'admin' page.
-	 * @param integer $id the ID of the model to be deleted
-	 */
-	public function actionHeadline($id) 
-	{
-		$model=$this->loadModel($id);
-
-		if(Yii::app()->request->isPostRequest) {
-			// we only allow deletion via POST request
-			if(isset($id)) {
-				//change value active or publish
-				$model->headline = 1;
-				$model->publish = 1;
-
-				if($model->update()) {
-					echo CJSON::encode(array(
-						'type' => 5,
-						'get' => Yii::app()->controller->createUrl('manage'),
-						'id' => 'partial-psb-religions',
-						'msg' => '<div class="errorSummary success"><strong>'.Yii::t('phrase', 'PsbReligions success updated.').'</strong></div>',
-					));
-				}
-			}
-
-		} else {
-			$this->dialogDetail = true;
-			$this->dialogGroundUrl = Yii::app()->controller->createUrl('manage');
-			$this->dialogWidth = 350;
-
-			$this->pageTitle = Yii::t('phrase', 'Headline');
-			$this->pageDescription = '';
-			$this->pageMeta = '';
-			$this->render('admin_headline');
 		}
 	}
 
