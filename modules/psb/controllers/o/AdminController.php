@@ -1,9 +1,9 @@
 <?php
 /**
- * Admin1Controller
- * @var $this Admin1Controller
- * @var $model PsbRegisters * @var $form CActiveForm
- * Copyright (c) 2013, Ommu Platform (ommu.co). All rights reserved.
+ * AdminController
+ * @var $this AdminController
+ * @var $model PsbRegisters
+ * @var $form CActiveForm
  * version: 0.0.1
  * Reference start
  *
@@ -21,7 +21,8 @@
  *	performAjaxValidation
  *
  * @author Putra Sudaryanto <putra.sudaryanto@gmail.com>
- * @copyright Copyright (c) 2014 Ommu Platform (ommu.co)
+ * @copyright Copyright (c) 2016 Ommu Platform (ommu.co)
+ * @created date 27 April 2016, 12:23 WIB
  * @link http://company.ommu.co
  * @contect (+62)856-299-4114
  *
@@ -43,7 +44,7 @@ class AdminController extends Controller
 	public function init() 
 	{
 		if(!Yii::app()->user->isGuest) {
-			if(Yii::app()->user->level == 1) {
+			if(in_array(Yii::app()->user->level, array(1,2))) {
 				$arrThemes = Utility::getCurrentTemplate('admin');
 				Yii::app()->theme = $arrThemes['folder'];
 				$this->layout = $arrThemes['layout'];
@@ -85,9 +86,9 @@ class AdminController extends Controller
 				//'expression'=>'isset(Yii::app()->user->level) && (Yii::app()->user->level != 1)',
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
-				'actions'=>array('manage','add','edit','view','runaction','delete','publish','headline'),
+				'actions'=>array('manage','add','edit','view','runaction','delete','publish'),
 				'users'=>array('@'),
-				'expression'=>'isset(Yii::app()->user->level) && (Yii::app()->user->level == 1)',
+				'expression'=>'isset(Yii::app()->user->level) && in_array(Yii::app()->user->level, array(1,2))',
 			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
 				'actions'=>array(),
@@ -128,7 +129,7 @@ class AdminController extends Controller
 		}
 		$columns = $model->getGridColumn($columnTemp);
 
-		$this->pageTitle = 'Psb Registers Manage';
+		$this->pageTitle = Yii::t('phrase', 'Psb Registers Manage');
 		$this->pageDescription = '';
 		$this->pageMeta = '';
 		$this->render('admin_manage',array(
@@ -150,14 +151,15 @@ class AdminController extends Controller
 
 		if(isset($_POST['PsbRegisters'])) {
 			$model->attributes=$_POST['PsbRegisters'];
+			
 			if($model->save()) {
-				Yii::app()->user->setFlash('success', 'PsbRegisters success created.');
+				Yii::app()->user->setFlash('success', Yii::t('phrase', 'PsbRegisters success created.'));
 				//$this->redirect(array('view','id'=>$model->register_id));
 				$this->redirect(array('manage'));
 			}
 		}
 
-		$this->pageTitle = 'Create Psb Registers';
+		$this->pageTitle = Yii::t('phrase', 'Create Psb Registers');
 		$this->pageDescription = '';
 		$this->pageMeta = '';
 		$this->render('admin_add',array(
@@ -179,14 +181,15 @@ class AdminController extends Controller
 
 		if(isset($_POST['PsbRegisters'])) {
 			$model->attributes=$_POST['PsbRegisters'];
+			
 			if($model->save()) {
-				Yii::app()->user->setFlash('success', 'PsbRegisters success updated.');
+				Yii::app()->user->setFlash('success', Yii::t('phrase', 'PsbRegisters success updated.'));
 				//$this->redirect(array('view','id'=>$model->register_id));
 				$this->redirect(array('manage'));
 			}
 		}
 
-		$this->pageTitle = 'Update Psb Registers';
+		$this->pageTitle = Yii::t('phrase', 'Update Psb Registers');
 		$this->pageDescription = '';
 		$this->pageMeta = '';
 		$this->render('admin_edit',array(
@@ -202,13 +205,13 @@ class AdminController extends Controller
 	{
 		$model=$this->loadModel($id);
 
-		$this->pageTitle = 'View Psb Registers';
+		$this->pageTitle = Yii::t('phrase', 'View Psb Registers');
 		$this->pageDescription = '';
-		$this->pageMeta = $setting->meta_keyword;
+		$this->pageMeta = '';
 		$this->render('admin_view',array(
 			'model'=>$model,
 		));
-	}
+	}	
 
 	/**
 	 * Displays a particular model.
@@ -263,7 +266,7 @@ class AdminController extends Controller
 						'type' => 5,
 						'get' => Yii::app()->controller->createUrl('manage'),
 						'id' => 'partial-psb-registers',
-						'msg' => '<div class="errorSummary success"><strong>PsbRegisters success deleted.</strong></div>',
+						'msg' => '<div class="errorSummary success"><strong>'.Yii::t('phrase', 'PsbRegisters success deleted.').'</strong></div>',
 					));
 				}
 			}
@@ -273,7 +276,7 @@ class AdminController extends Controller
 			$this->dialogGroundUrl = Yii::app()->controller->createUrl('manage');
 			$this->dialogWidth = 350;
 
-			$this->pageTitle = 'PsbRegisters Delete.';
+			$this->pageTitle = Yii::t('phrase', 'PsbRegisters Delete.');
 			$this->pageDescription = '';
 			$this->pageMeta = '';
 			$this->render('admin_delete');
@@ -290,10 +293,19 @@ class AdminController extends Controller
 		$model=$this->loadModel($id);
 		
 		if($model->publish == 1) {
+		//if($model->actived == 1) {
+		//if($model->enabled == 1) {
+		//if($model->status == 1) {
 			$title = Yii::t('phrase', 'Unpublish');
+			//$title = Yii::t('phrase', 'Deactived');
+			//$title = Yii::t('phrase', 'Disabled');
+			//$title = Yii::t('phrase', 'Unresolved');
 			$replace = 0;
 		} else {
 			$title = Yii::t('phrase', 'Publish');
+			//$title = Yii::t('phrase', 'Actived');
+			//$title = Yii::t('phrase', 'Enabled');
+			//$title = Yii::t('phrase', 'Resolved');
 			$replace = 1;
 		}
 
@@ -302,13 +314,16 @@ class AdminController extends Controller
 			if(isset($id)) {
 				//change value active or publish
 				$model->publish = $replace;
+				//$model->actived = $replace;
+				//$model->enabled = $replace;
+				//$model->status = $replace;
 
 				if($model->update()) {
 					echo CJSON::encode(array(
 						'type' => 5,
 						'get' => Yii::app()->controller->createUrl('manage'),
 						'id' => 'partial-psb-registers',
-						'msg' => '<div class="errorSummary success"><strong>PsbRegisters success published.</strong></div>',
+						'msg' => '<div class="errorSummary success"><strong>'.Yii::t('phrase', 'PsbRegisters success updated.').'</strong></div>',
 					));
 				}
 			}
