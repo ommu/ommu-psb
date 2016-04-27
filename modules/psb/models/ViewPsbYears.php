@@ -1,7 +1,11 @@
 <?php
 /**
- * PsbSchools * @author Putra Sudaryanto <putra.sudaryanto@gmail.com>
- * @copyright Copyright (c) 2014 Ommu Platform (ommu.co)
+ * ViewPsbYears
+ * version: 0.0.1
+ *
+ * @author Putra Sudaryanto <putra.sudaryanto@gmail.com>
+ * @copyright Copyright (c) 2016 Ommu Platform (ommu.co)
+ * @created date 27 April 2016, 01:18 WIB
  * @link http://company.ommu.co
  * @contact (+62)856-299-4114
  *
@@ -16,20 +20,15 @@
  *
  * --------------------------------------------------------------------------------------
  *
- * This is the model class for table "ommu_psb_schools".
+ * This is the model class for table "_view_psb_years".
  *
- * The followings are the available columns in table 'ommu_psb_schools':
- * @property string $school_id
- * @property string $school_name
- * @property string $school_address
- * @property string $school_phone
- * @property string $school_status
- * @property integer $registers
- *
- * The followings are the available model relations:
- * @property OmmuPsbRegisters[] $ommuPsbRegisters
+ * The followings are the available columns in table '_view_psb_years':
+ * @property string $year_id
+ * @property string $batchs
+ * @property string $courses
+ * @property string $registers
  */
-class PsbSchools extends CActiveRecord
+class ViewPsbYears extends CActiveRecord
 {
 	public $defaultColumns = array();
 
@@ -37,7 +36,7 @@ class PsbSchools extends CActiveRecord
 	 * Returns the static model of the specified AR class.
 	 * Please note that you should have this exact method in all your CActiveRecord descendants!
 	 * @param string $className active record class name.
-	 * @return PsbSchools the static model class
+	 * @return ViewPsbYears the static model class
 	 */
 	public static function model($className=__CLASS__)
 	{
@@ -49,8 +48,17 @@ class PsbSchools extends CActiveRecord
 	 */
 	public function tableName()
 	{
-		return 'ommu_psb_schools';
+		return '_view_psb_years';
 	}
+
+	/**
+	 * @return string the primarykey column
+	 */
+	public function primaryKey()
+	{
+		return 'year_id';
+	}
+
 
 	/**
 	 * @return array validation rules for model attributes.
@@ -60,16 +68,12 @@ class PsbSchools extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('school_name', 'required', 'on'=>'schoolmaster, schoolmasterEdit'),
-			array('school_address, school_phone, school_status', 'required', 'on'=>'schoolmasterEdit'),
-			array('school_address, school_phone, school_status', 'required', 'on'=>'edit'),
-			array('school_status, registers', 'numerical', 'integerOnly'=>true),
-			array('school_name', 'length', 'max'=>64),
-			array('school_phone', 'length', 'max'=>15),
-			array('school_name, school_address, school_phone, school_status, registers', 'safe'),
+			array('year_id', 'length', 'max'=>11),
+			array('batchs, courses', 'length', 'max'=>21),
+			array('registers', 'length', 'max'=>42),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('school_id, school_name, school_address, school_phone, school_status, registers', 'safe', 'on'=>'search'),
+			array('year_id, batchs, courses, registers', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -81,7 +85,6 @@ class PsbSchools extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'registers' => array(self::HAS_MANY, 'PsbRegisters', 'school_id'),
 		);
 	}
 
@@ -91,13 +94,18 @@ class PsbSchools extends CActiveRecord
 	public function attributeLabels()
 	{
 		return array(
-			'school_id' => 'School',
-			'school_name' => 'School Name',
-			'school_address' => 'School Address',
-			'school_phone' => 'School Phone',
-			'school_status' => 'School Status',
-			'registers' => 'Registers',
+			'year_id' => Yii::t('attribute', 'Year'),
+			'batchs' => Yii::t('attribute', 'Batchs'),
+			'courses' => Yii::t('attribute', 'Courses'),
+			'registers' => Yii::t('attribute', 'Registers'),
 		);
+		/*
+			'Year' => 'Year',
+			'Batchs' => 'Batchs',
+			'Courses' => 'Courses',
+			'Registers' => 'Registers',
+		
+		*/
 	}
 
 	/**
@@ -118,15 +126,13 @@ class PsbSchools extends CActiveRecord
 
 		$criteria=new CDbCriteria;
 
-		$criteria->compare('t.school_id',$this->school_id,true);
-		$criteria->compare('t.school_name',$this->school_name,true);
-		$criteria->compare('t.school_address',$this->school_address,true);
-		$criteria->compare('t.school_phone',$this->school_phone,true);
-		$criteria->compare('t.school_status',$this->school_status);
-		$criteria->compare('t.registers',$this->registers);
+		$criteria->compare('t.year_id',strtolower($this->year_id),true);
+		$criteria->compare('t.batchs',strtolower($this->batchs),true);
+		$criteria->compare('t.courses',strtolower($this->courses),true);
+		$criteria->compare('t.registers',strtolower($this->registers),true);
 
-		if(!isset($_GET['PsbSchools_sort']))
-			$criteria->order = 'school_id DESC';
+		if(!isset($_GET['ViewPsbYears_sort']))
+			$criteria->order = 't.year_id DESC';
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
@@ -154,11 +160,9 @@ class PsbSchools extends CActiveRecord
 				$this->defaultColumns[] = $val;
 			}
 		} else {
-			//$this->defaultColumns[] = 'school_id';
-			$this->defaultColumns[] = 'school_name';
-			$this->defaultColumns[] = 'school_address';
-			$this->defaultColumns[] = 'school_phone';
-			$this->defaultColumns[] = 'school_status';
+			$this->defaultColumns[] = 'year_id';
+			$this->defaultColumns[] = 'batchs';
+			$this->defaultColumns[] = 'courses';
 			$this->defaultColumns[] = 'registers';
 		}
 
@@ -174,29 +178,9 @@ class PsbSchools extends CActiveRecord
 				'header' => 'No',
 				'value' => '$this->grid->dataProvider->pagination->currentPage*$this->grid->dataProvider->pagination->pageSize + $row+1'
 			);
-			$this->defaultColumns[] = array(
-				'name' => 'school_name',
-				'value' => 'ucwords($data->school_name)',
-			);
-			$this->defaultColumns[] = 'school_address';
-			$this->defaultColumns[] = 'school_phone';
-			$this->defaultColumns[] = array(
-				'name' => 'school_status',
-				'value' => '$data->school_status == 1 ? "Negeri" : "Swasta"',
-				'htmlOptions' => array(
-					'class' => 'center',
-				),
-				'filter'=>array(
-					1=>'Negeri',
-					0=>'Swasta',
-				),
-				'type' => 'raw',
-			);
-			$this->defaultColumns[] = array(
-				'header' => 'registers',
-				'value' => 'CHtml::link($data->registers, Yii::app()->controller->createUrl("o/admin/manage",array("school"=>$data->school_id)))',
-				'type' => 'raw',
-			);
+			$this->defaultColumns[] = 'batchs';
+			$this->defaultColumns[] = 'courses';
+			$this->defaultColumns[] = 'registers';
 		}
 		parent::afterConstruct();
 	}
@@ -216,37 +200,6 @@ class PsbSchools extends CActiveRecord
 			$model = self::model()->findByPk($id);
 			return $model;			
 		}
-	}
-
-	/**
-	 * Get category
-	 * 0 = unpublish
-	 * 1 = publish
-	 */
-	public static function getSchool() {
-		
-		$criteria=new CDbCriteria;		
-		$model = self::model()->findAll($criteria);
-
-		$items = array();
-		if($model != null) {
-			foreach($model as $key => $val) {
-				$items[$val->school_id] = $val->school_name;
-			}
-			return $items;
-		} else {
-			return false;
-		}
-	}
-	
-	/**
-	 * before save attributes
-	 */
-	protected function beforeSave() {
-		if(parent::beforeSave()) {
-			$this->school_name = strtolower($this->school_name);
-		}
-		return true;
 	}
 
 }

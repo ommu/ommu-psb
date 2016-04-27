@@ -73,7 +73,7 @@ class PsbYearBatch extends CActiveRecord
 			array('year_id, batch_name, batch_start, batch_finish', 'required'),
 			array('publish', 'numerical', 'integerOnly'=>true),
 			array('year_id, creation_id, modified_id', 'length', 'max'=>11),
-			array('batch_name, batch_start, batch_finish, creation_date, creation_id, modified_date, modified_id', 'safe'),
+			array('batch_name, batch_start, batch_finish', 'safe'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
 			array('batch_id, publish, year_id, batch_name, batch_start, batch_finish, creation_date, creation_id, modified_date, modified_id,
@@ -93,6 +93,7 @@ class PsbYearBatch extends CActiveRecord
 			'year' => array(self::BELONGS_TO, 'PsbYears', 'year_id'),
 			'creation' => array(self::BELONGS_TO, 'Users', 'creation_id'),
 			'modified' => array(self::BELONGS_TO, 'Users', 'modified_id'),
+			'view' => array(self::BELONGS_TO, 'ViewPsbYearBatch', 'batch_id'),
 		);
 	}
 
@@ -308,13 +309,14 @@ class PsbYearBatch extends CActiveRecord
 					),
 				), true),
 			);
-			/*
 			$this->defaultColumns[] = array(
 				'header' => 'registers',
-				'value' => 'CHtml::link($data->registers, Yii::app()->controller->createUrl("admin/manage",array("batch"=>$data->batch_id)))',
+				'value' => 'CHtml::link($data->view->registers, Yii::app()->controller->createUrl("o/admin/manage",array("batch"=>$data->batch_id)))',
+				'htmlOptions' => array(
+					'class' => 'center',
+				),
 				'type' => 'raw',
 			);
-			*/
 			$this->defaultColumns[] = array(
 				'name' => 'creation_search',
 				'value' => '$data->creation->displayname',
