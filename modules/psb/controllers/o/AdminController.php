@@ -146,7 +146,7 @@ class AdminController extends Controller
 	{
 		$model=new PsbRegisters;
 		$setting = PsbSettings::model()->findByPk(1,array(
-			'select' => 'field_religion, field_wali',
+			'select' => 'form_online, field_religion, field_wali',
 		));
 
 		// Uncomment the following line if AJAX validation is needed
@@ -180,7 +180,7 @@ class AdminController extends Controller
 	{
 		$model=$this->loadModel($id);
 		$setting = PsbSettings::model()->findByPk(1,array(
-			'select' => 'field_religion, field_wali',
+			'select' => 'form_online, field_religion, field_wali',
 		));
 
 		// Uncomment the following line if AJAX validation is needed

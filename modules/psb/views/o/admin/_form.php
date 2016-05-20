@@ -29,24 +29,16 @@
 
 <fieldset>
 
-	<div class="clearfix publish">
+	<?php if(!$model->isNewRecord ) {?>
+	<div class="clearfix">
 		<?php echo $form->labelEx($model,'status'); ?>
 		<div class="desc">
 			<?php echo $form->checkBox($model,'status'); ?>
-			<?php echo $form->labelEx($model,'status'); ?>
 			<?php echo $form->error($model,'status'); ?>
 			<?php /*<div class="small-px silent"></div>*/?>
 		</div>
 	</div>
-
-	<div class="clearfix">
-		<?php echo $form->labelEx($model,'author_id'); ?>
-		<div class="desc">
-			<?php echo $form->textField($model,'author_id',array('maxlength'=>11)); ?>
-			<?php echo $form->error($model,'author_id'); ?>
-			<?php /*<div class="small-px silent"></div>*/?>
-		</div>
-	</div>
+	<?php }?>
 
 	<div class="clearfix">
 		<?php echo $form->labelEx($model,'batch_id'); ?>
@@ -297,6 +289,18 @@
 			<?php /*<div class="small-px silent"></div>*/?>
 		</div>
 	</div>
+	
+	<?php if($setting->form_online == 1) {?>
+	<h3><?php echo Yii::t('phrase', 'Author');?></h3>
+	<div class="clearfix">
+		<?php echo $form->labelEx($model,'author_id'); ?>
+		<div class="desc">
+			<?php echo $form->textField($model,'author_id',array('maxlength'=>11)); ?>
+			<?php echo $form->error($model,'author_id'); ?>
+			<?php /*<div class="small-px silent"></div>*/?>
+		</div>
+	</div>
+	<?php }?>
 
 	<div class="submit clearfix">
 		<label>&nbsp;</label>

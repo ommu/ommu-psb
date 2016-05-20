@@ -70,6 +70,15 @@
 	</div>
 
 	<div class="clearfix publish">
+		<?php echo $form->labelEx($model,'field_author'); ?>
+		<div class="desc">
+			<?php echo $form->checkBox($model,'field_author'); ?>
+			<?php echo $form->error($model,'field_author'); ?>
+			<?php /*<div class="small-px silent"></div>*/?>
+		</div>
+	</div>
+
+	<div class="clearfix publish">
 		<?php echo $form->labelEx($model,'field_religion'); ?>
 		<div class="desc">
 			<?php echo $form->checkBox($model,'field_religion'); ?>
