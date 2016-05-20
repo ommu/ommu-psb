@@ -164,7 +164,7 @@ class AdminController extends Controller
 			$this->performAjaxValidation($author);
 
 		if(isset($_POST['PsbRegisters'])) {
-			$model->attributes=$_POST['PsbRegisters'];			
+			$model->attributes=$_POST['PsbRegisters'];
 			$school->attributes=$_POST['PsbSchools'];
 			$school->validate();
 			
@@ -189,7 +189,7 @@ class AdminController extends Controller
 				$model->author_id = 0;
 			
 			if($model->validate() && $school->validate()) {
-				if($model->school_id != '' && $model->school_id != 0) {
+				//if($model->school_id != '' && $model->school_id != 0) {
 					$schoolFind = PsbSchools::model()->find(array(
 						'select' => 'school_id, school_name',
 						'condition' => 'school_name = :school',
@@ -204,6 +204,7 @@ class AdminController extends Controller
 							$model->school_id = $school->school_id;
 					}
 					
+				/*
 				} else {
 					$schoolFind = PsbSchools::model()->find(array(
 						'select' => 'school_id, school_name',
@@ -219,11 +220,15 @@ class AdminController extends Controller
 							$model->school_id = $school->school_id;
 					}
 				}
+				*/
 				
 				if($model->save()) {
 					Yii::app()->user->setFlash('success', Yii::t('phrase', 'PsbRegisters success created.'));
 					//$this->redirect(array('view','id'=>$model->register_id));
-					$this->redirect(array('manage'));
+					if($model->back_field == 1)
+						$this->redirect(array('manage'));
+					else
+						$this->redirect(array('add'));
 				}
 			}
 		}
@@ -252,17 +257,73 @@ class AdminController extends Controller
 		));
 		
 		$model=$this->loadModel($id);
+		$school=PsbSchools::model()->findByPk($model->school_id);		
+		if($setting->form_online == 1) {
+			$author=OmmuAuthors::model()->findByPk($model->author_id);
+			if($author == null)
+				$author=new OmmuAuthors;
+		}
 
 		// Uncomment the following line if AJAX validation is needed
 		$this->performAjaxValidation($model);
+		$this->performAjaxValidation($school);
+		if($setting->form_online == 1)
+			$this->performAjaxValidation($author);
 
 		if(isset($_POST['PsbRegisters'])) {
 			$model->attributes=$_POST['PsbRegisters'];
+			$school->attributes=$_POST['PsbSchools'];
+			$school->validate();
 			
-			if($model->save()) {
-				Yii::app()->user->setFlash('success', Yii::t('phrase', 'PsbRegisters success updated.'));
-				//$this->redirect(array('view','id'=>$model->register_id));
-				$this->redirect(array('manage'));
+			if($setting->form_online == 1) {
+				$author->attributes=$_POST['OmmuAuthors'];
+				$author->save();
+			}
+			
+			if($model->validate() && $school->validate()) {
+				if($model->school_id_old != $model->school_id) {
+					//if($model->school_id != '' && $model->school_id != 0) {
+						$schoolFind = PsbSchools::model()->find(array(
+							'select' => 'school_id, school_name',
+							'condition' => 'school_name = :school',
+							'params' => array(
+								':school' => $school->school_name,
+							),
+						));
+						if($schoolFind != null)
+							$model->school_id = $schoolFind->school_id;
+						else {
+							$school=new PsbSchools;
+							if($school->save())
+								$model->school_id = $school->school_id;
+						}
+						
+					/*
+					} else {
+						$schoolFind = PsbSchools::model()->find(array(
+							'select' => 'school_id, school_name',
+							'condition' => 'school_name = :school',
+							'params' => array(
+								':school' => $school->school_name,
+							),
+						));
+						if($schoolFind != null)
+							$model->school_id = $schoolFind->school_id;
+						else {
+							$school=new PsbSchools;
+							if($school->save())
+								$model->school_id = $school->school_id;
+						}
+					}
+					*/
+				}// else
+				//	$school->save();
+				
+				if($model->save()) {
+					Yii::app()->user->setFlash('success', Yii::t('phrase', 'PsbRegisters success updated.'));
+					//$this->redirect(array('view','id'=>$model->register_id));
+					$this->redirect(array('manage'));
+				}
 			}
 		}
 
@@ -272,6 +333,8 @@ class AdminController extends Controller
 		$this->render('admin_edit',array(
 			'setting'=>$setting,
 			'model'=>$model,
+			'school'=>$school,
+			'author'=>$setting->form_online == 1 ? $author : 0,
 		));
 	}
 	

@@ -60,6 +60,9 @@ class PsbRegisters extends CActiveRecord
 {
 	public $defaultColumns = array();
 	public $birthcity_field;
+	public $school_id_old;
+	public $school_name_old;
+	public $back_field;
 	
 	// Variable Search
 	public $creation_search;
@@ -92,14 +95,16 @@ class PsbRegisters extends CActiveRecord
 		// will receive user inputs.
 		return array(
 			array('nisn, batch_id, register_name, birth_date, gender, address, parent_name, parent_work, parent_address, parent_phone,
-				birthcity_field', 'required'),
-			array('status, religion, parent_religion, wali_religion', 'numerical', 'integerOnly'=>true),
+				birthcity_field, back_field', 'required'),
+			array('status, religion, parent_religion, wali_religion,
+				back_field', 'numerical', 'integerOnly'=>true),
 			array('author_id, batch_id, birth_city, school_id, creation_id', 'length', 'max'=>11),
 			array('nisn', 'length', 'max'=>12),
 			array('register_name, parent_name, parent_work, wali_name, wali_work', 'length', 'max'=>32),
 			array('gender', 'length', 'max'=>6),
 			array('address_phone, address_yogya_phone, parent_phone, wali_phone', 'length', 'max'=>15),
-			array('author_id, birth_city, religion, address_phone, address_yogya, address_yogya_phone, parent_religion, wali_name, wali_work, wali_religion, wali_address, wali_phone, school_id', 'safe'),
+			array('author_id, birth_city, religion, address_phone, address_yogya, address_yogya_phone, parent_religion, wali_name, wali_work, wali_religion, wali_address, wali_phone, school_id,
+				school_id_old, school_name_old', 'safe'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
 			array('register_id, author_id, status, nisn, batch_id, register_name, birth_city, birth_date, gender, religion, address, address_phone, address_yogya, address_yogya_phone, parent_name, parent_work, parent_religion, parent_address, parent_phone, wali_name, wali_work, wali_religion, wali_address, wali_phone, school_id, school_un_rank, creation_date, creation_id,
@@ -115,9 +120,13 @@ class PsbRegisters extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
+			'author' => array(self::BELONGS_TO, 'OmmuAuthors', 'author_id'),
 			'batch_relation' => array(self::BELONGS_TO, 'PsbYearBatch', 'batch_id'),
+			'city_relation' => array(self::BELONGS_TO, 'OmmuZoneCity', 'birth_city'),
+			'religion' => array(self::BELONGS_TO, 'PsbReligions', 'religion'),
+			'parent_religion' => array(self::BELONGS_TO, 'PsbReligions', 'parent_religion'),
+			'wali_religion' => array(self::BELONGS_TO, 'PsbReligions', 'wali_religion'),
 			'school_relation' => array(self::BELONGS_TO, 'PsbSchools', 'school_id'),
-			'religion_relation' => array(self::BELONGS_TO, 'PsbReligions', 'religion'),
 			'creation' => array(self::BELONGS_TO, 'Users', 'creation_id'),
 		);
 	}
@@ -157,6 +166,7 @@ class PsbRegisters extends CActiveRecord
 			'creation_date' => Yii::t('attribute', 'Creation Date'),
 			'creation_id' => Yii::t('attribute', 'Creation'),
 			'birthcity_field' => Yii::t('attribute', 'Birth City'),
+			'back_field' => Yii::t('attribute', 'Back to Manage'),
 			'creation_search' => Yii::t('attribute', 'Creation'),
 		);
 		/*
@@ -188,6 +198,7 @@ class PsbRegisters extends CActiveRecord
 			'School Un Rank' => 'School Un Rank',
 			'Creation Date' => 'Creation Date',
 			'Creation' => 'Creation',
+			'Back to Manage' => 'Back to Manage',
 		
 		*/
 	}

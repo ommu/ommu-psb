@@ -25,5 +25,7 @@
 	<?php echo $this->renderPartial('_form', array(
 		'setting'=>$setting,
 		'model'=>$model,
+		'school'=>$school,
+		'author'=>$author,
 	)); ?>
 </div>

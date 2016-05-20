@@ -20,6 +20,13 @@
 	);
 ?>
 
+<?php //begin.Messages ?>
+<?php
+if(Yii::app()->user->hasFlash('success'))
+	echo Utility::flashSuccess(Yii::app()->user->getFlash('success'));
+?>
+<?php //end.Messages ?>
+
 <div class="form">
 	<?php echo $this->renderPartial('_form', array(
 		'batch'=>$batch,

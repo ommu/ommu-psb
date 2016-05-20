@@ -71,7 +71,9 @@
 	<div class="clearfix">
 		<?php echo $form->labelEx($model,'birthcity_field'); ?>
 		<div class="desc">
-			<?php 
+			<?php
+			if(!$model->isNewRecord)
+				$model->birthcity_field = $model->city_relation->city;
 			//echo $form->textField($model,'birthcity_field', array('maxlength'=>32,'class'=>'span-4'));		
 			$this->widget('zii.widgets.jui.CJuiAutoComplete', array(
 				'model' => $model,
@@ -325,6 +327,12 @@
 					'maxlength'=>64,
 				),
 			));
+			if(!$model->isNewRecord) {
+				$model->school_id_old = $model->school_id;
+				echo $form->hiddenField($model,'school_id_old');
+				$model->school_name_old = $school->school_name;
+				echo $form->hiddenField($model,'school_name_old');
+			}
 			echo $form->hiddenField($model,'school_id');?>
 			<?php echo $form->error($school,'school_name'); ?>
 			<?php /*<div class="small-px silent"></div>*/?>
@@ -374,7 +382,7 @@
 		<div class="clearfix">
 			<?php echo $form->labelEx($author,'name'); ?>
 			<div class="desc">
-				<?php echo $form->textField($author,'name',array('maxlength'=>32, 'class'=>'span-8')); ?>
+				<?php echo $form->textField($author,'name',array('maxlength'=>32, 'class'=>'span-5')); ?>
 				<?php echo $form->error($author,'name'); ?>
 				<?php /*<div class="small-px silent"></div>*/?>
 			</div>
@@ -383,12 +391,26 @@
 		<div class="clearfix">
 			<?php echo $form->labelEx($author,'email'); ?>
 			<div class="desc">
-				<?php echo $form->textField($author,'email',array('maxlength'=>32, 'class'=>'span-8')); ?>
+				<?php echo $form->textField($author,'email',array('maxlength'=>32, 'class'=>'span-5')); ?>
 				<?php echo $form->error($author,'email'); ?>
 				<?php /*<div class="small-px silent"></div>*/?>
 			</div>
 		</div>
 	<?php }?>
+	
+	<?php if($model->isNewRecord) {?>
+	<div class="clearfix">
+		<?php echo $form->labelEx($model,'back_field'); ?>
+		<div class="desc">
+			<?php echo $form->checkBox($model,'back_field'); ?>
+			<?php echo $form->error($model,'back_field'); ?>
+			<?php /*<div class="small-px silent"></div>*/?>
+		</div>
+	</div>
+	<?php } else {
+		$model->back_field = 1;
+		echo $form->hiddenField($model,'back_field');
+	}?>
 
 	<div class="submit clearfix">
 		<label>&nbsp;</label>
