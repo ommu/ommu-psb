@@ -59,6 +59,7 @@
 class PsbRegisters extends CActiveRecord
 {
 	public $defaultColumns = array();
+	public $birthcity_field;
 	
 	// Variable Search
 	public $creation_search;
@@ -90,14 +91,15 @@ class PsbRegisters extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('author_id, status, nisn, batch_id, register_name, birth_city, gender, religion, address, address_phone, address_yogya, address_yogya_phone, parent_name, parent_work, parent_religion, parent_address, parent_phone, wali_name, wali_work, wali_religion, wali_address, wali_phone, school_id, school_un_rank, creation_date, creation_id', 'required'),
+			array('nisn, batch_id, register_name, birth_date, gender, address, parent_name, parent_work, parent_address, parent_phone,
+				birthcity_field', 'required'),
 			array('status, religion, parent_religion, wali_religion', 'numerical', 'integerOnly'=>true),
 			array('author_id, batch_id, birth_city, school_id, creation_id', 'length', 'max'=>11),
 			array('nisn', 'length', 'max'=>12),
 			array('register_name, parent_name, parent_work, wali_name, wali_work', 'length', 'max'=>32),
 			array('gender', 'length', 'max'=>6),
 			array('address_phone, address_yogya_phone, parent_phone, wali_phone', 'length', 'max'=>15),
-			array('birth_date', 'safe'),
+			array('author_id, birth_city, religion, address_phone, address_yogya, address_yogya_phone, parent_religion, wali_name, wali_work, wali_religion, wali_address, wali_phone, school_id', 'safe'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
 			array('register_id, author_id, status, nisn, batch_id, register_name, birth_city, birth_date, gender, religion, address, address_phone, address_yogya, address_yogya_phone, parent_name, parent_work, parent_religion, parent_address, parent_phone, wali_name, wali_work, wali_religion, wali_address, wali_phone, school_id, school_un_rank, creation_date, creation_id,
@@ -154,6 +156,7 @@ class PsbRegisters extends CActiveRecord
 			'school_un_rank' => Yii::t('attribute', 'School Un Rank'),
 			'creation_date' => Yii::t('attribute', 'Creation Date'),
 			'creation_id' => Yii::t('attribute', 'Creation'),
+			'birthcity_field' => Yii::t('attribute', 'Birth City'),
 			'creation_search' => Yii::t('attribute', 'Creation'),
 		);
 		/*
@@ -449,6 +452,16 @@ class PsbRegisters extends CActiveRecord
 	protected function beforeValidate() {
 		if(parent::beforeValidate()) {			
 			$this->creation_id = Yii::app()->user->id;
+		}
+		return true;
+	}
+	
+	/**
+	 * before save attributes
+	 */
+	protected function beforeSave() {
+		if(parent::beforeSave()) {	
+			$this->birth_date = date('Y-m-d', strtotime($this->birth_date));
 		}
 		return true;
 	}

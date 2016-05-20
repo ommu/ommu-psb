@@ -70,10 +70,10 @@
 	</div>
 
 	<div class="clearfix publish">
-		<?php echo $form->labelEx($model,'field_author'); ?>
+		<?php echo $form->labelEx($model,'form_online'); ?>
 		<div class="desc">
-			<?php echo $form->checkBox($model,'field_author'); ?>
-			<?php echo $form->error($model,'field_author'); ?>
+			<?php echo $form->checkBox($model,'form_online'); ?>
+			<?php echo $form->error($model,'form_online'); ?>
 			<?php /*<div class="small-px silent"></div>*/?>
 		</div>
 	</div>

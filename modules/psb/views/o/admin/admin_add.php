@@ -22,7 +22,10 @@
 
 <div class="form">
 	<?php echo $this->renderPartial('_form', array(
-		'model'=>$model,
+		'batch'=>$batch,
 		'setting'=>$setting,
+		'model'=>$model,
+		'school'=>$school,
+		'author'=>$author,
 	)); ?>
 </div>

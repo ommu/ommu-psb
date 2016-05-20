@@ -29,18 +29,6 @@
 		<?php //begin.Messages ?>
 
 		<div class="clearfix">
-			<?php echo $form->labelEx($model,'school_status'); ?>
-			<div class="desc">
-				<?php echo $form->dropDownList($model,'school_status',array(
-					1=>'Negeri',
-					0=>'Swasta',					
-				)); ?>
-				<?php echo $form->error($model,'school_status'); ?>
-				<?php /*<div class="small-px silent"></div>*/?>
-			</div>
-		</div>
-
-		<div class="clearfix">
 			<?php echo $form->labelEx($model,'school_name'); ?>
 			<div class="desc">
 				<?php
@@ -65,6 +53,18 @@
 			<div class="desc">
 				<?php echo $form->textField($model,'school_phone',array('maxlength'=>15)); ?>
 				<?php echo $form->error($model,'school_phone'); ?>
+			</div>
+		</div>
+
+		<div class="clearfix">
+			<?php echo $form->labelEx($model,'school_status'); ?>
+			<div class="desc">
+				<?php echo $form->dropDownList($model,'school_status',array(
+					1=>Yii::t('phrase', 'Negeri'),
+					0=>Yii::t('phrase', 'Swasta'),
+				)); ?>
+				<?php echo $form->error($model,'school_status'); ?>
+				<?php /*<div class="small-px silent"></div>*/?>
 			</div>
 		</div>
 

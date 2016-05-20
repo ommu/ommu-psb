@@ -149,7 +149,6 @@ class SchoolController extends Controller
 
 		if(isset($_POST['PsbSchools'])) {
 			$model->attributes=$_POST['PsbSchools'];
-			$model->scenario='schoolmaster';
 			
 			$jsonError = CActiveForm::validate($model);
 			if(strlen($jsonError) > 2) {
@@ -199,7 +198,7 @@ class SchoolController extends Controller
 
 		if(isset($_POST['PsbSchools'])) {
 			$model->attributes=$_POST['PsbSchools'];
-			$model->scenario='schoolmasterEdit';
+			$model->scenario='masterEdit';
 			
 			$jsonError = CActiveForm::validate($model);
 			if(strlen($jsonError) > 2) {
