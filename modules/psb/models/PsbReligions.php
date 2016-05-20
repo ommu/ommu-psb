@@ -6,7 +6,7 @@
  * @author Putra Sudaryanto <putra.sudaryanto@gmail.com>
  * @copyright Copyright (c) 2016 Ommu Platform (ommu.co)
  * @created date 27 April 2016, 15:34 WIB
- * @link http://company.ommu.co
+ * @link https://github.com/Ommu/Ommu-PSB
  * @contact (+62)856-299-4114
  *
  * This is the template for generating the model class of a specified table.
@@ -320,6 +320,30 @@ class PsbReligions extends CActiveRecord
 			$model = self::model()->findByPk($id);
 			return $model;			
 		}
+	}
+
+	/**
+	 * Get Years
+	 */
+	public static function getReligion($publish=null, $type=null) 
+	{		
+		$criteria=new CDbCriteria;
+		if($publish != null)
+			$criteria->compare('t.publish',$publish);
+		$model = self::model()->findAll($criteria);
+
+		if($type == null) {
+			$items = array();
+			if($model != null) {
+				foreach($model as $key => $val)
+					$items[$val->religion_id] = Phrase::trans($val->religion_name, 2);
+				return $items;
+				
+			} else
+				return false;
+			
+		} else
+			return $model;
 	}
 
 	/**

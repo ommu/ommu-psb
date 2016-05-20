@@ -4,10 +4,11 @@
  * @var $this BatchController
  * @var $model PsbYearBatch
  * @var $form CActiveForm
+ * version: 0.0.1
  *
  * @author Putra Sudaryanto <putra.sudaryanto@gmail.com>
  * @copyright Copyright (c) 2014 Ommu Platform (ommu.co)
- * @link http://company.ommu.co
+ * @link https://github.com/Ommu/Ommu-PSB
  * @contect (+62)856-299-4114
  *
  */
@@ -93,6 +94,18 @@
 					 ),
 				)); ?>
 				<?php echo $form->error($model,'batch_finish'); ?>
+				<?php /*<div class="small-px silent"></div>*/?>
+			</div>
+		</div>
+
+		<div class="clearfix">
+			<?php echo $form->labelEx($model,'batch_valuation'); ?>
+			<div class="desc">
+				<?php echo $form->dropDownList($model,'batch_valuation', array(
+					1=>Yii::t('phrase', 'Ujian Nasional'),
+					0=>Yii::t('phrase', 'Raport'),					
+				)); ?>
+				<?php echo $form->error($model,'batch_valuation'); ?>
 				<?php /*<div class="small-px silent"></div>*/?>
 			</div>
 		</div>

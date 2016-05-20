@@ -9,7 +9,7 @@
  * @author Putra Sudaryanto <putra.sudaryanto@gmail.com>
  * @copyright Copyright (c) 2016 Ommu Platform (ommu.co)
  * @created date 27 April 2016, 12:23 WIB
- * @link http://company.ommu.co
+ * @link https://github.com/Ommu/Ommu-PSB
  * @contect (+62)856-299-4114
  *
  */
@@ -22,5 +22,8 @@
 ?>
 
 <div class="form">
-	<?php echo $this->renderPartial('_form', array('model'=>$model)); ?>
+	<?php echo $this->renderPartial('_form', array(
+		'model'=>$model,
+		'setting'=>$setting,
+	)); ?>
 </div>
