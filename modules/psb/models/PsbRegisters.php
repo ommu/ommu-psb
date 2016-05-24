@@ -127,9 +127,9 @@ class PsbRegisters extends CActiveRecord
 			'author' => array(self::BELONGS_TO, 'OmmuAuthors', 'author_id'),
 			'batch_relation' => array(self::BELONGS_TO, 'PsbYearBatch', 'batch_id'),
 			'city_relation' => array(self::BELONGS_TO, 'OmmuZoneCity', 'birth_city'),
-			'religion' => array(self::BELONGS_TO, 'PsbReligions', 'religion'),
-			'parent_religion' => array(self::BELONGS_TO, 'PsbReligions', 'parent_religion'),
-			'wali_religion' => array(self::BELONGS_TO, 'PsbReligions', 'wali_religion'),
+			'religion_relation' => array(self::BELONGS_TO, 'PsbReligions', 'religion'),
+			'parent_religion_relation' => array(self::BELONGS_TO, 'PsbReligions', 'parent_religion'),
+			'wali_religion_relation' => array(self::BELONGS_TO, 'PsbReligions', 'wali_religion'),
 			'school' => array(self::BELONGS_TO, 'PsbSchools', 'school_id'),
 			'creation' => array(self::BELONGS_TO, 'Users', 'creation_id'),
 		);
