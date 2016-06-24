@@ -3,6 +3,10 @@ mklink /H "D:\htdocs\_project_ommu_module_psb\modules\psb\LICENSE" "D:\htdocs\_p
 -------
 psb_smamuh5yk
 -------
+components
+=======
+mklink /J "D:\htdocs\_project_ommu_module_psb\modules\psb_smamuh5yk\components\extensions" "D:\htdocs\_project_ommu_module_psb\modules\psb\components\extensions"
+
 controllers
 =======
 mklink /H "D:\htdocs\_project_ommu_module_psb\modules\psb_smamuh5yk\controllers\o\BatchController.php" "D:\htdocs\_project_ommu_module_psb\modules\psb\controllers\o\BatchController.php"
