@@ -137,7 +137,7 @@ class AdminController extends Controller
 			'model'=>$model,
 			'columns' => $columns,
 		));
-	}	
+	}
 
 	/**
 	 * Manages all models.
@@ -169,6 +169,7 @@ class AdminController extends Controller
 		if($model != null) {
 			$data[] = array(
 				'NO',
+				'nisn',
 				'register_name',
 				'birth_city',
 				'birth_date',
@@ -193,6 +194,7 @@ class AdminController extends Controller
 				$i++;
 				$register = array(
 					$i,
+					$val->nisn,
 					$val->register_name,
 					$val->birth_city != 0 ? $val->city_relation->city : '',
 					!in_array($val->birth_date, array('0000-00-00','1970-01-01')) ? Utility::dateFormat($val->birth_date) : '',
