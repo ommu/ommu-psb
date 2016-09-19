@@ -1,4 +1,5 @@
 mklink /H "D:\htdocs\_project_ommu_module_psb\modules\psb\LICENSE" "D:\htdocs\_project_ommu_module_psb\LICENSE"
+mklink /H "D:\htdocs\_project_ommu_module_psb\modules\psb_smamuh5yk\LICENSE" "D:\htdocs\_project_ommu_module_psb\LICENSE"
 
 -------
 psb_smamuh5yk
