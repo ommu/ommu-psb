@@ -286,8 +286,8 @@ class PsbYearBatch extends CActiveRecord
 				'filter' => Yii::app()->controller->widget('zii.widgets.jui.CJuiDatePicker', array(
 					'model'=>$this,
 					'attribute'=>'batch_start',
-					'language' => 'ja',
-					'i18nScriptFile' => 'jquery.ui.datepicker-en.js',
+					'language' => 'en',
+					'i18nScriptFile' => 'jquery-ui-i18n.min.js'
 					//'mode'=>'datetime',
 					'htmlOptions' => array(
 						'id' => 'batch_start_filter',
@@ -312,8 +312,8 @@ class PsbYearBatch extends CActiveRecord
 				'filter' => Yii::app()->controller->widget('zii.widgets.jui.CJuiDatePicker', array(
 					'model'=>$this,
 					'attribute'=>'batch_finish',
-					'language' => 'ja',
-					'i18nScriptFile' => 'jquery.ui.datepicker-en.js',
+					'language' => 'en',
+					'i18nScriptFile' => 'jquery-ui-i18n.min.js'
 					//'mode'=>'datetime',
 					'htmlOptions' => array(
 						'id' => 'batch_finish_filter',
@@ -350,8 +350,8 @@ class PsbYearBatch extends CActiveRecord
 				'filter' => Yii::app()->controller->widget('zii.widgets.jui.CJuiDatePicker', array(
 					'model'=>$this,
 					'attribute'=>'creation_date',
-					'language' => 'ja',
-					'i18nScriptFile' => 'jquery.ui.datepicker-en.js',
+					'language' => 'en',
+					'i18nScriptFile' => 'jquery-ui-i18n.min.js'
 					//'mode'=>'datetime',
 					'htmlOptions' => array(
 						'id' => 'creation_date_filter',
