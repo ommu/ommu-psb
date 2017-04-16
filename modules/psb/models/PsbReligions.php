@@ -4,9 +4,9 @@
  * version: 0.0.1
  *
  * @author Putra Sudaryanto <putra@sudaryanto.id>
- * @copyright Copyright (c) 2016 Ommu Platform (ommu.co)
+ * @copyright Copyright (c) 2016 Ommu Platform (opensource.ommu.co)
  * @created date 27 April 2016, 15:34 WIB
- * @link https://github.com/Ommu/Ommu-PSB
+ * @link https://github.com/ommu/PSB
  * @contact (+62)856-299-4114
  *
  * This is the template for generating the model class of a specified table.
@@ -271,7 +271,7 @@ class PsbReligions extends CActiveRecord
 					'model'=>$this,
 					'attribute'=>'creation_date',
 					'language' => 'en',
-					'i18nScriptFile' => 'jquery-ui-i18n.min.js'
+					'i18nScriptFile' => 'jquery-ui-i18n.min.js',
 					//'mode'=>'datetime',
 					'htmlOptions' => array(
 						'id' => 'creation_date_filter',

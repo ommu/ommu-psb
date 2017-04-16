@@ -6,9 +6,9 @@
  * version: 0.0.1
  *
  * @author Putra Sudaryanto <putra@sudaryanto.id>
- * @copyright Copyright (c) 2016 Ommu Platform (ommu.co)
+ * @copyright Copyright (c) 2016 Ommu Platform (opensource.ommu.co)
  * @created date 27 April 2016, 12:23 WIB
- * @link https://github.com/Ommu/Ommu-PSB
+ * @link https://github.com/ommu/PSB
  * @contect (+62)856-299-4114
  *
  */
