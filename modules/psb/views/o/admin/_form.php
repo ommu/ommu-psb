@@ -106,7 +106,7 @@ EOP;
 			<?php 
 			$model->isNewRecord && $model->bundle_date == '' ? $model->bundle_date = date('d-m-Y') : date('d-m-Y', strtotime($model->bundle_date));
 			//echo $form->textField($model,'bundle_date',array('maxlength'=>32, 'class'=>'span-5'));
-			$this->widget('zii.widgets.jui.CJuiDatePicker',array(
+			$this->widget('application.components.system.CJuiDatePicker',array(
 				'model'=>$model, 
 				'attribute'=>'bundle_date',
 				//'mode'=>'datetime',
@@ -179,7 +179,7 @@ EOP;
 			<?php
 			!$model->isNewRecord ? ($model->birth_date != '0000-00-00' ? $model->birth_date = date('d-m-Y', strtotime($model->birth_date)) : '') : '';
 			//echo $form->textField($model,'birth_date');
-			$this->widget('zii.widgets.jui.CJuiDatePicker',array(
+			$this->widget('application.components.system.CJuiDatePicker',array(
 				'model'=>$model,
 				'attribute'=>'birth_date',
 				//'mode'=>'datetime',

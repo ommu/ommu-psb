@@ -60,7 +60,7 @@
 				<?php
 				!$model->isNewRecord ? ($model->batch_start != '0000-00-00' ? $model->batch_start = date('d-m-Y', strtotime($model->batch_start)) : '') : '';
 				//echo $form->textField($model,'batch_start');
-				$this->widget('zii.widgets.jui.CJuiDatePicker',array(
+				$this->widget('application.components.system.CJuiDatePicker',array(
 					'model'=>$model,
 					'attribute'=>'batch_start',
 					//'mode'=>'datetime',
@@ -82,7 +82,7 @@
 				<?php
 				!$model->isNewRecord ? ($model->batch_finish != '0000-00-00' ? $model->batch_finish = date('d-m-Y', strtotime($model->batch_finish)) : '') : '';
 				//echo $form->textField($model,'batch_finish');
-				$this->widget('zii.widgets.jui.CJuiDatePicker',array(
+				$this->widget('application.components.system.CJuiDatePicker',array(
 					'model'=>$model,
 					'attribute'=>'batch_finish',
 					//'mode'=>'datetime',

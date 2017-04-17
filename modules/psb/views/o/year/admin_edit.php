@@ -127,18 +127,21 @@
 				'buttons' => array(
 					'view' => array(
 						'label' => 'view',
+						'imageUrl' => false,
 						'options' => array(							
 							'class' => 'view',
 						),
 						'url' => 'Yii::app()->controller->createUrl("o/batch/view",array("id"=>$data->primaryKey, "type"=>"year"))'),
 					'update' => array(
 						'label' => 'update',
+						'imageUrl' => false,
 						'options' => array(
 							'class' => 'update'
 						),
 						'url' => 'Yii::app()->controller->createUrl("o/batch/edit",array("id"=>$data->primaryKey, "type"=>"year"))'),
 					'delete' => array(
 						'label' => 'delete',
+						'imageUrl' => false,
 						'options' => array(
 							'class' => 'delete'
 						),
