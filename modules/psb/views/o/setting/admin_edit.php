@@ -10,7 +10,7 @@
  * @copyright Copyright (c) 2016 Ommu Platform (opensource.ommu.co)
  * @created date 27 April 2016, 12:11 WIB
  * @link https://github.com/ommu/PSB
- * @contect (+62)856-299-4114
+ * @contact (+62)856-299-4114
  *
  */
 
