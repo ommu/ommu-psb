@@ -33,7 +33,8 @@
 			<?php echo $form->labelEx($model,'title'); ?>
 			<div class="desc">
 				<?php 
-				$model->title = Phrase::trans($model->religion_name, 2);
+				if(!$model->getErrors())
+					$model->title = Phrase::trans($model->religion_name, 2);
 				echo $form->textField($model,'title'); ?>
 				<?php echo $form->error($model,'title'); ?>
 				<?php /*<div class="small-px silent"></div>*/?>

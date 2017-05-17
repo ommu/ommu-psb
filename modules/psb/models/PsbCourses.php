@@ -346,7 +346,7 @@ class PsbCourses extends CActiveRecord
 	{		
 		$criteria=new CDbCriteria;
 		if($default != null)
-			$criteria->compare('t.defaults',$default);
+			$criteria->compare('defaults',$default);
 		$model = self::model()->findAll($criteria);
 
 		if($type == null) {

@@ -429,7 +429,7 @@ class PsbYearBatch extends CActiveRecord
 	{		
 		$criteria=new CDbCriteria;
 		if($publish != null)
-			$criteria->compare('t.publish',$publish);
+			$criteria->compare('publish',$publish);
 		$criteria->order = 'year_id ASC, batch_start ASC';
 		$model = self::model()->findAll($criteria);
 
