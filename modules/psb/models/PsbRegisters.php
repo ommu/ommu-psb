@@ -187,38 +187,6 @@ class PsbRegisters extends CActiveRecord
 			'back_field' => Yii::t('attribute', 'Back to Manage'),
 			'school_un_average' => Yii::t('attribute', 'School Un Average'),
 		);
-		/*
-			'Register' => 'Register',
-			'Author' => 'Author',
-			'Status' => 'Status',
-			'Nisn' => 'Nisn',
-			'Batch' => 'Batch',
-			'Register Name' => 'Register Name',
-			'Birth City' => 'Birth City',
-			'Birth Date' => 'Birth Date',
-			'Gender' => 'Gender',
-			'Religion' => 'Religion',
-			'Address' => 'Address',
-			'Address Phone' => 'Address Phone',
-			'Address Yogya' => 'Address Yogya',
-			'Address Yogya Phone' => 'Address Yogya Phone',
-			'Parent Name' => 'Parent Name',
-			'Parent Work' => 'Parent Work',
-			'Parent Religion' => 'Parent Religion',
-			'Parent Address' => 'Parent Address',
-			'Parent Phone' => 'Parent Phone',
-			'Wali Name' => 'Wali Name',
-			'Wali Work' => 'Wali Work',
-			'Wali Religion' => 'Wali Religion',
-			'Wali Address' => 'Wali Address',
-			'Wali Phone' => 'Wali Phone',
-			'School' => 'School',
-			'School Un Rank' => 'School Un Rank',
-			'Creation Date' => 'Creation Date',
-			'Creation' => 'Creation',
-			'Back to Manage' => 'Back to Manage',
-		
-		*/
 	}
 
 	/**

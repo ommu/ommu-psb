@@ -97,12 +97,6 @@ class ViewPsbYearBatch extends CActiveRecord
 			'year_id' => Yii::t('attribute', 'Year'),
 			'registers' => Yii::t('attribute', 'Registers'),
 		);
-		/*
-			'Batch' => 'Batch',
-			'Year' => 'Year',
-			'Registers' => 'Registers',
-		
-		*/
 	}
 
 	/**

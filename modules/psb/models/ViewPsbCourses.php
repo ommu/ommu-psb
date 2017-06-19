@@ -93,11 +93,6 @@ class ViewPsbCourses extends CActiveRecord
 			'course_id' => Yii::t('attribute', 'Course'),
 			'years' => Yii::t('attribute', 'Years'),
 		);
-		/*
-			'Course' => 'Course',
-			'Years' => 'Years',
-		
-		*/
 	}
 
 	/**

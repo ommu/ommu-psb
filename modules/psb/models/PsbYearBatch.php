@@ -122,19 +122,6 @@ class PsbYearBatch extends CActiveRecord
             'modified_search' => Yii::t('attribute', 'Modified'),
             'year_search' => Yii::t('attribute', 'Year'),
 		);
-        /* 
-            'Batch' => 'Batch',
-            'Publish' => 'Publish',
-            'Year' => 'Year',
-            'Batch Name' => 'Batch Name',
-            'Batch Start' => 'Batch Start',
-            'Batch Finish' => 'Batch Finish',
-            'Batch Valuation' => 'Batch Valuation',
-            'Creation Date' => 'Creation Date',
-            'Creation' => 'Creation',
-            'Modified Date' => 'Modified Date',
-            'Modified' => 'Modified',         
-        */ 		
 	}
 
 	/**

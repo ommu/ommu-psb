@@ -93,11 +93,6 @@ class ViewPsbReligions extends CActiveRecord
 			'religion_id' => Yii::t('attribute', 'Religion'),
 			'registers' => Yii::t('attribute', 'Registers'),
 		);
-		/*
-			'Religion' => 'Religion',
-			'Registers' => 'Registers',
-		
-		*/
 	}
 
 	/**

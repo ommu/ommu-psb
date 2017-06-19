@@ -99,13 +99,6 @@ class ViewPsbYears extends CActiveRecord
 			'courses' => Yii::t('attribute', 'Courses'),
 			'registers' => Yii::t('attribute', 'Registers'),
 		);
-		/*
-			'Year' => 'Year',
-			'Batchs' => 'Batchs',
-			'Courses' => 'Courses',
-			'Registers' => 'Registers',
-		
-		*/
 	}
 
 	/**

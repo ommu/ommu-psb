@@ -115,18 +115,6 @@ class PsbCourses extends CActiveRecord
             'creation_search' => Yii::t('attribute', 'Creation'),
             'modified_search' => Yii::t('attribute', 'Modified'),
 		);
-        /* 
-            'Course' => 'Course',
-            'Publish' => 'Publish',
-            'Default' => 'Default',
-            'Course Name' => 'Course Name',
-            'Course Desc' => 'Course Desc',
-            'Creation Date' => 'Creation Date',
-            'Creation' => 'Creation',
-            'Modified Date' => 'Modified Date',
-            'Modified' => 'Modified',
-         
-        */ 		
 	}
 
 	/**

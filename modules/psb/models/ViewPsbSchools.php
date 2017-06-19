@@ -93,11 +93,6 @@ class ViewPsbSchools extends CActiveRecord
 			'school_id' => Yii::t('attribute', 'School'),
 			'registers' => Yii::t('attribute', 'Registers'),
 		);
-		/*
-			'School' => 'School',
-			'Registers' => 'Registers',
-		
-		*/
 	}
 
 	/**

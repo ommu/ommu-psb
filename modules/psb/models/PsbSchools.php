@@ -118,18 +118,6 @@ class PsbSchools extends CActiveRecord
             'creation_search' => Yii::t('attribute', 'Creation'),
             'modified_search' => Yii::t('attribute', 'Modified'),
 		);
-        /* 
-            'School' => 'School',
-            'Publish' => 'Publish',
-            'School Name' => 'School Name',
-            'School Address' => 'School Address',
-            'School Phone' => 'School Phone',
-            'School Status' => 'School Status',
-            'Creation Date' => 'Creation Date',
-            'Creation' => 'Creation',
-            'Modified Date' => 'Modified Date',
-            'Modified' => 'Modified',         
-        */ 		
 	}
 
 	/**

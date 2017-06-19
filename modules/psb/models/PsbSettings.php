@@ -109,19 +109,6 @@ class PsbSettings extends CActiveRecord
 			'modified_id' => Yii::t('attribute', 'Modified'),
 			'modified_search' => Yii::t('attribute', 'Modified'),
 		);
-		/*
-			'ID' => 'ID',
-			'License' => 'License',
-			'Permission' => 'Permission',
-			'Meta Keyword' => 'Meta Keyword',
-			'Meta Description' => 'Meta Description',
-			'Form Online' => 'Form Online',
-			'Field Religion' => 'Field Religion',
-			'Field Wali' => 'Field Wali',
-			'Modified Date' => 'Modified Date',
-			'Modified' => 'Modified',
-		
-		*/
 	}
 
 	/**
