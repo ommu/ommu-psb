@@ -34,7 +34,7 @@
  * @property string $modified_id
  *
  * The followings are the available model relations:
- * @property OmmuPsbRegisters[] $ommuPsbRegisters
+ * @property PsbRegisters[] $PsbRegisters
  */
 class PsbSchools extends CActiveRecord
 {

@@ -56,8 +56,8 @@
  * @property string $creation_id
  *
  * The followings are the available model relations:
- * @property OmmuPsbYearBatch $batch
- * @property OmmuPsbSchools $school
+ * @property PsbYearBatch $batch
+ * @property PsbSchools $school
  */
 class PsbRegisters extends CActiveRecord
 {

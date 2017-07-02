@@ -35,8 +35,8 @@
  * @property string $modified_id
  *
  * The followings are the available model relations:
- * @property OmmuPsbRegisters[] $ommuPsbRegisters
- * @property OmmuPsbYears $year
+ * @property PsbRegisters[] $PsbRegisters
+ * @property PsbYears $year
  */
 class PsbYearBatch extends CActiveRecord
 {

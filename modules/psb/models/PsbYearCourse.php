@@ -29,8 +29,8 @@
  * @property string $creation_id
  *
  * The followings are the available model relations:
- * @property OmmuPsbYears $year
- * @property OmmuPsbCourses $course
+ * @property PsbYears $year
+ * @property PsbCourses $course
  */
 class PsbYearCourse extends CActiveRecord
 {
