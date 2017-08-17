@@ -1,48 +1,48 @@
-ln -s "/Users/putrasudaryanto/htdocs/_project_ommu_module_psb/LICENSE" "/Users/putrasudaryanto/htdocs/_project_ommu_module_psb/modules/psb/LICENSE"
-ln -s "/Users/putrasudaryanto/htdocs/_project_ommu_module_psb/LICENSE" "/Users/putrasudaryanto/htdocs/_project_ommu_module_psb/modules/psb_smamuh5yk/LICENSE"
+ln -fs "/Users/putrasudaryanto/htdocs/_project_ommu_module_psb/LICENSE" "/Users/putrasudaryanto/htdocs/_project_ommu_module_psb/modules/psb/LICENSE"
+ln -fs "/Users/putrasudaryanto/htdocs/_project_ommu_module_psb/LICENSE" "/Users/putrasudaryanto/htdocs/_project_ommu_module_psb/modules/psb_smamuh5yk/LICENSE"
 
 -------
 psb_smamuh5yk
 -------
 components
 =======
-ln -s "/Users/putrasudaryanto/htdocs/_project_ommu_module_psb/modules/psb/components/extensions" "/Users/putrasudaryanto/htdocs/_project_ommu_module_psb/modules/psb_smamuh5yk/components/extensions"
+hln "/Users/putrasudaryanto/htdocs/_project_ommu_module_psb/modules/psb/components/extensions" "/Users/putrasudaryanto/htdocs/_project_ommu_module_psb/modules/psb_smamuh5yk/components/extensions"
 
 controllers
 =======
-ln -s "/Users/putrasudaryanto/htdocs/_project_ommu_module_psb/modules/psb/controllers/o/BatchController.php" "/Users/putrasudaryanto/htdocs/_project_ommu_module_psb/modules/psb_smamuh5yk/controllers/o/BatchController.php"
-ln -s "/Users/putrasudaryanto/htdocs/_project_ommu_module_psb/modules/psb/controllers/o/CourseController.php" "/Users/putrasudaryanto/htdocs/_project_ommu_module_psb/modules/psb_smamuh5yk/controllers/o/CourseController.php"
-ln -s "/Users/putrasudaryanto/htdocs/_project_ommu_module_psb/modules/psb/controllers/o/ReligionController.php" "/Users/putrasudaryanto/htdocs/_project_ommu_module_psb/modules/psb_smamuh5yk/controllers/o/ReligionController.php"
-ln -s "/Users/putrasudaryanto/htdocs/_project_ommu_module_psb/modules/psb/controllers/o/SchoolController.php" "/Users/putrasudaryanto/htdocs/_project_ommu_module_psb/modules/psb_smamuh5yk/controllers/o/SchoolController.php"
-ln -s "/Users/putrasudaryanto/htdocs/_project_ommu_module_psb/modules/psb/controllers/o/SettingController.php" "/Users/putrasudaryanto/htdocs/_project_ommu_module_psb/modules/psb_smamuh5yk/controllers/o/SettingController.php"
-ln -s "/Users/putrasudaryanto/htdocs/_project_ommu_module_psb/modules/psb/controllers/o/YearController.php" "/Users/putrasudaryanto/htdocs/_project_ommu_module_psb/modules/psb_smamuh5yk/controllers/o/YearController.php"
-ln -s "/Users/putrasudaryanto/htdocs/_project_ommu_module_psb/modules/psb/controllers/o/YearcourseController.php" "/Users/putrasudaryanto/htdocs/_project_ommu_module_psb/modules/psb_smamuh5yk/controllers/o/YearcourseController.php"
-ln -s "/Users/putrasudaryanto/htdocs/_project_ommu_module_psb/modules/psb/controllers/CourseController.php" "/Users/putrasudaryanto/htdocs/_project_ommu_module_psb/modules/psb_smamuh5yk/controllers/CourseController.php"
-ln -s "/Users/putrasudaryanto/htdocs/_project_ommu_module_psb/modules/psb/controllers/SchoolController.php" "/Users/putrasudaryanto/htdocs/_project_ommu_module_psb/modules/psb_smamuh5yk/controllers/SchoolController.php"
+ln -fs "/Users/putrasudaryanto/htdocs/_project_ommu_module_psb/modules/psb/controllers/o/BatchController.php" "/Users/putrasudaryanto/htdocs/_project_ommu_module_psb/modules/psb_smamuh5yk/controllers/o/BatchController.php"
+ln -fs "/Users/putrasudaryanto/htdocs/_project_ommu_module_psb/modules/psb/controllers/o/CourseController.php" "/Users/putrasudaryanto/htdocs/_project_ommu_module_psb/modules/psb_smamuh5yk/controllers/o/CourseController.php"
+ln -fs "/Users/putrasudaryanto/htdocs/_project_ommu_module_psb/modules/psb/controllers/o/ReligionController.php" "/Users/putrasudaryanto/htdocs/_project_ommu_module_psb/modules/psb_smamuh5yk/controllers/o/ReligionController.php"
+ln -fs "/Users/putrasudaryanto/htdocs/_project_ommu_module_psb/modules/psb/controllers/o/SchoolController.php" "/Users/putrasudaryanto/htdocs/_project_ommu_module_psb/modules/psb_smamuh5yk/controllers/o/SchoolController.php"
+ln -fs "/Users/putrasudaryanto/htdocs/_project_ommu_module_psb/modules/psb/controllers/o/SettingController.php" "/Users/putrasudaryanto/htdocs/_project_ommu_module_psb/modules/psb_smamuh5yk/controllers/o/SettingController.php"
+ln -fs "/Users/putrasudaryanto/htdocs/_project_ommu_module_psb/modules/psb/controllers/o/YearController.php" "/Users/putrasudaryanto/htdocs/_project_ommu_module_psb/modules/psb_smamuh5yk/controllers/o/YearController.php"
+ln -fs "/Users/putrasudaryanto/htdocs/_project_ommu_module_psb/modules/psb/controllers/o/YearcourseController.php" "/Users/putrasudaryanto/htdocs/_project_ommu_module_psb/modules/psb_smamuh5yk/controllers/o/YearcourseController.php"
+ln -fs "/Users/putrasudaryanto/htdocs/_project_ommu_module_psb/modules/psb/controllers/CourseController.php" "/Users/putrasudaryanto/htdocs/_project_ommu_module_psb/modules/psb_smamuh5yk/controllers/CourseController.php"
+ln -fs "/Users/putrasudaryanto/htdocs/_project_ommu_module_psb/modules/psb/controllers/SchoolController.php" "/Users/putrasudaryanto/htdocs/_project_ommu_module_psb/modules/psb_smamuh5yk/controllers/SchoolController.php"
 
 -------
 models
 =======
-ln -s "/Users/putrasudaryanto/htdocs/_project_ommu_module_psb/modules/psb/models/PsbCourses.php" "/Users/putrasudaryanto/htdocs/_project_ommu_module_psb/modules/psb_smamuh5yk/models/PsbCourses.php"
-ln -s "/Users/putrasudaryanto/htdocs/_project_ommu_module_psb/modules/psb/models/PsbReligions.php" "/Users/putrasudaryanto/htdocs/_project_ommu_module_psb/modules/psb_smamuh5yk/models/PsbReligions.php"
-ln -s "/Users/putrasudaryanto/htdocs/_project_ommu_module_psb/modules/psb/models/PsbSchools.php" "/Users/putrasudaryanto/htdocs/_project_ommu_module_psb/modules/psb_smamuh5yk/models/PsbSchools.php"
-ln -s "/Users/putrasudaryanto/htdocs/_project_ommu_module_psb/modules/psb/models/PsbSettings.php" "/Users/putrasudaryanto/htdocs/_project_ommu_module_psb/modules/psb_smamuh5yk/models/PsbSettings.php"
-ln -s "/Users/putrasudaryanto/htdocs/_project_ommu_module_psb/modules/psb/models/PsbYearBatch.php" "/Users/putrasudaryanto/htdocs/_project_ommu_module_psb/modules/psb_smamuh5yk/models/PsbYearBatch.php"
-ln -s "/Users/putrasudaryanto/htdocs/_project_ommu_module_psb/modules/psb/models/PsbYearCourse.php" "/Users/putrasudaryanto/htdocs/_project_ommu_module_psb/modules/psb_smamuh5yk/models/PsbYearCourse.php"
-ln -s "/Users/putrasudaryanto/htdocs/_project_ommu_module_psb/modules/psb/models/PsbYears.php" "/Users/putrasudaryanto/htdocs/_project_ommu_module_psb/modules/psb_smamuh5yk/models/PsbYears.php"
-ln -s "/Users/putrasudaryanto/htdocs/_project_ommu_module_psb/modules/psb/models/ViewPsbCourses.php" "/Users/putrasudaryanto/htdocs/_project_ommu_module_psb/modules/psb_smamuh5yk/models/ViewPsbCourses.php"
-ln -s "/Users/putrasudaryanto/htdocs/_project_ommu_module_psb/modules/psb/models/ViewPsbReligions.php" "/Users/putrasudaryanto/htdocs/_project_ommu_module_psb/modules/psb_smamuh5yk/models/ViewPsbReligions.php"
-ln -s "/Users/putrasudaryanto/htdocs/_project_ommu_module_psb/modules/psb/models/ViewPsbSchools.php" "/Users/putrasudaryanto/htdocs/_project_ommu_module_psb/modules/psb_smamuh5yk/models/ViewPsbSchools.php"
-ln -s "/Users/putrasudaryanto/htdocs/_project_ommu_module_psb/modules/psb/models/ViewPsbYearBatch.php" "/Users/putrasudaryanto/htdocs/_project_ommu_module_psb/modules/psb_smamuh5yk/models/ViewPsbYearBatch.php"
-ln -s "/Users/putrasudaryanto/htdocs/_project_ommu_module_psb/modules/psb/models/ViewPsbYears.php" "/Users/putrasudaryanto/htdocs/_project_ommu_module_psb/modules/psb_smamuh5yk/models/ViewPsbYears.php"
+ln -fs "/Users/putrasudaryanto/htdocs/_project_ommu_module_psb/modules/psb/models/PsbCourses.php" "/Users/putrasudaryanto/htdocs/_project_ommu_module_psb/modules/psb_smamuh5yk/models/PsbCourses.php"
+ln -fs "/Users/putrasudaryanto/htdocs/_project_ommu_module_psb/modules/psb/models/PsbReligions.php" "/Users/putrasudaryanto/htdocs/_project_ommu_module_psb/modules/psb_smamuh5yk/models/PsbReligions.php"
+ln -fs "/Users/putrasudaryanto/htdocs/_project_ommu_module_psb/modules/psb/models/PsbSchools.php" "/Users/putrasudaryanto/htdocs/_project_ommu_module_psb/modules/psb_smamuh5yk/models/PsbSchools.php"
+ln -fs "/Users/putrasudaryanto/htdocs/_project_ommu_module_psb/modules/psb/models/PsbSettings.php" "/Users/putrasudaryanto/htdocs/_project_ommu_module_psb/modules/psb_smamuh5yk/models/PsbSettings.php"
+ln -fs "/Users/putrasudaryanto/htdocs/_project_ommu_module_psb/modules/psb/models/PsbYearBatch.php" "/Users/putrasudaryanto/htdocs/_project_ommu_module_psb/modules/psb_smamuh5yk/models/PsbYearBatch.php"
+ln -fs "/Users/putrasudaryanto/htdocs/_project_ommu_module_psb/modules/psb/models/PsbYearCourse.php" "/Users/putrasudaryanto/htdocs/_project_ommu_module_psb/modules/psb_smamuh5yk/models/PsbYearCourse.php"
+ln -fs "/Users/putrasudaryanto/htdocs/_project_ommu_module_psb/modules/psb/models/PsbYears.php" "/Users/putrasudaryanto/htdocs/_project_ommu_module_psb/modules/psb_smamuh5yk/models/PsbYears.php"
+ln -fs "/Users/putrasudaryanto/htdocs/_project_ommu_module_psb/modules/psb/models/ViewPsbCourses.php" "/Users/putrasudaryanto/htdocs/_project_ommu_module_psb/modules/psb_smamuh5yk/models/ViewPsbCourses.php"
+ln -fs "/Users/putrasudaryanto/htdocs/_project_ommu_module_psb/modules/psb/models/ViewPsbReligions.php" "/Users/putrasudaryanto/htdocs/_project_ommu_module_psb/modules/psb_smamuh5yk/models/ViewPsbReligions.php"
+ln -fs "/Users/putrasudaryanto/htdocs/_project_ommu_module_psb/modules/psb/models/ViewPsbSchools.php" "/Users/putrasudaryanto/htdocs/_project_ommu_module_psb/modules/psb_smamuh5yk/models/ViewPsbSchools.php"
+ln -fs "/Users/putrasudaryanto/htdocs/_project_ommu_module_psb/modules/psb/models/ViewPsbYearBatch.php" "/Users/putrasudaryanto/htdocs/_project_ommu_module_psb/modules/psb_smamuh5yk/models/ViewPsbYearBatch.php"
+ln -fs "/Users/putrasudaryanto/htdocs/_project_ommu_module_psb/modules/psb/models/ViewPsbYears.php" "/Users/putrasudaryanto/htdocs/_project_ommu_module_psb/modules/psb_smamuh5yk/models/ViewPsbYears.php"
 
 -------
 views
 =======
-ln -s "/Users/putrasudaryanto/htdocs/_project_ommu_module_psb/modules/psb/views/o/batch" "/Users/putrasudaryanto/htdocs/_project_ommu_module_psb/modules/psb_smamuh5yk/views/o/batch"
-ln -s "/Users/putrasudaryanto/htdocs/_project_ommu_module_psb/modules/psb/views/o/course" "/Users/putrasudaryanto/htdocs/_project_ommu_module_psb/modules/psb_smamuh5yk/views/o/course"
-ln -s "/Users/putrasudaryanto/htdocs/_project_ommu_module_psb/modules/psb/views/o/religion" "/Users/putrasudaryanto/htdocs/_project_ommu_module_psb/modules/psb_smamuh5yk/views/o/religion"
-ln -s "/Users/putrasudaryanto/htdocs/_project_ommu_module_psb/modules/psb/views/o/school" "/Users/putrasudaryanto/htdocs/_project_ommu_module_psb/modules/psb_smamuh5yk/views/o/school"
-ln -s "/Users/putrasudaryanto/htdocs/_project_ommu_module_psb/modules/psb/views/o/setting" "/Users/putrasudaryanto/htdocs/_project_ommu_module_psb/modules/psb_smamuh5yk/views/o/setting"
-ln -s "/Users/putrasudaryanto/htdocs/_project_ommu_module_psb/modules/psb/views/o/year" "/Users/putrasudaryanto/htdocs/_project_ommu_module_psb/modules/psb_smamuh5yk/views/o/year"
-ln -s "/Users/putrasudaryanto/htdocs/_project_ommu_module_psb/modules/psb/views/o/year_course" "/Users/putrasudaryanto/htdocs/_project_ommu_module_psb/modules/psb_smamuh5yk/views/o/year_course"
+hln "/Users/putrasudaryanto/htdocs/_project_ommu_module_psb/modules/psb/views/o/batch" "/Users/putrasudaryanto/htdocs/_project_ommu_module_psb/modules/psb_smamuh5yk/views/o/batch"
+hln "/Users/putrasudaryanto/htdocs/_project_ommu_module_psb/modules/psb/views/o/course" "/Users/putrasudaryanto/htdocs/_project_ommu_module_psb/modules/psb_smamuh5yk/views/o/course"
+hln "/Users/putrasudaryanto/htdocs/_project_ommu_module_psb/modules/psb/views/o/religion" "/Users/putrasudaryanto/htdocs/_project_ommu_module_psb/modules/psb_smamuh5yk/views/o/religion"
+hln "/Users/putrasudaryanto/htdocs/_project_ommu_module_psb/modules/psb/views/o/school" "/Users/putrasudaryanto/htdocs/_project_ommu_module_psb/modules/psb_smamuh5yk/views/o/school"
+hln "/Users/putrasudaryanto/htdocs/_project_ommu_module_psb/modules/psb/views/o/setting" "/Users/putrasudaryanto/htdocs/_project_ommu_module_psb/modules/psb_smamuh5yk/views/o/setting"
+hln "/Users/putrasudaryanto/htdocs/_project_ommu_module_psb/modules/psb/views/o/year" "/Users/putrasudaryanto/htdocs/_project_ommu_module_psb/modules/psb_smamuh5yk/views/o/year"
+hln "/Users/putrasudaryanto/htdocs/_project_ommu_module_psb/modules/psb/views/o/year_course" "/Users/putrasudaryanto/htdocs/_project_ommu_module_psb/modules/psb_smamuh5yk/views/o/year_course"
