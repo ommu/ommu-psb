@@ -99,7 +99,7 @@ class SchoolController extends Controller
 		if(isset($_GET['term'])) {
 			$criteria = new CDbCriteria;
 			$criteria->condition = 'school_name LIKE :name';
-			$criteria->select	= "school_id, school_name";
+			$criteria->select = "school_id, school_name";
 			$criteria->limit = $limit;
 			$criteria->order = "school_id ASC";
 			$criteria->params = array(':name' => '%' . strtolower($_GET['term']) . '%');

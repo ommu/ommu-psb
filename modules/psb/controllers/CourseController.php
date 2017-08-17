@@ -97,7 +97,7 @@ class CourseController extends Controller
 		if(isset($_GET['term'])) {
 			$criteria = new CDbCriteria;
 			$criteria->condition = 'course_name LIKE :course_name';
-			$criteria->select	= "course_id, course_name";
+			$criteria->select = "course_id, course_name";
 			$criteria->limit = $limit;
 			$criteria->order = "course_id ASC";
 			$criteria->params = array(':course_name' => '%' . strtolower($_GET['term']) . '%');
