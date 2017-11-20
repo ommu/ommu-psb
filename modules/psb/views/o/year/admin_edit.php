@@ -20,7 +20,7 @@
 ?>
 
 <div class="form" name="post-on">
-<?php $form=$this->beginWidget('application.components.system.OActiveForm', array(
+<?php $form=$this->beginWidget('application.libraries.core.components.system.OActiveForm', array(
 	'id'=>'psb-years-form',
 	'enableAjaxValidation'=>true,
 	//'htmlOptions' => array('enctype' => 'multipart/form-data')
@@ -150,7 +150,7 @@
 				'template' => '{update}|{delete}',
 			));
 
-			$this->widget('application.components.system.OGridView', array(
+			$this->widget('application.libraries.core.components.system.OGridView', array(
 				'id'=>'psb-year-batch-grid',
 				'dataProvider'=>$batch->search(),
 				'filter'=>$batch,

@@ -94,7 +94,7 @@
 				'template' => '{update}|{delete}',
 			));
 
-			$this->widget('application.components.system.OGridView', array(
+			$this->widget('application.libraries.core.components.system.OGridView', array(
 				'id'=>'psb-year-batch-grid',
 				'dataProvider'=>$model->search(),
 				'filter'=>$model,
