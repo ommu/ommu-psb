@@ -22,7 +22,7 @@
  * @author Putra Sudaryanto <putra@sudaryanto.id>
  * @copyright Copyright (c) 2016 Ommu Platform (opensource.ommu.co)
  * @created date 27 April 2016, 15:50 WIB
- * @link https://github.com/ommu/PSB
+ * @link https://github.com/ommu/ommu-psb
  * @contact (+62)856-299-4114
  *
  *----------------------------------------------------------------------------------------------------------
