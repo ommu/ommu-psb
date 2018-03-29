@@ -478,7 +478,7 @@ EOP;
 	<?php }?>
 	
 	<?php if($setting->form_online == 1) {?>
-		<h3><?php echo Yii::t('phrase', 'Author');?></h3>		
+		<h3><?php echo Yii::t('phrase', 'Author');?></h3>
 		<div class="clearfix">
 			<?php echo $form->labelEx($author,'name'); ?>
 			<div class="desc">

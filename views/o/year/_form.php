@@ -19,7 +19,7 @@
 	//'htmlOptions' => array('enctype' => 'multipart/form-data')
 )); ?>
 
-<div class="dialog-content">	
+<div class="dialog-content">
 	<fieldset>
 		<?php //begin.Messages ?>
 		<div id="ajax-message">

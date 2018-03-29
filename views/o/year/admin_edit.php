@@ -40,7 +40,7 @@
 			</div>
 		</div>
 		
-		<?php if(!$model->isNewRecord) {?>			
+		<?php if(!$model->isNewRecord) {?>
 			<div class="clearfix">
 				<?php echo $form->labelEx($model,'course_input'); ?>
 				<div class="desc">
