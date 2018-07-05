@@ -16,7 +16,7 @@
  *
  * @author Putra Sudaryanto <putra@sudaryanto.id>
  * @contact (+62)856-299-4114
- * @copyright Copyright (c) 2016 Ommu Platform (opensource.ommu.co)
+ * @copyright Copyright (c) 2016 Ommu Platform (www.ommu.co)
  * @link https://github.com/ommu/ommu-psb
  *
  *----------------------------------------------------------------------------------------------------------
@@ -95,13 +95,13 @@ class SchoolController extends Controller
 	 */
 	public function actionSuggest($limit=15) 
 	{
-		if(isset($_GET['term'])) {
+		if(Yii::app()->getRequest()->getParam('term')) {
 			$criteria = new CDbCriteria;
 			$criteria->condition = 'school_name LIKE :name';
 			$criteria->select = "school_id, school_name";
 			$criteria->limit = $limit;
 			$criteria->order = "school_id ASC";
-			$criteria->params = array(':name' => '%' . strtolower($_GET['term']) . '%');
+			$criteria->params = array(':name' => '%' . strtolower(Yii::app()->getRequest()->getParam('term')) . '%');
 			$model = PsbSchools::model()->findAll($criteria);
 
 			if($model) {

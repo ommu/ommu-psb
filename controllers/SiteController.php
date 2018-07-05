@@ -14,7 +14,7 @@
  *
  * @author Putra Sudaryanto <putra@sudaryanto.id>
  * @contact (+62)856-299-4114
- * @copyright Copyright (c) 2016 Ommu Platform (opensource.ommu.co)
+ * @copyright Copyright (c) 2016 Ommu Platform (www.ommu.co)
  * @link https://github.com/ommu/ommu-psb
  *
  *----------------------------------------------------------------------------------------------------------
@@ -153,7 +153,7 @@ class SiteController extends Controller
 			$this->pageTitle = 'Psb Registers';
 			$this->pageDescription = '';
 			$this->pageMeta = '';
-			$this->render('front_add',array(
+			$this->render('front_add', array(
 				'model'=>$model,
 				'school'=>$school,
 				'author'=>$author,

@@ -7,7 +7,7 @@
  *
  * @author Putra Sudaryanto <putra@sudaryanto.id>
  * @contact (+62)856-299-4114
- * @copyright Copyright (c) 2016 Ommu Platform (opensource.ommu.co)
+ * @copyright Copyright (c) 2016 Ommu Platform (www.ommu.co)
  * @created date 27 April 2016, 12:23 WIB
  * @link https://github.com/ommu/ommu-psb
  *
@@ -93,7 +93,7 @@ EOP;
 	<div class="clearfix">
 		<?php echo $form->labelEx($model,'register_number'); ?>
 		<div class="desc">
-			<?php echo $form->textField($model,'register_number',array('maxlength'=>32, 'class'=>'span-4')); ?>
+			<?php echo $form->textField($model,'register_number', array('maxlength'=>32, 'class'=>'span-4')); ?>
 			<?php echo $form->error($model,'register_number'); ?>
 			<?php /*<div class="small-px silent"></div>*/?>
 		</div>
@@ -104,13 +104,13 @@ EOP;
 		<div class="desc">
 			<?php 
 			$model->isNewRecord && $model->bundle_date == '' ? $model->bundle_date = date('d-m-Y') : date('d-m-Y', strtotime($model->bundle_date));
-			//echo $form->textField($model,'bundle_date',array('maxlength'=>32, 'class'=>'span-5'));
-			$this->widget('application.libraries.core.components.system.CJuiDatePicker',array(
+			//echo $form->textField($model,'bundle_date', array('maxlength'=>32, 'class'=>'span-5'));
+			$this->widget('application.libraries.core.components.system.CJuiDatePicker', array(
 				'model'=>$model, 
 				'attribute'=>'bundle_date',
 				//'mode'=>'datetime',
 				'options'=>array(
-					'dateFormat' => 'dd-mm-yy',
+					'dateFormat' => 'yy-mm-dd',
 				),
 				'htmlOptions'=>array(
 					'class' => 'span-3',
@@ -126,7 +126,7 @@ EOP;
 	<div class="clearfix">
 		<?php echo $form->labelEx($model,'register_name'); ?>
 		<div class="desc">
-			<?php echo $form->textField($model,'register_name',array('maxlength'=>32, 'class'=>'span-5')); ?>
+			<?php echo $form->textField($model,'register_name', array('maxlength'=>32, 'class'=>'span-5')); ?>
 			<?php echo $form->error($model,'register_name'); ?>
 			<?php /*<div class="small-px silent"></div>*/?>
 		</div>
@@ -135,7 +135,7 @@ EOP;
 	<div class="clearfix">
 		<?php echo $form->labelEx($model,'nisn'); ?>
 		<div class="desc">
-			<?php echo $form->textField($model,'nisn',array('maxlength'=>12)); ?>
+			<?php echo $form->textField($model,'nisn', array('maxlength'=>12)); ?>
 			<?php echo $form->error($model,'nisn'); ?>
 			<?php /*<div class="small-px silent"></div>*/?>
 		</div>
@@ -178,12 +178,12 @@ EOP;
 			<?php
 			!$model->isNewRecord ? ($model->birth_date != '0000-00-00' ? $model->birth_date = date('d-m-Y', strtotime($model->birth_date)) : '') : '';
 			//echo $form->textField($model,'birth_date');
-			$this->widget('application.libraries.core.components.system.CJuiDatePicker',array(
+			$this->widget('application.libraries.core.components.system.CJuiDatePicker', array(
 				'model'=>$model,
 				'attribute'=>'birth_date',
 				//'mode'=>'datetime',
 				'options'=>array(
-					'dateFormat' => 'dd-mm-yy',
+					'dateFormat' => 'yy-mm-dd',
 				),
 				'htmlOptions'=>array(
 					'class' => 'span-4',
@@ -197,7 +197,7 @@ EOP;
 	<div class="clearfix">
 		<?php echo $form->labelEx($model,'gender'); ?>
 		<div class="desc">
-			<?php echo $form->dropDownList($model,'gender',array(
+			<?php echo $form->dropDownList($model,'gender', array(
 				'male'=>Yii::t('phrase', 'Laki-laki'),
 				'female'=>Yii::t('phrase', 'Perempuan'),
 			), array('prompt'=>Yii::t('phrase', 'Pilih salah satu'))); ?>
@@ -225,7 +225,7 @@ EOP;
 	<div class="clearfix">
 		<?php echo $form->labelEx($model,'address'); ?>
 		<div class="desc">
-			<?php echo $form->textArea($model,'address',array('rows'=>6, 'cols'=>50, 'class'=>'span-8 smaller')); ?>
+			<?php echo $form->textArea($model,'address', array('rows'=>6, 'cols'=>50, 'class'=>'span-8 smaller')); ?>
 			<?php echo $form->error($model,'address'); ?>
 			<?php /*<div class="small-px silent"></div>*/?>
 		</div>
@@ -234,7 +234,7 @@ EOP;
 	<div class="clearfix">
 		<?php echo $form->labelEx($model,'address_phone'); ?>
 		<div class="desc">
-			<?php echo $form->textField($model,'address_phone',array('maxlength'=>15)); ?>
+			<?php echo $form->textField($model,'address_phone', array('maxlength'=>15)); ?>
 			<?php echo $form->error($model,'address_phone'); ?>
 			<?php /*<div class="small-px silent"></div>*/?>
 		</div>
@@ -243,7 +243,7 @@ EOP;
 	<div class="clearfix">
 		<?php echo $form->labelEx($model,'address_yogya'); ?>
 		<div class="desc">
-			<?php echo $form->textArea($model,'address_yogya',array('rows'=>6, 'cols'=>50, 'class'=>'span-8 smaller')); ?>
+			<?php echo $form->textArea($model,'address_yogya', array('rows'=>6, 'cols'=>50, 'class'=>'span-8 smaller')); ?>
 			<?php echo $form->error($model,'address_yogya'); ?>
 			<?php /*<div class="small-px silent"></div>*/?>
 		</div>
@@ -252,7 +252,7 @@ EOP;
 	<div class="clearfix">
 		<?php echo $form->labelEx($model,'address_yogya_phone'); ?>
 		<div class="desc">
-			<?php echo $form->textField($model,'address_yogya_phone',array('maxlength'=>15)); ?>
+			<?php echo $form->textField($model,'address_yogya_phone', array('maxlength'=>15)); ?>
 			<?php echo $form->error($model,'address_yogya_phone'); ?>
 			<?php /*<div class="small-px silent"></div>*/?>
 		</div>
@@ -262,7 +262,7 @@ EOP;
 	<div class="clearfix">
 		<?php echo $form->labelEx($model,'parent_name'); ?>
 		<div class="desc">
-			<?php echo $form->textField($model,'parent_name',array('maxlength'=>32, 'class'=>'span-5')); ?>
+			<?php echo $form->textField($model,'parent_name', array('maxlength'=>32, 'class'=>'span-5')); ?>
 			<?php echo $form->error($model,'parent_name'); ?>
 			<?php /*<div class="small-px silent"></div>*/?>
 		</div>
@@ -271,7 +271,7 @@ EOP;
 	<div class="clearfix">
 		<?php echo $form->labelEx($model,'parent_work'); ?>
 		<div class="desc">
-			<?php echo $form->textField($model,'parent_work',array('maxlength'=>32, 'class'=>'span-5')); ?>
+			<?php echo $form->textField($model,'parent_work', array('maxlength'=>32, 'class'=>'span-5')); ?>
 			<?php echo $form->error($model,'parent_work'); ?>
 			<?php /*<div class="small-px silent"></div>*/?>
 		</div>
@@ -296,7 +296,7 @@ EOP;
 	<div class="clearfix">
 		<?php echo $form->labelEx($model,'parent_address'); ?>
 		<div class="desc">
-			<?php echo $form->textArea($model,'parent_address',array('rows'=>6, 'cols'=>50, 'class'=>'span-8 smaller')); ?>
+			<?php echo $form->textArea($model,'parent_address', array('rows'=>6, 'cols'=>50, 'class'=>'span-8 smaller')); ?>
 			<?php echo $form->error($model,'parent_address'); ?>
 			<?php /*<div class="small-px silent"></div>*/?>
 		</div>
@@ -305,7 +305,7 @@ EOP;
 	<div class="clearfix">
 		<?php echo $form->labelEx($model,'parent_phone'); ?>
 		<div class="desc">
-			<?php echo $form->textField($model,'parent_phone',array('maxlength'=>15)); ?>
+			<?php echo $form->textField($model,'parent_phone', array('maxlength'=>15)); ?>
 			<?php echo $form->error($model,'parent_phone'); ?>
 			<?php /*<div class="small-px silent"></div>*/?>
 		</div>
@@ -315,7 +315,7 @@ EOP;
 		<div class="clearfix">
 			<?php echo $form->labelEx($model,'wali_name'); ?>
 			<div class="desc">
-				<?php echo $form->textField($model,'wali_name',array('maxlength'=>32, 'class'=>'span-5')); ?>
+				<?php echo $form->textField($model,'wali_name', array('maxlength'=>32, 'class'=>'span-5')); ?>
 				<?php echo $form->error($model,'wali_name'); ?>
 				<?php /*<div class="small-px silent"></div>*/?>
 			</div>
@@ -324,7 +324,7 @@ EOP;
 		<div class="clearfix">
 			<?php echo $form->labelEx($model,'wali_work'); ?>
 			<div class="desc">
-				<?php echo $form->textField($model,'wali_work',array('maxlength'=>32, 'class'=>'span-5')); ?>
+				<?php echo $form->textField($model,'wali_work', array('maxlength'=>32, 'class'=>'span-5')); ?>
 				<?php echo $form->error($model,'wali_work'); ?>
 				<?php /*<div class="small-px silent"></div>*/?>
 			</div>
@@ -349,7 +349,7 @@ EOP;
 		<div class="clearfix">
 			<?php echo $form->labelEx($model,'wali_address'); ?>
 			<div class="desc">
-				<?php echo $form->textArea($model,'wali_address',array('rows'=>6, 'cols'=>50, 'class'=>'span-8 smaller')); ?>
+				<?php echo $form->textArea($model,'wali_address', array('rows'=>6, 'cols'=>50, 'class'=>'span-8 smaller')); ?>
 				<?php echo $form->error($model,'wali_address'); ?>
 				<?php /*<div class="small-px silent"></div>*/?>
 			</div>
@@ -358,7 +358,7 @@ EOP;
 		<div class="clearfix">
 			<?php echo $form->labelEx($model,'wali_phone'); ?>
 			<div class="desc">
-				<?php echo $form->textField($model,'wali_phone',array('maxlength'=>15)); ?>
+				<?php echo $form->textField($model,'wali_phone', array('maxlength'=>15)); ?>
 				<?php echo $form->error($model,'wali_phone'); ?>
 				<?php /*<div class="small-px silent"></div>*/?>
 			</div>
@@ -369,7 +369,7 @@ EOP;
 	<div class="clearfix">
 		<?php echo $form->labelEx($school,'school_name'); ?>
 		<div class="desc">
-			<?php //echo $form->textField($school,'school_name',array('maxlength'=>64, 'class'=>'span-8'));			
+			<?php //echo $form->textField($school,'school_name', array('maxlength'=>64, 'class'=>'span-8'));			
 			$url = Yii::app()->controller->createUrl('school/ajaxget');			
 			$this->widget('zii.widgets.jui.CJuiAutoComplete', array(
 				'model' => $school,
@@ -415,7 +415,7 @@ EOP;
 	<div class="clearfix">
 		<?php echo $form->labelEx($school,'school_address'); ?>
 		<div class="desc">
-			<?php echo $form->textArea($school,'school_address',array('rows'=>6, 'cols'=>50, 'class'=>'span-8 smaller')); ?>
+			<?php echo $form->textArea($school,'school_address', array('rows'=>6, 'cols'=>50, 'class'=>'span-8 smaller')); ?>
 			<?php echo $form->error($school,'school_address'); ?>
 			<?php /*<div class="small-px silent"></div>*/?>
 		</div>
@@ -424,7 +424,7 @@ EOP;
 	<div class="clearfix">
 		<?php echo $form->labelEx($school,'school_phone'); ?>
 		<div class="desc">
-			<?php echo $form->textField($school,'school_phone',array('maxlength'=>15)); ?>
+			<?php echo $form->textField($school,'school_phone', array('maxlength'=>15)); ?>
 			<?php echo $form->error($school,'school_phone'); ?>
 		</div>
 	</div>
@@ -432,7 +432,7 @@ EOP;
 	<div class="clearfix">
 		<?php echo $form->labelEx($school,'school_status'); ?>
 		<div class="desc">
-			<?php echo $form->dropDownList($school,'school_status',array(
+			<?php echo $form->dropDownList($school,'school_status', array(
 				1=>Yii::t('phrase', 'Negeri'),
 				0=>Yii::t('phrase', 'Swasta'),
 			)); ?>
@@ -445,7 +445,7 @@ EOP;
 	<div class="clearfix">
 		<?php echo $form->labelEx($model,'school_un_detail'); ?>
 		<div class="desc">
-			<?php //echo $form->textArea($model,'school_un_detail',array('rows'=>6, 'cols'=>50, 'class'=>'span-8 smaller'));?>
+			<?php //echo $form->textArea($model,'school_un_detail', array('rows'=>6, 'cols'=>50, 'class'=>'span-8 smaller'));?>
 			<table>
 			<?php 
 			$valuation = $batch->batch_valuation == 1 ? 1 : 3;
@@ -482,7 +482,7 @@ EOP;
 		<div class="clearfix">
 			<?php echo $form->labelEx($author,'name'); ?>
 			<div class="desc">
-				<?php echo $form->textField($author,'name',array('maxlength'=>32, 'class'=>'span-5')); ?>
+				<?php echo $form->textField($author,'name', array('maxlength'=>32, 'class'=>'span-5')); ?>
 				<?php echo $form->error($author,'name'); ?>
 				<?php /*<div class="small-px silent"></div>*/?>
 			</div>
@@ -491,7 +491,7 @@ EOP;
 		<div class="clearfix">
 			<?php echo $form->labelEx($author,'email'); ?>
 			<div class="desc">
-				<?php echo $form->textField($author,'email',array('maxlength'=>32, 'class'=>'span-5')); ?>
+				<?php echo $form->textField($author,'email', array('maxlength'=>32, 'class'=>'span-5')); ?>
 				<?php echo $form->error($author,'email'); ?>
 				<?php /*<div class="small-px silent"></div>*/?>
 			</div>

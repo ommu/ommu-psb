@@ -7,7 +7,7 @@
  *
  * @author Putra Sudaryanto <putra@sudaryanto.id>
  * @contact (+62)856-299-4114
- * @copyright Copyright (c) 2016 Ommu Platform (opensource.ommu.co)
+ * @copyright Copyright (c) 2016 Ommu Platform (www.ommu.co)
  * @created date 27 April 2016, 12:11 WIB
  * @link https://github.com/ommu/ommu-psb
  *
@@ -34,7 +34,7 @@
 			<span><?php echo Yii::t('phrase', 'Enter the your license key that is provided to you when you purchased this plugin. If you do not know your license key, please contact support team.');?></span>
 		</label>
 		<div class="desc">
-			<?php echo $form->textField($model,'license',array('maxlength'=>32,'class'=>'span-4','disabled'=>'disabled')); ?>
+			<?php echo $form->textField($model,'license', array('maxlength'=>32,'class'=>'span-4','disabled'=>'disabled')); ?>
 			<?php echo $form->error($model,'license'); ?>
 			<span class="small-px"><?php echo Yii::t('phrase', 'Format: XXXX-XXXX-XXXX-XXXX');?></span>
 		</div>
@@ -55,7 +55,7 @@
 	<div class="clearfix">
 		<?php echo $form->labelEx($model,'meta_keyword'); ?>
 		<div class="desc">
-			<?php echo $form->textArea($model,'meta_keyword',array('rows'=>6, 'cols'=>50, 'class'=>'span-7 smaller')); ?>
+			<?php echo $form->textArea($model,'meta_keyword', array('rows'=>6, 'cols'=>50, 'class'=>'span-7 smaller')); ?>
 			<?php echo $form->error($model,'meta_keyword'); ?>
 		</div>
 	</div>
@@ -63,7 +63,7 @@
 	<div class="clearfix">
 		<?php echo $form->labelEx($model,'meta_description'); ?>
 		<div class="desc">
-			<?php echo $form->textArea($model,'meta_description',array('rows'=>6, 'cols'=>50, 'class'=>'span-7 smaller')); ?>
+			<?php echo $form->textArea($model,'meta_description', array('rows'=>6, 'cols'=>50, 'class'=>'span-7 smaller')); ?>
 			<?php echo $form->error($model,'meta_description'); ?>
 		</div>
 	</div>

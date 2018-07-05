@@ -15,7 +15,7 @@
  *
  * @author Putra Sudaryanto <putra@sudaryanto.id>
  * @contact (+62)856-299-4114
- * @copyright Copyright (c) 2016 Ommu Platform (opensource.ommu.co)
+ * @copyright Copyright (c) 2016 Ommu Platform (www.ommu.co)
  * @link https://github.com/ommu/ommu-psb
  *
  *----------------------------------------------------------------------------------------------------------
@@ -93,13 +93,13 @@ class CourseController extends Controller
 	 * @param integer $id the ID of the model to be updated
 	 */
 	public function actionSuggest($limit=10) {
-		if(isset($_GET['term'])) {
+		if(Yii::app()->getRequest()->getParam('term')) {
 			$criteria = new CDbCriteria;
 			$criteria->condition = 'course_name LIKE :course_name';
 			$criteria->select = "course_id, course_name";
 			$criteria->limit = $limit;
 			$criteria->order = "course_id ASC";
-			$criteria->params = array(':course_name' => '%' . strtolower($_GET['term']) . '%');
+			$criteria->params = array(':course_name' => '%' . strtolower(Yii::app()->getRequest()->getParam('term')) . '%');
 			$model = PsbCourses::model()->findAll($criteria);
 
 			if($model) {
@@ -107,7 +107,7 @@ class CourseController extends Controller
 					$result[] = array('id' => $items->course_id, 'value' => $items->course_name);
 				}
 			} else {
-				$result[] = array('id' => 0, 'value' => $_GET['term']);
+				$result[] = array('id' => 0, 'value' => Yii::app()->getRequest()->getParam('term'));
 			}
 		}
 		echo CJSON::encode($result);

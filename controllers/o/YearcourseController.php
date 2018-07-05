@@ -16,7 +16,7 @@
  *
  * @author Putra Sudaryanto <putra@sudaryanto.id>
  * @contact (+62)856-299-4114
- * @copyright Copyright (c) 2016 Ommu Platform (opensource.ommu.co)
+ * @copyright Copyright (c) 2016 Ommu Platform (www.ommu.co)
  * @link https://github.com/ommu/ommu-psb
  *
  *----------------------------------------------------------------------------------------------------------
@@ -123,7 +123,7 @@ class YearcourseController extends Controller
 		$this->pageTitle = Yii::t('phrase', 'Psb Year Courses Manage');
 		$this->pageDescription = '';
 		$this->pageMeta = '';
-		$this->render('/o/year_course/admin_manage',array(
+		$this->render('/o/year_course/admin_manage', array(
 			'model'=>$model,
 			'columns' => $columns,
 		));
@@ -146,10 +146,10 @@ class YearcourseController extends Controller
 			$model->body = $_POST['body'];
 
 			if($model->save()) {
-				if(isset($_GET['type']) && $_GET['type'] == 'year')
-					$url = Yii::app()->controller->createUrl('delete',array('id'=>$model->id,'type'=>'year'));
+				if(Yii::app()->getRequest()->getParam('type') == 'year')
+					$url = Yii::app()->controller->createUrl('delete', array('id'=>$model->id,'type'=>'year'));
 				else 
-					$url = Yii::app()->controller->createUrl('delete',array('id'=>$model->id));
+					$url = Yii::app()->controller->createUrl('delete', array('id'=>$model->id));
 				echo CJSON::encode(array(
 					'data' => '<div>'.$model->course->course_name.'<a href="'.$url.'" title="'.Yii::t('phrase', 'Delete').'">'.Yii::t('phrase', 'Delete').'</a></div>',
 				));
@@ -170,7 +170,7 @@ class YearcourseController extends Controller
 			// we only allow deletion via POST request
 			if(isset($id)) {
 				if($model->delete()) {
-					if(isset($_GET['type']) && $_GET['type'] == 'year') {
+					if(Yii::app()->getRequest()->getParam('type') == 'year') {
 						echo CJSON::encode(array(
 							'type' => 4,
 						));
@@ -187,7 +187,7 @@ class YearcourseController extends Controller
 
 		} else {
 			$this->dialogDetail = true;
-			$this->dialogGroundUrl = (isset($_GET['type']) && $_GET['type'] == 'year') ? Yii::app()->controller->createUrl('o/year/edit', array('id'=>$model->year_id)) : Yii::app()->controller->createUrl('manage');
+			$this->dialogGroundUrl = (Yii::app()->getRequest()->getParam('type') == 'year') ? Yii::app()->controller->createUrl('o/year/edit', array('id'=>$model->year_id)) : Yii::app()->controller->createUrl('manage');
 			$this->dialogWidth = 350;
 
 			$this->pageTitle = Yii::t('phrase', 'PsbYearCourse Delete.');

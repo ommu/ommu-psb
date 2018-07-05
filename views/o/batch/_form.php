@@ -7,7 +7,7 @@
  *
  * @author Putra Sudaryanto <putra@sudaryanto.id>
  * @contact (+62)856-299-4114
- * @copyright Copyright (c) 2016 Ommu Platform (opensource.ommu.co)
+ * @copyright Copyright (c) 2016 Ommu Platform (www.ommu.co)
  * @link https://github.com/ommu/ommu-psb
  *
  */
@@ -32,8 +32,8 @@
 			<?php echo $form->labelEx($model,'year_id'); ?>
 			<div class="desc">
 				<?php
-				if($model->isNewRecord && isset($_GET['id']))
-					$model->year_id = $_GET['id'];
+				if($model->isNewRecord && Yii::app()->getRequest()->getParam('id'))
+					$model->year_id = Yii::app()->getRequest()->getParam('id');
 				$year = PsbYears::getYear();
 				if($year != null)
 					echo $form->dropDownList($model,'year_id', $year);					
@@ -47,7 +47,7 @@
 		<div class="clearfix">
 			<?php echo $form->labelEx($model,'batch_name'); ?>
 			<div class="desc">
-				<?php echo $form->textField($model,'batch_name',array('class'=>'span-6','maxlength'=>32)); ?>
+				<?php echo $form->textField($model,'batch_name', array('class'=>'span-6','maxlength'=>32)); ?>
 				<?php echo $form->error($model,'batch_name'); ?>
 				<?php /*<div class="small-px silent"></div>*/?>
 			</div>
@@ -59,12 +59,12 @@
 				<?php
 				!$model->isNewRecord ? ($model->batch_start != '0000-00-00' ? $model->batch_start = date('d-m-Y', strtotime($model->batch_start)) : '') : '';
 				//echo $form->textField($model,'batch_start');
-				$this->widget('application.libraries.core.components.system.CJuiDatePicker',array(
+				$this->widget('application.libraries.core.components.system.CJuiDatePicker', array(
 					'model'=>$model,
 					'attribute'=>'batch_start',
 					//'mode'=>'datetime',
 					'options'=>array(
-						'dateFormat' => 'dd-mm-yy',
+						'dateFormat' => 'yy-mm-dd',
 					),
 					'htmlOptions'=>array(
 						'class' => 'span-6',
@@ -81,12 +81,12 @@
 				<?php
 				!$model->isNewRecord ? ($model->batch_finish != '0000-00-00' ? $model->batch_finish = date('d-m-Y', strtotime($model->batch_finish)) : '') : '';
 				//echo $form->textField($model,'batch_finish');
-				$this->widget('application.libraries.core.components.system.CJuiDatePicker',array(
+				$this->widget('application.libraries.core.components.system.CJuiDatePicker', array(
 					'model'=>$model,
 					'attribute'=>'batch_finish',
 					//'mode'=>'datetime',
 					'options'=>array(
-						'dateFormat' => 'dd-mm-yy',
+						'dateFormat' => 'yy-mm-dd',
 					),
 					'htmlOptions'=>array(
 						'class' => 'span-6',
@@ -122,7 +122,7 @@
 	</fieldset>
 </div>
 <div class="dialog-submit">
-	<?php echo CHtml::submitButton($model->isNewRecord ? Yii::t('phrase', 'Create') : Yii::t('phrase', 'Save') ,array('onclick' => 'setEnableSave()')); ?>
+	<?php echo CHtml::submitButton($model->isNewRecord ? Yii::t('phrase', 'Create') : Yii::t('phrase', 'Save') , array('onclick' => 'setEnableSave()')); ?>
 	<?php echo CHtml::button(Yii::t('phrase', 'Close'), array('id'=>'closed')); ?>
 </div>
 <?php $this->endWidget(); ?>

@@ -7,7 +7,7 @@
  *
  * @author Putra Sudaryanto <putra@sudaryanto.id>
  * @contact (+62)856-299-4114
- * @copyright Copyright (c) 2016 Ommu Platform (opensource.ommu.co)
+ * @copyright Copyright (c) 2016 Ommu Platform (www.ommu.co)
  * @link https://github.com/ommu/ommu-psb
  *
  */
@@ -32,7 +32,7 @@
 			<div class="desc">
 				<?php
 				$model->school_name = $model->school_name;
-				echo $form->textField($model,'school_name',array('maxlength'=>64, 'class'=>'span-8')); ?>
+				echo $form->textField($model,'school_name', array('maxlength'=>64, 'class'=>'span-8')); ?>
 				<?php echo $form->error($model,'school_name'); ?>
 				<?php /*<div class="small-px silent"></div>*/?>
 			</div>
@@ -41,7 +41,7 @@
 		<div class="clearfix">
 			<?php echo $form->labelEx($model,'school_address'); ?>
 			<div class="desc">
-				<?php echo $form->textArea($model,'school_address',array('rows'=>6, 'cols'=>50, 'class'=>'span-11')); ?>
+				<?php echo $form->textArea($model,'school_address', array('rows'=>6, 'cols'=>50, 'class'=>'span-11')); ?>
 				<?php echo $form->error($model,'school_address'); ?>
 				<?php /*<div class="small-px silent"></div>*/?>
 			</div>
@@ -50,7 +50,7 @@
 		<div class="clearfix">
 			<?php echo $form->labelEx($model,'school_phone'); ?>
 			<div class="desc">
-				<?php echo $form->textField($model,'school_phone',array('maxlength'=>15)); ?>
+				<?php echo $form->textField($model,'school_phone', array('maxlength'=>15)); ?>
 				<?php echo $form->error($model,'school_phone'); ?>
 			</div>
 		</div>
@@ -58,7 +58,7 @@
 		<div class="clearfix">
 			<?php echo $form->labelEx($model,'school_status'); ?>
 			<div class="desc">
-				<?php echo $form->dropDownList($model,'school_status',array(
+				<?php echo $form->dropDownList($model,'school_status', array(
 					1=>Yii::t('phrase', 'Negeri'),
 					0=>Yii::t('phrase', 'Swasta'),
 				)); ?>
@@ -80,7 +80,7 @@
 	</fieldset>
 </div>
 <div class="dialog-submit">
-	<?php echo CHtml::submitButton($model->isNewRecord ? Yii::t('phrase', 'Create') : Yii::t('phrase', 'Save') ,array('onclick' => 'setEnableSave()')); ?>
+	<?php echo CHtml::submitButton($model->isNewRecord ? Yii::t('phrase', 'Create') : Yii::t('phrase', 'Save') , array('onclick' => 'setEnableSave()')); ?>
 	<?php echo CHtml::button(Yii::t('phrase', 'Close'), array('id'=>'closed')); ?>
 </div>
 <?php $this->endWidget(); ?>

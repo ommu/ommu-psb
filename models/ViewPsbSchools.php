@@ -4,7 +4,7 @@
  *
  * @author Putra Sudaryanto <putra@sudaryanto.id>
  * @contact (+62)856-299-4114
- * @copyright Copyright (c) 2016 Ommu Platform (opensource.ommu.co)
+ * @copyright Copyright (c) 2016 Ommu Platform (www.ommu.co)
  * @created date 27 April 2016, 11:02 WIB
  * @link https://github.com/ommu/ommu-psb
  *
@@ -112,10 +112,10 @@ class ViewPsbSchools extends CActiveRecord
 
 		$criteria=new CDbCriteria;
 
-		$criteria->compare('t.school_id',strtolower($this->school_id),true);
-		$criteria->compare('t.registers',strtolower($this->registers),true);
+		$criteria->compare('t.school_id', strtolower($this->school_id), true);
+		$criteria->compare('t.registers', strtolower($this->registers), true);
 
-		if(!isset($_GET['ViewPsbSchools_sort']))
+		if(!Yii::app()->getRequest()->getParam('ViewPsbSchools_sort'))
 			$criteria->order = 't.school_id DESC';
 
 		return new CActiveDataProvider($this, array(
@@ -172,7 +172,7 @@ class ViewPsbSchools extends CActiveRecord
 	public static function getInfo($id, $column=null)
 	{
 		if($column != null) {
-			$model = self::model()->findByPk($id,array(
+			$model = self::model()->findByPk($id, array(
 				'select' => $column,
 			));
  			if(count(explode(',', $column)) == 1)

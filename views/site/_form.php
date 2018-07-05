@@ -7,7 +7,7 @@
  *
  * @author Putra Sudaryanto <putra@sudaryanto.id>
  * @contact (+62)856-299-4114
- * @copyright Copyright (c) 2016 Ommu Platform (opensource.ommu.co)
+ * @copyright Copyright (c) 2016 Ommu Platform (www.ommu.co)
  * @link https://github.com/ommu/ommu-psb
  *
  */
@@ -34,7 +34,7 @@ echo $form->hiddenField($model,'batch_id'); ?>
 	<div class="clearfix">
 		<?php echo $form->labelEx($model,'register_name'); ?>
 		<div class="desc">
-			<?php echo $form->textField($model,'register_name',array('maxlength'=>32)); ?>
+			<?php echo $form->textField($model,'register_name', array('maxlength'=>32)); ?>
 			<?php echo $form->error($model,'register_name'); ?>
 			<?php /*<div class="small-px silent"></div>*/?>
 		</div>
@@ -43,7 +43,7 @@ echo $form->hiddenField($model,'batch_id'); ?>
 	<div class="clearfix">
 		<?php echo $form->labelEx($model,'birth_city'); ?>
 		<div class="desc">
-			<?php echo $form->textField($model,'birth_city',array('maxlength'=>11)); ?>
+			<?php echo $form->textField($model,'birth_city', array('maxlength'=>11)); ?>
 			<?php echo $form->error($model,'birth_city'); ?>
 			<?php /*<div class="small-px silent"></div>*/?>
 		</div>
@@ -55,12 +55,12 @@ echo $form->hiddenField($model,'batch_id'); ?>
 			<?php
 			!$model->isNewRecord ? ($model->birth_date != '0000-00-00' ? $model->birth_date = date('d-m-Y', strtotime($model->birth_date)) : '') : '';
 			//echo $form->textField($model,'birth_date');
-			$this->widget('application.libraries.core.components.system.CJuiDatePicker',array(
+			$this->widget('application.libraries.core.components.system.CJuiDatePicker', array(
 				'model'=>$model,
 				'attribute'=>'birth_date',
 				//'mode'=>'datetime',
 				'options'=>array(
-					'dateFormat' => 'dd-mm-yy',
+					'dateFormat' => 'yy-mm-dd',
 				),
 				'htmlOptions'=>array(
 					'class' => 'span-4',
@@ -74,7 +74,7 @@ echo $form->hiddenField($model,'batch_id'); ?>
 	<div class="clearfix">
 		<?php echo $form->labelEx($model,'address'); ?>
 		<div class="desc">
-			<?php echo $form->textArea($model,'address',array('rows'=>6, 'cols'=>50)); ?>
+			<?php echo $form->textArea($model,'address', array('rows'=>6, 'cols'=>50)); ?>
 			<?php echo $form->error($model,'address'); ?>
 			<?php /*<div class="small-px silent"></div>*/?>
 		</div>
@@ -83,7 +83,7 @@ echo $form->hiddenField($model,'batch_id'); ?>
 	<div class="clearfix">
 		<?php echo $form->labelEx($model,'address_phone'); ?>
 		<div class="desc">
-			<?php echo $form->textField($model,'address_phone',array('size'=>15,'maxlength'=>15)); ?>
+			<?php echo $form->textField($model,'address_phone', array('size'=>15,'maxlength'=>15)); ?>
 			<?php echo $form->error($model,'address_phone'); ?>
 			<?php /*<div class="small-px silent"></div>*/?>
 		</div>
@@ -92,7 +92,7 @@ echo $form->hiddenField($model,'batch_id'); ?>
 	<div class="clearfix">
 		<?php echo $form->labelEx($model,'address_yogya'); ?>
 		<div class="desc">
-			<?php echo $form->textArea($model,'address_yogya',array('rows'=>6, 'cols'=>50)); ?>
+			<?php echo $form->textArea($model,'address_yogya', array('rows'=>6, 'cols'=>50)); ?>
 			<?php echo $form->error($model,'address_yogya'); ?>
 			<?php /*<div class="small-px silent"></div>*/?>
 		</div>
@@ -101,7 +101,7 @@ echo $form->hiddenField($model,'batch_id'); ?>
 	<div class="clearfix">
 		<?php echo $form->labelEx($model,'address_yogya_phone'); ?>
 		<div class="desc">
-			<?php echo $form->textField($model,'address_yogya_phone',array('size'=>15,'maxlength'=>15)); ?>
+			<?php echo $form->textField($model,'address_yogya_phone', array('size'=>15,'maxlength'=>15)); ?>
 			<?php echo $form->error($model,'address_yogya_phone'); ?>
 			<?php /*<div class="small-px silent"></div>*/?>
 		</div>
@@ -113,7 +113,7 @@ echo $form->hiddenField($model,'batch_id'); ?>
 	<div class="clearfix">
 		<?php echo $form->labelEx($model,'parent_name'); ?>
 		<div class="desc">
-			<?php echo $form->textField($model,'parent_name',array('maxlength'=>32)); ?>
+			<?php echo $form->textField($model,'parent_name', array('maxlength'=>32)); ?>
 			<?php echo $form->error($model,'parent_name'); ?>
 			<?php /*<div class="small-px silent"></div>*/?>
 		</div>
@@ -122,7 +122,7 @@ echo $form->hiddenField($model,'batch_id'); ?>
 	<div class="clearfix">
 		<?php echo $form->labelEx($model,'parent_work'); ?>
 		<div class="desc">
-			<?php echo $form->textField($model,'parent_work',array('maxlength'=>32)); ?>
+			<?php echo $form->textField($model,'parent_work', array('maxlength'=>32)); ?>
 			<?php echo $form->error($model,'parent_work'); ?>
 			<?php /*<div class="small-px silent"></div>*/?>
 		</div>
@@ -131,7 +131,7 @@ echo $form->hiddenField($model,'batch_id'); ?>
 	<div class="clearfix">
 		<?php echo $form->labelEx($model,'parent_address'); ?>
 		<div class="desc">
-			<?php echo $form->textArea($model,'parent_address',array('rows'=>6, 'cols'=>50)); ?>
+			<?php echo $form->textArea($model,'parent_address', array('rows'=>6, 'cols'=>50)); ?>
 			<?php echo $form->error($model,'parent_address'); ?>
 			<?php /*<div class="small-px silent"></div>*/?>
 		</div>
@@ -140,7 +140,7 @@ echo $form->hiddenField($model,'batch_id'); ?>
 	<div class="clearfix">
 		<?php echo $form->labelEx($model,'parent_phone'); ?>
 		<div class="desc">
-			<?php echo $form->textField($model,'parent_phone',array('size'=>15,'maxlength'=>15)); ?>
+			<?php echo $form->textField($model,'parent_phone', array('size'=>15,'maxlength'=>15)); ?>
 			<?php echo $form->error($model,'parent_phone'); ?>
 			<?php /*<div class="small-px silent"></div>*/?>
 		</div>
@@ -152,7 +152,7 @@ echo $form->hiddenField($model,'batch_id'); ?>
 	<div class="clearfix">
 		<?php echo $form->labelEx($model,'school_input'); ?>
 		<div class="desc">
-			<?php //echo $form->textField($model,'school_input',array('maxlength'=>64));
+			<?php //echo $form->textField($model,'school_input', array('maxlength'=>64));
 			$url = Yii::app()->controller->createUrl('school/ajaxget', array('type'=>'school'));
 			$this->widget('zii.widgets.jui.CJuiAutoComplete', array(
 				'model' => $model,
@@ -192,7 +192,7 @@ echo $form->hiddenField($model,'batch_id'); ?>
 	<div class="clearfix">
 		<?php echo $form->labelEx($school,'school_address'); ?>
 		<div class="desc">
-			<?php echo $form->textArea($school,'school_address',array('rows'=>6, 'cols'=>50, 'class'=>'span-11')); ?>
+			<?php echo $form->textArea($school,'school_address', array('rows'=>6, 'cols'=>50, 'class'=>'span-11')); ?>
 			<?php echo $form->error($school,'school_address'); ?>
 			<?php /*<div class="small-px silent"></div>*/?>
 		</div>
@@ -201,7 +201,7 @@ echo $form->hiddenField($model,'batch_id'); ?>
 	<div class="clearfix">
 		<?php echo $form->labelEx($school,'school_phone'); ?>
 		<div class="desc">
-			<?php echo $form->textField($school,'school_phone',array('maxlength'=>15)); ?>
+			<?php echo $form->textField($school,'school_phone', array('maxlength'=>15)); ?>
 			<?php echo $form->error($school,'school_phone'); ?>
 		</div>
 	</div>
@@ -209,7 +209,7 @@ echo $form->hiddenField($model,'batch_id'); ?>
 	<div class="clearfix">
 		<?php echo $form->labelEx($school,'school_status'); ?>
 		<div class="desc">
-			<?php echo $form->dropDownList($school,'school_status',array(
+			<?php echo $form->dropDownList($school,'school_status', array(
 				1=>'Negeri',
 				0=>'Swasta',					
 			)); ?>
@@ -223,7 +223,7 @@ echo $form->hiddenField($model,'batch_id'); ?>
 	<div class="clearfix">
 		<?php echo $form->labelEx($model,'school_un_rank'); ?>
 		<div class="desc">
-			<?php echo $form->textField($model,'school_un_rank',array('maxlength'=>32)); ?>
+			<?php echo $form->textField($model,'school_un_rank', array('maxlength'=>32)); ?>
 			<?php echo $form->error($model,'school_un_rank'); ?>
 			<?php /*<div class="small-px silent"></div>*/?>
 		</div>
@@ -236,7 +236,7 @@ echo $form->hiddenField($model,'batch_id'); ?>
 	<div class="clearfix">
 		<?php echo $form->labelEx($author,'name'); ?>
 		<div class="desc">
-			<?php echo $form->textField($author,'name',array('maxlength'=>32, 'class'=>'span-8')); ?>
+			<?php echo $form->textField($author,'name', array('maxlength'=>32, 'class'=>'span-8')); ?>
 			<?php echo $form->error($author,'name'); ?>
 			<?php /*<div class="small-px silent"></div>*/?>
 		</div>
@@ -245,7 +245,7 @@ echo $form->hiddenField($model,'batch_id'); ?>
 	<div class="clearfix">
 		<?php echo $form->labelEx($author,'email'); ?>
 		<div class="desc">
-			<?php echo $form->textField($author,'email',array('maxlength'=>32, 'class'=>'span-8')); ?>
+			<?php echo $form->textField($author,'email', array('maxlength'=>32, 'class'=>'span-8')); ?>
 			<?php echo $form->error($author,'email'); ?>
 			<?php /*<div class="small-px silent"></div>*/?>
 		</div>

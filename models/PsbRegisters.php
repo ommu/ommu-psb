@@ -4,7 +4,7 @@
  *
  * @author Putra Sudaryanto <putra@sudaryanto.id>
  * @contact (+62)856-299-4114
- * @copyright Copyright (c) 2016 Ommu Platform (opensource.ommu.co)
+ * @copyright Copyright (c) 2016 Ommu Platform (www.ommu.co)
  * @created date 27 April 2016, 12:05 WIB
  * @link https://github.com/ommu/ommu-psb
  *
@@ -205,59 +205,59 @@ class PsbRegisters extends CActiveRecord
 		// @todo Please modify the following code to remove attributes that should not be searched.
 
 		$criteria=new CDbCriteria;
-		$criteria->compare('t.register_id',strtolower($this->register_id),true);
-		$criteria->compare('t.author_id',strtolower($this->author_id),true);
-		$criteria->compare('t.status',$this->status);
-		$criteria->compare('t.register_number',$this->status);
-		$criteria->compare('t.nisn',strtolower($this->nisn),true);
-		if(isset($_GET['batch']))
-			$criteria->compare('t.batch_id',$_GET['batch']);
+		$criteria->compare('t.register_id', strtolower($this->register_id), true);
+		$criteria->compare('t.author_id', strtolower($this->author_id), true);
+		$criteria->compare('t.status', $this->status);
+		$criteria->compare('t.register_number', $this->status);
+		$criteria->compare('t.nisn', strtolower($this->nisn), true);
+		if(Yii::app()->getRequest()->getParam('batch'))
+			$criteria->compare('t.batch_id', Yii::app()->getRequest()->getParam('batch'));
 		else
-			$criteria->compare('t.batch_id',$this->batch_id);
-		$criteria->compare('t.register_name',strtolower($this->register_name),true);
-		$criteria->compare('t.birth_city',strtolower($this->birth_city),true);
-		if($this->birth_date != null && !in_array($this->birth_date, array('0000-00-00 00:00:00', '0000-00-00')))
-			$criteria->compare('date(t.birth_date)',date('Y-m-d', strtotime($this->birth_date)));
-		$criteria->compare('t.gender',strtolower($this->gender),true);
-		if(isset($_GET['religion']))
-			$criteria->compare('t.religion',$_GET['religion']);
+			$criteria->compare('t.batch_id', $this->batch_id);
+		$criteria->compare('t.register_name', strtolower($this->register_name), true);
+		$criteria->compare('t.birth_city', strtolower($this->birth_city), true);
+		if($this->birth_date != null && !in_array($this->birth_date, array('0000-00-00 00:00:00','1970-01-01 00:00:00','0002-12-02 07:07:12','-0001-11-30 00:00:00')))
+			$criteria->compare('date(t.birth_date)', date('Y-m-d', strtotime($this->birth_date)));
+		$criteria->compare('t.gender', strtolower($this->gender), true);
+		if(Yii::app()->getRequest()->getParam('religion'))
+			$criteria->compare('t.religion', Yii::app()->getRequest()->getParam('religion'));
 		else
-			$criteria->compare('t.religion',$this->religion);
-		$criteria->compare('t.address',strtolower($this->address),true);
-		$criteria->compare('t.address_phone',strtolower($this->address_phone),true);
-		$criteria->compare('t.address_yogya',strtolower($this->address_yogya),true);
-		$criteria->compare('t.address_yogya_phone',strtolower($this->address_yogya_phone),true);
-		$criteria->compare('t.parent_name',strtolower($this->parent_name),true);
-		$criteria->compare('t.parent_work',strtolower($this->parent_work),true);
-		if(isset($_GET['parentreligion']))
-			$criteria->compare('t.parent_religion',$_GET['parentreligion']);
+			$criteria->compare('t.religion', $this->religion);
+		$criteria->compare('t.address', strtolower($this->address), true);
+		$criteria->compare('t.address_phone', strtolower($this->address_phone), true);
+		$criteria->compare('t.address_yogya', strtolower($this->address_yogya), true);
+		$criteria->compare('t.address_yogya_phone', strtolower($this->address_yogya_phone), true);
+		$criteria->compare('t.parent_name', strtolower($this->parent_name), true);
+		$criteria->compare('t.parent_work', strtolower($this->parent_work), true);
+		if(Yii::app()->getRequest()->getParam('parentreligion'))
+			$criteria->compare('t.parent_religion', Yii::app()->getRequest()->getParam('parentreligion'));
 		else
-			$criteria->compare('t.parent_religion',$this->parent_religion);
-		$criteria->compare('t.parent_address',strtolower($this->parent_address),true);
-		$criteria->compare('t.parent_phone',strtolower($this->parent_phone),true);
-		$criteria->compare('t.wali_name',strtolower($this->wali_name),true);
-		$criteria->compare('t.wali_work',strtolower($this->wali_work),true);
-		if(isset($_GET['walireligion']))
-			$criteria->compare('t.wali_religion',$_GET['walireligion']);
+			$criteria->compare('t.parent_religion', $this->parent_religion);
+		$criteria->compare('t.parent_address', strtolower($this->parent_address), true);
+		$criteria->compare('t.parent_phone', strtolower($this->parent_phone), true);
+		$criteria->compare('t.wali_name', strtolower($this->wali_name), true);
+		$criteria->compare('t.wali_work', strtolower($this->wali_work), true);
+		if(Yii::app()->getRequest()->getParam('walireligion'))
+			$criteria->compare('t.wali_religion', Yii::app()->getRequest()->getParam('walireligion'));
 		else
-			$criteria->compare('t.wali_religion',$this->wali_religion);
-		$criteria->compare('t.wali_address',strtolower($this->wali_address),true);
-		$criteria->compare('t.wali_phone',strtolower($this->wali_phone),true);
-		if(isset($_GET['school']))
-			$criteria->compare('t.school_id',$_GET['school']);
+			$criteria->compare('t.wali_religion', $this->wali_religion);
+		$criteria->compare('t.wali_address', strtolower($this->wali_address), true);
+		$criteria->compare('t.wali_phone', strtolower($this->wali_phone), true);
+		if(Yii::app()->getRequest()->getParam('school'))
+			$criteria->compare('t.school_id', Yii::app()->getRequest()->getParam('school'));
 		else
-			$criteria->compare('t.school_id',$this->school_id);
-		$criteria->compare('t.school_un_rank',strtolower($this->school_un_rank),true);
-		$criteria->compare('t.school_un_detail',strtolower($this->school_un_detail),true);
-		if($this->bundle_date != null && !in_array($this->bundle_date, array('0000-00-00 00:00:00', '0000-00-00')))
-			$criteria->compare('date(t.bundle_date)',date('Y-m-d', strtotime($this->bundle_date)));
-		if($this->creation_date != null && !in_array($this->creation_date, array('0000-00-00 00:00:00', '0000-00-00')))
-			$criteria->compare('date(t.creation_date)',date('Y-m-d', strtotime($this->creation_date)));
-		if(isset($_GET['creation']))
-			$criteria->compare('t.creation_id',$_GET['creation']);
+			$criteria->compare('t.school_id', $this->school_id);
+		$criteria->compare('t.school_un_rank', strtolower($this->school_un_rank), true);
+		$criteria->compare('t.school_un_detail', strtolower($this->school_un_detail), true);
+		if($this->bundle_date != null && !in_array($this->bundle_date, array('0000-00-00 00:00:00','1970-01-01 00:00:00','0002-12-02 07:07:12','-0001-11-30 00:00:00')))
+			$criteria->compare('date(t.bundle_date)', date('Y-m-d', strtotime($this->bundle_date)));
+		if($this->creation_date != null && !in_array($this->creation_date, array('0000-00-00 00:00:00','1970-01-01 00:00:00','0002-12-02 07:07:12','-0001-11-30 00:00:00')))
+			$criteria->compare('date(t.creation_date)', date('Y-m-d', strtotime($this->creation_date)));
+		if(Yii::app()->getRequest()->getParam('creation'))
+			$criteria->compare('t.creation_id', Yii::app()->getRequest()->getParam('creation'));
 		else
-			$criteria->compare('t.creation_id',$this->creation_id);
-		$criteria->compare('t.school_un_average',$this->school_un_average,true);
+			$criteria->compare('t.creation_id', $this->creation_id);
+		$criteria->compare('t.school_un_average', $this->school_un_average,true);
 		
 		// Custom Search
 		$criteria->with = array(
@@ -278,16 +278,16 @@ class PsbRegisters extends CActiveRecord
 				'select'=>'displayname'
 			),
 		);
-		if(isset($_GET['year']))
-			$criteria->compare('batch_relation.year_id',$_GET['year']);
+		if(Yii::app()->getRequest()->getParam('year'))
+			$criteria->compare('batch_relation.year_id', Yii::app()->getRequest()->getParam('year'));
 		else
-			$criteria->compare('batch_relation.year_id',$this->year_search);
-		$criteria->compare('batch_relation.batch_name',strtolower($this->batch_search), true);
-		$criteria->compare('city_relation.city',strtolower($this->birth_city_search), true);
-		$criteria->compare('school.school_name',strtolower($this->school_search), true);
-		$criteria->compare('creation.displayname',strtolower($this->creation_search), true);
+			$criteria->compare('batch_relation.year_id', $this->year_search);
+		$criteria->compare('batch_relation.batch_name', strtolower($this->batch_search), true);
+		$criteria->compare('city_relation.city', strtolower($this->birth_city_search), true);
+		$criteria->compare('school.school_name', strtolower($this->school_search), true);
+		$criteria->compare('creation.displayname', strtolower($this->creation_search), true);
 
-		if(!isset($_GET['PsbRegisters_sort']))
+		if(!Yii::app()->getRequest()->getParam('PsbRegisters_sort'))
 			$criteria->order = 't.register_id DESC';
 
 		return new CActiveDataProvider($this, array(
@@ -369,7 +369,7 @@ class PsbRegisters extends CActiveRecord
 				'header' => 'No',
 				'value' => '$this->grid->dataProvider->pagination->currentPage*$this->grid->dataProvider->pagination->pageSize + $row+1'
 			);
-			if(!isset($_GET['year'])) {
+			if(!Yii::app()->getRequest()->getParam('year')) {
 				$this->defaultColumns[] = array(
 					'name' => 'year_search',
 					'value' => '$data->batch_relation->year->years',
@@ -404,7 +404,7 @@ class PsbRegisters extends CActiveRecord
 					),
 					'options'=>array(
 						'showOn' => 'focus',
-						'dateFormat' => 'dd-mm-yy',
+						'dateFormat' => 'yy-mm-dd',
 						'showOtherMonths' => true,
 						'selectOtherMonths' => true,
 						'changeMonth' => true,
@@ -459,7 +459,7 @@ class PsbRegisters extends CActiveRecord
 					),
 					'options'=>array(
 						'showOn' => 'focus',
-						'dateFormat' => 'dd-mm-yy',
+						'dateFormat' => 'yy-mm-dd',
 						'showOtherMonths' => true,
 						'selectOtherMonths' => true,
 						'changeMonth' => true,
@@ -468,10 +468,10 @@ class PsbRegisters extends CActiveRecord
 					),
 				), true),
 			);
-			if(!isset($_GET['type'])) {
+			if(!Yii::app()->getRequest()->getParam('type')) {
 				$this->defaultColumns[] = array(
 					'name' => 'status',
-					'value' => 'Utility::getPublish(Yii::app()->controller->createUrl("status",array("id"=>$data->register_id)), $data->status, 1)',
+					'value' => 'Utility::getPublish(Yii::app()->controller->createUrl("status", array("id"=>$data->register_id)), $data->status, 1)',
 					'htmlOptions' => array(
 						'class' => 'center',
 					),
@@ -493,7 +493,7 @@ class PsbRegisters extends CActiveRecord
 	public static function getInfo($id, $column=null)
 	{
 		if($column != null) {
-			$model = self::model()->findByPk($id,array(
+			$model = self::model()->findByPk($id, array(
 				'select' => $column,
 			));
  			if(count(explode(',', $column)) == 1)

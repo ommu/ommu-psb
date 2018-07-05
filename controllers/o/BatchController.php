@@ -20,7 +20,7 @@
  *
  * @author Putra Sudaryanto <putra@sudaryanto.id>
  * @contact (+62)856-299-4114
- * @copyright Copyright (c) 2016 Ommu Platform (opensource.ommu.co)
+ * @copyright Copyright (c) 2016 Ommu Platform (www.ommu.co)
  * @link https://github.com/ommu/ommu-psb
  *
  *----------------------------------------------------------------------------------------------------------
@@ -127,7 +127,7 @@ class BatchController extends Controller
 		$this->pageTitle = Yii::t('phrase', 'Psb Year Batches Manage');
 		$this->pageDescription = '';
 		$this->pageMeta = '';
-		$this->render('admin_manage',array(
+		$this->render('admin_manage', array(
 			'model'=>$model,
 			'columns' => $columns,
 		));
@@ -152,11 +152,11 @@ class BatchController extends Controller
 				echo $jsonError;
 
 			} else {
-				if(isset($_GET['enablesave']) && $_GET['enablesave'] == 1) {
+				if(Yii::app()->getRequest()->getParam('enablesave') == 1) {
 					if($model->save()) {
 						echo CJSON::encode(array(
 							'type' => 5,
-							'get' => (isset($_GET['type']) && $_GET['type'] == 'year') ? Yii::app()->controller->createUrl('o/year/edit', array('id'=>$model->year_id)) : Yii::app()->controller->createUrl('manage'),
+							'get' => (Yii::app()->getRequest()->getParam('type') == 'year') ? Yii::app()->controller->createUrl('o/year/edit', array('id'=>$model->year_id)) : Yii::app()->controller->createUrl('manage'),
 							'id' => 'partial-psb-year-batch',
 							'msg' => '<div class="errorSummary success"><strong>'.Yii::t('phrase', 'PsbYearBatch success created.').'</strong></div>',
 						));
@@ -169,13 +169,13 @@ class BatchController extends Controller
 		}
 		
 		$this->dialogDetail = true;
-		$this->dialogGroundUrl = (isset($_GET['type']) && $_GET['type'] == 'year') ? Yii::app()->controller->createUrl('o/year/edit', array('id'=>$_GET['id'])) : Yii::app()->controller->createUrl('manage');
+		$this->dialogGroundUrl = (Yii::app()->getRequest()->getParam('type') == 'year') ? Yii::app()->controller->createUrl('o/year/edit', array('id'=>Yii::app()->getRequest()->getParam('id'))) : Yii::app()->controller->createUrl('manage');
 		$this->dialogWidth = 600;
 
 		$this->pageTitle = Yii::t('phrase', 'Create Psb Year Batches');
 		$this->pageDescription = '';
 		$this->pageMeta = '';
-		$this->render('admin_add',array(
+		$this->render('admin_add', array(
 			'model'=>$model,
 		));
 	}
@@ -200,11 +200,11 @@ class BatchController extends Controller
 				echo $jsonError;
 
 			} else {
-				if(isset($_GET['enablesave']) && $_GET['enablesave'] == 1) {
+				if(Yii::app()->getRequest()->getParam('enablesave') == 1) {
 					if($model->save()) {
 						echo CJSON::encode(array(
 							'type' => 5,
-							'get' => (isset($_GET['type']) && $_GET['type'] == 'year') ? Yii::app()->controller->createUrl('o/year/edit', array('id'=>$model->year_id)) : Yii::app()->controller->createUrl('manage'),
+							'get' => (Yii::app()->getRequest()->getParam('type') == 'year') ? Yii::app()->controller->createUrl('o/year/edit', array('id'=>$model->year_id)) : Yii::app()->controller->createUrl('manage'),
 							'id' => 'partial-psb-year-batch',
 							'msg' => '<div class="errorSummary success"><strong>'.Yii::t('phrase', 'PsbYearBatch success updated.').'</strong></div>',
 						));
@@ -217,13 +217,13 @@ class BatchController extends Controller
 		}
 		
 		$this->dialogDetail = true;
-		$this->dialogGroundUrl = (isset($_GET['type']) && $_GET['type'] == 'year') ? Yii::app()->controller->createUrl('o/year/edit', array('id'=>$model->year_id)) : Yii::app()->controller->createUrl('manage');
+		$this->dialogGroundUrl = (Yii::app()->getRequest()->getParam('type') == 'year') ? Yii::app()->controller->createUrl('o/year/edit', array('id'=>$model->year_id)) : Yii::app()->controller->createUrl('manage');
 		$this->dialogWidth = 600;
 
 		$this->pageTitle = Yii::t('phrase', 'Update Psb Year Batches');
 		$this->pageDescription = '';
 		$this->pageMeta = '';
-		$this->render('admin_edit',array(
+		$this->render('admin_edit', array(
 			'model'=>$model,
 		));
 	}
@@ -235,7 +235,7 @@ class BatchController extends Controller
 	public function actionRunAction() {
 		$id       = $_POST['trash_id'];
 		$criteria = null;
-		$actions  = $_GET['action'];
+		$actions  = Yii::app()->getRequest()->getParam('action');
 
 		if(count($id) > 0) {
 			$criteria = new CDbCriteria;
@@ -259,7 +259,7 @@ class BatchController extends Controller
 		}
 
 		// if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
-		if(!isset($_GET['ajax'])) {
+		if(!Yii::app()->getRequest()->getParam('ajax')) {
 			$this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('manage'));
 		}
 	}
@@ -279,7 +279,7 @@ class BatchController extends Controller
 				if($model->delete()) {
 					echo CJSON::encode(array(
 						'type' => 5,
-						'get' => (isset($_GET['type']) && $_GET['type'] == 'year') ? Yii::app()->controller->createUrl('o/year/edit', array('id'=>$model->year_id)) : Yii::app()->controller->createUrl('manage'),
+						'get' => (Yii::app()->getRequest()->getParam('type') == 'year') ? Yii::app()->controller->createUrl('o/year/edit', array('id'=>$model->year_id)) : Yii::app()->controller->createUrl('manage'),
 						'id' => 'partial-psb-year-batch',
 						'msg' => '<div class="errorSummary success"><strong>'.Yii::t('phrase', 'PsbYearBatch success deleted.').'</strong></div>',
 					));
@@ -288,7 +288,7 @@ class BatchController extends Controller
 
 		} else {
 			$this->dialogDetail = true;
-			$this->dialogGroundUrl = (isset($_GET['type']) && $_GET['type'] == 'year') ? Yii::app()->controller->createUrl('o/year/edit', array('id'=>$model->year_id)) : Yii::app()->controller->createUrl('manage');
+			$this->dialogGroundUrl = (Yii::app()->getRequest()->getParam('type') == 'year') ? Yii::app()->controller->createUrl('o/year/edit', array('id'=>$model->year_id)) : Yii::app()->controller->createUrl('manage');
 			$this->dialogWidth = 350;
 
 			$this->pageTitle = Yii::t('phrase', 'PsbYearBatch Delete.');
@@ -324,7 +324,7 @@ class BatchController extends Controller
 				if($model->update()) {
 					echo CJSON::encode(array(
 						'type' => 5,
-						'get' => (isset($_GET['type']) && $_GET['type'] == 'year') ? Yii::app()->controller->createUrl('o/year/edit', array('id'=>$model->year_id)) : Yii::app()->controller->createUrl('manage'),
+						'get' => (Yii::app()->getRequest()->getParam('type') == 'year') ? Yii::app()->controller->createUrl('o/year/edit', array('id'=>$model->year_id)) : Yii::app()->controller->createUrl('manage'),
 						'id' => 'partial-psb-year-batch',
 						'msg' => '<div class="errorSummary success"><strong>'.Yii::t('phrase', 'PsbYearBatch success updated.').'</strong></div>',
 					));
@@ -333,13 +333,13 @@ class BatchController extends Controller
 
 		} else {
 			$this->dialogDetail = true;
-			$this->dialogGroundUrl = (isset($_GET['type']) && $_GET['type'] == 'year') ? Yii::app()->controller->createUrl('o/year/edit', array('id'=>$model->year_id)) : Yii::app()->controller->createUrl('manage');
+			$this->dialogGroundUrl = (Yii::app()->getRequest()->getParam('type') == 'year') ? Yii::app()->controller->createUrl('o/year/edit', array('id'=>$model->year_id)) : Yii::app()->controller->createUrl('manage');
 			$this->dialogWidth = 350;
 
 			$this->pageTitle = $title;
 			$this->pageDescription = '';
 			$this->pageMeta = '';
-			$this->render('admin_publish',array(
+			$this->render('admin_publish', array(
 				'title'=>$title,
 				'model'=>$model,
 			));

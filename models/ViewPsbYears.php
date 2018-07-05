@@ -4,7 +4,7 @@
  *
  * @author Putra Sudaryanto <putra@sudaryanto.id>
  * @contact (+62)856-299-4114
- * @copyright Copyright (c) 2016 Ommu Platform (opensource.ommu.co)
+ * @copyright Copyright (c) 2016 Ommu Platform (www.ommu.co)
  * @created date 27 April 2016, 01:18 WIB
  * @link https://github.com/ommu/ommu-psb
  *
@@ -118,12 +118,12 @@ class ViewPsbYears extends CActiveRecord
 
 		$criteria=new CDbCriteria;
 
-		$criteria->compare('t.year_id',strtolower($this->year_id),true);
-		$criteria->compare('t.batchs',strtolower($this->batchs),true);
-		$criteria->compare('t.courses',strtolower($this->courses),true);
-		$criteria->compare('t.registers',strtolower($this->registers),true);
+		$criteria->compare('t.year_id', strtolower($this->year_id), true);
+		$criteria->compare('t.batchs', strtolower($this->batchs), true);
+		$criteria->compare('t.courses', strtolower($this->courses), true);
+		$criteria->compare('t.registers', strtolower($this->registers), true);
 
-		if(!isset($_GET['ViewPsbYears_sort']))
+		if(!Yii::app()->getRequest()->getParam('ViewPsbYears_sort'))
 			$criteria->order = 't.year_id DESC';
 
 		return new CActiveDataProvider($this, array(
@@ -183,7 +183,7 @@ class ViewPsbYears extends CActiveRecord
 	public static function getInfo($id, $column=null)
 	{
 		if($column != null) {
-			$model = self::model()->findByPk($id,array(
+			$model = self::model()->findByPk($id, array(
 				'select' => $column,
 			));
  			if(count(explode(',', $column)) == 1)

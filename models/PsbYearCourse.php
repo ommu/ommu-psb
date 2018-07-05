@@ -4,7 +4,7 @@
  *
  * @author Putra Sudaryanto <putra@sudaryanto.id>
  * @contact (+62)856-299-4114
- * @copyright Copyright (c) 2016 Ommu Platform (opensource.ommu.co)
+ * @copyright Copyright (c) 2016 Ommu Platform (www.ommu.co)
  * @link https://github.com/ommu/ommu-psb
  *
  * This is the template for generating the model class of a specified table.
@@ -129,20 +129,20 @@ class PsbYearCourse extends CActiveRecord
 
 		$criteria=new CDbCriteria;
 
-		$criteria->compare('t.id',$this->id,true);
-		if(isset($_GET['year'])) {
-			$criteria->compare('t.year_id',$_GET['year']);
+		$criteria->compare('t.id', $this->id,true);
+		if(Yii::app()->getRequest()->getParam('year')) {
+			$criteria->compare('t.year_id', Yii::app()->getRequest()->getParam('year'));
 		} else {
-			$criteria->compare('t.year_id',$this->year_id);
+			$criteria->compare('t.year_id', $this->year_id);
 		}
-		if(isset($_GET['course'])) {
-			$criteria->compare('t.course_id',$_GET['course']);
+		if(Yii::app()->getRequest()->getParam('course')) {
+			$criteria->compare('t.course_id', Yii::app()->getRequest()->getParam('course'));
 		} else {
-			$criteria->compare('t.course_id',$this->course_id);
+			$criteria->compare('t.course_id', $this->course_id);
 		}
-		if($this->creation_date != null && !in_array($this->creation_date, array('0000-00-00 00:00:00', '0000-00-00')))
-			$criteria->compare('date(t.creation_date)',date('Y-m-d', strtotime($this->creation_date)));
-		$criteria->compare('t.creation_id',$this->creation_id,true);
+		if($this->creation_date != null && !in_array($this->creation_date, array('0000-00-00 00:00:00','1970-01-01 00:00:00','0002-12-02 07:07:12','-0001-11-30 00:00:00')))
+			$criteria->compare('date(t.creation_date)', date('Y-m-d', strtotime($this->creation_date)));
+		$criteria->compare('t.creation_id', $this->creation_id,true);
 		
 		// Custom Search
 		$criteria->with = array(
@@ -159,11 +159,11 @@ class PsbYearCourse extends CActiveRecord
 				'select'=>'displayname'
 			),
 		);
-		$criteria->compare('year_relation.years',strtolower($this->year_search), true);
-		$criteria->compare('course.course_name',strtolower($this->course_search), true);
-		$criteria->compare('creation_relation.displayname',strtolower($this->creation_search), true);
+		$criteria->compare('year_relation.years', strtolower($this->year_search), true);
+		$criteria->compare('course.course_name', strtolower($this->course_search), true);
+		$criteria->compare('creation_relation.displayname', strtolower($this->creation_search), true);
 
-		if(!isset($_GET['PsbYearCourse_sort']))
+		if(!Yii::app()->getRequest()->getParam('PsbYearCourse_sort'))
 			$criteria->order = 'id DESC';
 
 		return new CActiveDataProvider($this, array(
@@ -239,7 +239,7 @@ class PsbYearCourse extends CActiveRecord
 					),
 					'options'=>array(
 						'showOn' => 'focus',
-						'dateFormat' => 'dd-mm-yy',
+						'dateFormat' => 'yy-mm-dd',
 						'showOtherMonths' => true,
 						'selectOtherMonths' => true,
 						'changeMonth' => true,
@@ -258,7 +258,7 @@ class PsbYearCourse extends CActiveRecord
 	public static function getInfo($id, $column=null)
 	{
 		if($column != null) {
-			$model = self::model()->findByPk($id,array(
+			$model = self::model()->findByPk($id, array(
 				'select' => $column,
 			));
  			if(count(explode(',', $column)) == 1)

@@ -4,7 +4,7 @@
  *
  * @author Putra Sudaryanto <putra@sudaryanto.id>
  * @contact (+62)856-299-4114
- * @copyright Copyright (c) 2016 Ommu Platform (opensource.ommu.co)
+ * @copyright Copyright (c) 2016 Ommu Platform (www.ommu.co)
  * @link https://github.com/ommu/ommu-psb
  *
  * This is the template for generating the model class of a specified table.
@@ -134,26 +134,26 @@ class PsbCourses extends CActiveRecord
 
 		$criteria=new CDbCriteria;
 
-		$criteria->compare('t.course_id',$this->course_id,true);
-		if(isset($_GET['type']) && $_GET['type'] == 'publish')
-			$criteria->compare('t.publish',1);
-		elseif(isset($_GET['type']) && $_GET['type'] == 'unpublish')
-			$criteria->compare('t.publish',0);
-		elseif(isset($_GET['type']) && $_GET['type'] == 'trash')
-			$criteria->compare('t.publish',2);
+		$criteria->compare('t.course_id', $this->course_id,true);
+		if(Yii::app()->getRequest()->getParam('type') == 'publish')
+			$criteria->compare('t.publish', 1);
+		elseif(Yii::app()->getRequest()->getParam('type') == 'unpublish')
+			$criteria->compare('t.publish', 0);
+		elseif(Yii::app()->getRequest()->getParam('type') == 'trash')
+			$criteria->compare('t.publish', 2);
 		else {
-			$criteria->addInCondition('t.publish',array(0,1));
-			$criteria->compare('t.publish',$this->publish);
+			$criteria->addInCondition('t.publish', array(0,1));
+			$criteria->compare('t.publish', $this->publish);
 		}
-		$criteria->compare('t.defaults',$this->defaults);
-		$criteria->compare('t.course_name',$this->course_name,true);
-		$criteria->compare('t.course_desc',$this->course_desc,true);
-		if($this->creation_date != null && !in_array($this->creation_date, array('0000-00-00 00:00:00', '0000-00-00')))
-			$criteria->compare('date(t.creation_date)',date('Y-m-d', strtotime($this->creation_date)));
-		$criteria->compare('t.creation_id',$this->creation_id,true);
-		if($this->modified_date != null && !in_array($this->modified_date, array('0000-00-00 00:00:00', '0000-00-00')))
-			$criteria->compare('date(t.modified_date)',date('Y-m-d', strtotime($this->modified_date)));
-		$criteria->compare('t.modified_id',$this->modified_id,true);
+		$criteria->compare('t.defaults', $this->defaults);
+		$criteria->compare('t.course_name', $this->course_name,true);
+		$criteria->compare('t.course_desc', $this->course_desc,true);
+		if($this->creation_date != null && !in_array($this->creation_date, array('0000-00-00 00:00:00','1970-01-01 00:00:00','0002-12-02 07:07:12','-0001-11-30 00:00:00')))
+			$criteria->compare('date(t.creation_date)', date('Y-m-d', strtotime($this->creation_date)));
+		$criteria->compare('t.creation_id', $this->creation_id,true);
+		if($this->modified_date != null && !in_array($this->modified_date, array('0000-00-00 00:00:00','1970-01-01 00:00:00','0002-12-02 07:07:12','-0001-11-30 00:00:00')))
+			$criteria->compare('date(t.modified_date)', date('Y-m-d', strtotime($this->modified_date)));
+		$criteria->compare('t.modified_id', $this->modified_id,true);
 		
 		// Custom Search
 		$criteria->with = array(
@@ -166,10 +166,10 @@ class PsbCourses extends CActiveRecord
 				'select'=>'displayname'
 			),
 		);
-		$criteria->compare('creation.displayname',strtolower($this->creation_search), true);
-		$criteria->compare('modified.displayname',strtolower($this->modified_search), true);
+		$criteria->compare('creation.displayname', strtolower($this->creation_search), true);
+		$criteria->compare('modified.displayname', strtolower($this->modified_search), true);
 
-		if(!isset($_GET['PsbCourses_sort']))
+		if(!Yii::app()->getRequest()->getParam('PsbCourses_sort'))
 			$criteria->order = 'course_id DESC';
 
 		return new CActiveDataProvider($this, array(
@@ -228,7 +228,7 @@ class PsbCourses extends CActiveRecord
 			$this->defaultColumns[] = 'course_desc';
 			$this->defaultColumns[] = array(
 				'header' => 'years',
-				'value' => 'CHtml::link($data->view->years, Yii::app()->controller->createUrl("o/yearcourse/manage",array("course"=>$data->course_id)))',
+				'value' => 'CHtml::link($data->view->years, Yii::app()->controller->createUrl("o/yearcourse/manage", array("course"=>$data->course_id)))',
 				'htmlOptions' => array(
 					'class' => 'center',
 				),
@@ -255,7 +255,7 @@ class PsbCourses extends CActiveRecord
 					),
 					'options'=>array(
 						'showOn' => 'focus',
-						'dateFormat' => 'dd-mm-yy',
+						'dateFormat' => 'yy-mm-dd',
 						'showOtherMonths' => true,
 						'selectOtherMonths' => true,
 						'changeMonth' => true,
@@ -264,10 +264,10 @@ class PsbCourses extends CActiveRecord
 					),
 				), true),
 			);
-			if(!isset($_GET['type'])) {
+			if(!Yii::app()->getRequest()->getParam('type')) {
 				$this->defaultColumns[] = array(
 					'name' => 'defaults',
-					'value' => 'Utility::getPublish(Yii::app()->controller->createUrl("default",array("id"=>$data->course_id)), $data->defaults, 1)',
+					'value' => 'Utility::getPublish(Yii::app()->controller->createUrl("default", array("id"=>$data->course_id)), $data->defaults, 1)',
 					'htmlOptions' => array(
 						'class' => 'center',
 					),
@@ -278,10 +278,10 @@ class PsbCourses extends CActiveRecord
 					'type' => 'raw',
 				);
 			}
-			if(!isset($_GET['type'])) {
+			if(!Yii::app()->getRequest()->getParam('type')) {
 				$this->defaultColumns[] = array(
 					'name' => 'publish',
-					'value' => 'Utility::getPublish(Yii::app()->controller->createUrl("publish",array("id"=>$data->course_id)), $data->publish, 1)',
+					'value' => 'Utility::getPublish(Yii::app()->controller->createUrl("publish", array("id"=>$data->course_id)), $data->publish, 1)',
 					'htmlOptions' => array(
 						'class' => 'center',
 					),
@@ -302,7 +302,7 @@ class PsbCourses extends CActiveRecord
 	public static function getInfo($id, $column=null)
 	{
 		if($column != null) {
-			$model = self::model()->findByPk($id,array(
+			$model = self::model()->findByPk($id, array(
 				'select' => $column,
 			));
  			if(count(explode(',', $column)) == 1)
@@ -321,7 +321,7 @@ class PsbCourses extends CActiveRecord
 	 */
 	public static function getValue($id, $value=null)
 	{
-		$course = self::model()->findByPk($id,array(
+		$course = self::model()->findByPk($id, array(
 			'select' => 'course_id, course_name',
 		));
 		$value = $value != null && $value != '' && $value != 0 ? $value : '-';
