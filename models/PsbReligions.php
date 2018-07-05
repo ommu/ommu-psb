@@ -32,6 +32,8 @@
  */
 class PsbReligions extends CActiveRecord
 {
+	use UtilityTrait;
+
 	public $defaultColumns = array();
 	public $title;
 	
@@ -357,7 +359,7 @@ class PsbReligions extends CActiveRecord
 	protected function beforeSave() 
 	{
 		$currentModule = strtolower(Yii::app()->controller->module->id.'/'.Yii::app()->controller->id);
-		$location = Utility::getUrlTitle($currentModule);
+		$location = $this->urlTitle($currentModule);
 		
 		if(parent::beforeSave()) {
 			if($this->isNewRecord || (!$this->isNewRecord && $this->religion_name == 0)) {
