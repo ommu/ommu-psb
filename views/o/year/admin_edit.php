@@ -126,25 +126,25 @@
 				'buttons' => array(
 					'view' => array(
 						'label' => 'view',
-						'imageUrl' => false,
-						'options' => array(							
+						'imageUrl' => Yii::app()->params['grid-view']['buttonImageUrl'],
+						'options' => array(
 							'class' => 'view',
 						),
-						'url' => 'Yii::app()->controller->createUrl("o/batch/view", array("id"=>$data->primaryKey, "type"=>"year"))'),
+						'url' => 'Yii::app()->controller->createUrl("o/batch/view", array(\'id\'=>$data->primaryKey, "type"=>"year"))'),
 					'update' => array(
 						'label' => 'update',
-						'imageUrl' => false,
+						'imageUrl' => Yii::app()->params['grid-view']['buttonImageUrl'],
 						'options' => array(
-							'class' => 'update'
+							'class' => 'update',
 						),
-						'url' => 'Yii::app()->controller->createUrl("o/batch/edit", array("id"=>$data->primaryKey, "type"=>"year"))'),
+						'url' => 'Yii::app()->controller->createUrl("o/batch/edit", array(\'id\'=>$data->primaryKey, "type"=>"year"))'),
 					'delete' => array(
 						'label' => 'delete',
-						'imageUrl' => false,
+						'imageUrl' => Yii::app()->params['grid-view']['buttonImageUrl'],
 						'options' => array(
-							'class' => 'delete'
+							'class' => 'delete',
 						),
-						'url' => 'Yii::app()->controller->createUrl("o/batch/delete", array("id"=>$data->primaryKey, "type"=>"year"))')
+						'url' => 'Yii::app()->controller->createUrl("o/batch/delete", array(\'id\'=>$data->primaryKey, "type"=>"year"))')
 				),
 				'template' => '{update}|{delete}',
 			));
@@ -153,8 +153,9 @@
 				'id'=>'psb-year-batch-grid',
 				'dataProvider'=>$batch->search(),
 				'filter'=>$batch,
-				'columns' => $columnData,
-				'pager' => array('header' => ''),
+				'columns'=>$columnData,
+				'template'=>Yii::app()->params['grid-view']['gridTemplate'],
+				'pager'=>array('header'=>''),
 			));
 		?>
 		<?php //end.Grid Item ?>
