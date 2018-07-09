@@ -307,23 +307,21 @@ class PsbYears extends CActiveRecord
 	/**
 	 * Get Years
 	 */
-	public static function getYear($publish=null, $type=null) 
+	public static function getYear($publish=null, $array=true) 
 	{		
 		$criteria=new CDbCriteria;
 		if($publish != null)
 			$criteria->compare('publish',$publish);
 		$model = self::model()->findAll($criteria);
 
-		if($type == null) {
+		if($array == true) {
 			$items = array();
 			if($model != null) {
 				foreach($model as $key => $val)
 					$items[$val->year_id] = $val->years;
 				return $items;
-				
 			} else
 				return false;
-			
 		} else
 			return $model;
 	}

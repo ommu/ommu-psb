@@ -310,23 +310,21 @@ class PsbCourses extends CActiveRecord
 	/**
 	 * Get Years
 	 */
-	public static function getCourse($default=null, $type=null) 
+	public static function getCourse($default=null, $array=true) 
 	{		
 		$criteria=new CDbCriteria;
 		if($default != null)
 			$criteria->compare('defaults',$default);
 		$model = self::model()->findAll($criteria);
 
-		if($type == null) {
+		if($array == true) {
 			$items = array();
 			if($model != null) {
 				foreach($model as $key => $val)
 					$items[$val->course_id] = $val->course_name;
 				return $items;
-				
 			} else
 				return false;
-			
 		} else
 			return $model;
 	}

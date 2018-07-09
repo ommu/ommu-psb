@@ -194,7 +194,7 @@ class AdminController extends Controller
 					$val->nisn,
 					$val->register_name,
 					$val->birth_city != 0 ? $val->city_relation->city : '',
-					!in_array($val->birth_date, array('0000-00-00','1970-01-01','0002-12-02','-0001-11-30')) ? Utility::dateFormat($val->birth_date) : '',
+					!in_array($val->birth_date, array('0000-00-00','1970-01-01','0002-12-02','-0001-11-30')) ? $this->dateFormat($val->birth_date) : '',
 					$val->gender == 'male' ? Yii::t('phrase', 'Laki-laki') : Yii::t('phrase', 'Perempuan'),
 					$val->address,
 					$val->address_yogya,
@@ -209,7 +209,7 @@ class AdminController extends Controller
 					$val->school_id != 0 ? $val->school->school_name : '',
 					$val->school->school_status != 1 ? Yii::t('phrase', 'Negeri') : Yii::t('phrase', 'Swasta'),
 					$val->school_un_average,
-					!in_array($val->creation_date, array('0000-00-00','1970-01-01','0002-12-02','-0001-11-30')) ? Utility::dateFormat($val->creation_date) : '',
+					!in_array($val->creation_date, array('0000-00-00','1970-01-01','0002-12-02','-0001-11-30')) ? $this->dateFormat($val->creation_date) : '',
 				);
 				$data[] = $register;
 			}

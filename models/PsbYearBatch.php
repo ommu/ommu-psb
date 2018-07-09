@@ -359,7 +359,7 @@ class PsbYearBatch extends CActiveRecord
 	/**
 	 * Get Years
 	 */
-	public static function getBatch($publish=null, $type=null) 
+	public static function getBatch($publish=null, $array=true) 
 	{		
 		$criteria=new CDbCriteria;
 		if($publish != null)
@@ -367,16 +367,14 @@ class PsbYearBatch extends CActiveRecord
 		$criteria->order = 'year_id ASC, batch_start ASC';
 		$model = self::model()->findAll($criteria);
 
-		if($type == null) {
+		if($array == true) {
 			$items = array();
 			if($model != null) {
 				foreach($model as $key => $val)
 					$items[$val->batch_id] = $val->batch_name.' '.$val->year->years;
 				return $items;
-				
 			} else
 				return false;
-			
 		} else
 			return $model;
 	}
