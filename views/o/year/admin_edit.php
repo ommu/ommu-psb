@@ -19,7 +19,7 @@
 ?>
 
 <div class="form" name="post-on">
-<?php $form=$this->beginWidget('application.libraries.core.components.system.OActiveForm', array(
+<?php $form=$this->beginWidget('application.libraries.yii-traits.system.OActiveForm', array(
 	'id'=>'psb-years-form',
 	'enableAjaxValidation'=>true,
 	//'htmlOptions' => array('enctype' => 'multipart/form-data')
@@ -149,13 +149,14 @@
 				'template' => '{update}|{delete}',
 			));
 
-			$this->widget('application.libraries.core.components.system.OGridView', array(
+			$this->widget('application.libraries.yii-traits.system.OGridView', array(
 				'id'=>'psb-year-batch-grid',
 				'dataProvider'=>$batch->search(),
 				'filter'=>$batch,
 				'columns'=>$columnData,
 				'template'=>Yii::app()->params['grid-view']['gridTemplate'],
 				'pager'=>array('header'=>''),
+				'afterAjaxUpdate'=>'reinstallDatePicker',
 			));
 		?>
 		<?php //end.Grid Item ?>
