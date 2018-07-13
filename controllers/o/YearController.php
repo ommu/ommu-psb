@@ -114,15 +114,7 @@ class YearController extends Controller
 			$model->attributes=$_GET['PsbYears'];
 		}
 
-		$columnTemp = array();
-		if(isset($_GET['GridColumn'])) {
-			foreach($_GET['GridColumn'] as $key => $val) {
-				if($_GET['GridColumn'][$key] == 1) {
-					$columnTemp[] = $key;
-				}
-			}
-		}
-		$columns = $model->getGridColumn($columnTemp);
+		$columns = $model->getGridColumn($this->gridColumnTemp());
 
 		$this->pageTitle = Yii::t('phrase', 'Psb Years Manage');
 		$this->pageDescription = '';
@@ -202,15 +194,7 @@ class YearController extends Controller
 			$batch->attributes=$_GET['PsbYearBatch'];
 		}
 
-		$columnTemp = array();
-		if(Yii::app()->getRequest()->getParam('GridColumn')) {
-			foreach(Yii::app()->getRequest()->getParam('GridColumn') as $key => $val) {
-				if($_GET['GridColumn'][$key] == 1) {
-					$columnTemp[] = $key;
-				}
-			}
-		}
-		$columns = $batch->getGridColumn($columnTemp);
+		$columns = $batch->getGridColumn($this->gridColumnTemp());
 
 		// Uncomment the following line if AJAX validation is needed
 		$this->performAjaxValidation($model);
