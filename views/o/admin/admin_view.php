@@ -65,7 +65,7 @@ if(Yii::app()->user->hasFlash('success'))
 		),
 		array(
 			'name'=>'birth_date',
-			'value'=>!in_array($model->birth_date, array('0000-00-00','1970-01-01','0002-12-02','-0001-11-30')) ? $this->dateFormat($model->birth_date) : '-',
+			'value'=>!in_array($model->birth_date, array('0000-00-00','1970-01-01','0002-12-02','-0001-11-30')) ? $this->dateFormat($model->birth_date, 'full', false) : '-',
 		),
 		array(
 			'name'=>'gender',
@@ -153,7 +153,7 @@ if(Yii::app()->user->hasFlash('success'))
 		),
 		array(
 			'name'=>'creation_date',
-			'value'=>!in_array($model->creation_date, array('0000-00-00 00:00:00','1970-01-01 00:00:00','0002-12-02 07:07:12','-0001-11-30 00:00:00')) ? $this->dateFormat($model->creation_date, true) : '-',
+			'value'=>!in_array($model->creation_date, array('0000-00-00 00:00:00','1970-01-01 00:00:00','0002-12-02 07:07:12','-0001-11-30 00:00:00')) ? $this->dateFormat($model->creation_date) : '-',
 		),
 		array(
 			'name'=>'creation_id',
