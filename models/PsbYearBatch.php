@@ -267,7 +267,7 @@ class PsbYearBatch extends CActiveRecord
 			);
 			$this->defaultColumns[] = array(
 				'name' => 'batch_start',
-				'value' => 'Utility::dateFormat($data->batch_start)',
+				'value' => 'Yii::app()->dateFormatter->formatDateTime(\$data->batch_start, \'medium\', false)',
 				'htmlOptions' => array(
 					'class' => 'center',
 				),
@@ -275,7 +275,7 @@ class PsbYearBatch extends CActiveRecord
 			);
 			$this->defaultColumns[] = array(
 				'name' => 'batch_finish',
-				'value' => 'Utility::dateFormat($data->batch_finish)',
+				'value' => 'Yii::app()->dateFormatter->formatDateTime($data->batch_finish, \'medium\', false)',
 				'htmlOptions' => array(
 					'class' => 'center',
 				),
@@ -295,7 +295,7 @@ class PsbYearBatch extends CActiveRecord
 			);
 			$this->defaultColumns[] = array(
 				'name' => 'creation_date',
-				'value' => 'Utility::dateFormat($data->creation_date)',
+				'value' => 'Yii::app()->dateFormatter->formatDateTime($data->creation_date, \'medium\', false)',
 				'htmlOptions' => array(
 					'class' => 'center',
 				),
