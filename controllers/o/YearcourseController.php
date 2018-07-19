@@ -105,7 +105,7 @@ class YearcourseController extends Controller
 	public function actionManage() 
 	{
 		$model=new PsbYearCourse('search');
-		$model->unsetAttributes();  // clear any default values
+		$model->unsetAttributes();	// clear any default values
 		if(isset($_GET['PsbYearCourse'])) {
 			$model->attributes=$_GET['PsbYearCourse'];
 		}

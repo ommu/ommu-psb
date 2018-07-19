@@ -109,7 +109,7 @@ class SchoolController extends Controller
 	public function actionManage() 
 	{
 		$model=new PsbSchools('search');
-		$model->unsetAttributes();  // clear any default values
+		$model->unsetAttributes();	// clear any default values
 		if(isset($_GET['PsbSchools'])) {
 			$model->attributes=$_GET['PsbSchools'];
 		}

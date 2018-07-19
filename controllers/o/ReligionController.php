@@ -110,7 +110,7 @@ class ReligionController extends Controller
 	public function actionManage() 
 	{
 		$model=new PsbReligions('search');
-		$model->unsetAttributes();  // clear any default values
+		$model->unsetAttributes();	// clear any default values
 		if(isset($_GET['PsbReligions'])) {
 			$model->attributes=$_GET['PsbReligions'];
 		}

@@ -109,7 +109,7 @@ class YearController extends Controller
 	public function actionManage() 
 	{
 		$model=new PsbYears('search');
-		$model->unsetAttributes();  // clear any default values
+		$model->unsetAttributes();	// clear any default values
 		if(isset($_GET['PsbYears'])) {
 			$model->attributes=$_GET['PsbYears'];
 		}
@@ -189,7 +189,7 @@ class YearController extends Controller
 		));
 		
 		$batch=new PsbYearBatch('search');
-		$batch->unsetAttributes();  // clear any default values
+		$batch->unsetAttributes();	// clear any default values
 		if(isset($_GET['PsbYearBatch'])) {
 			$batch->attributes=$_GET['PsbYearBatch'];
 		}

@@ -112,7 +112,7 @@ class AdminController extends Controller
 	public function actionManage() 
 	{
 		$model=new PsbRegisters('search');
-		$model->unsetAttributes();  // clear any default values
+		$model->unsetAttributes();	// clear any default values
 		if(isset($_GET['PsbRegisters'])) {
 			$model->attributes=$_GET['PsbRegisters'];
 		}

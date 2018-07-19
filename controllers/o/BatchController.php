@@ -109,7 +109,7 @@ class BatchController extends Controller
 	public function actionManage() 
 	{
 		$model=new PsbYearBatch('search');
-		$model->unsetAttributes();  // clear any default values
+		$model->unsetAttributes();	// clear any default values
 		if(isset($_GET['PsbYearBatch'])) {
 			$model->attributes=$_GET['PsbYearBatch'];
 		}
