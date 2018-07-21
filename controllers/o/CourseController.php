@@ -11,7 +11,7 @@
  *	Manage
  *	Add
  *	Edit
- *	RunAction
+ *	Runaction
  *	Delete
  *	Publish
  *	Default
@@ -227,7 +227,7 @@ class CourseController extends Controller
 	 * Displays a particular model.
 	 * @param integer $id the ID of the model to be displayed
 	 */
-	public function actionRunAction() {
+	public function actionRunaction() {
 		$id       = $_POST['trash_id'];
 		$criteria = null;
 		$actions  = Yii::app()->getRequest()->getParam('action');
