@@ -264,20 +264,20 @@ class PsbRegisters extends CActiveRecord
 		// Custom Search
 		$criteria->with = array(
 			'batch_relation' => array(
-				'alias'=>'batch_relation',
-				'select'=>'year_id, batch_name'
+				'alias' => 'batch_relation',
+				'select' => 'year_id, batch_name'
 			),
 			'city_relation' => array(
-				'alias'=>'city_relation',
-				'select'=>'city'
+				'alias' => 'city_relation',
+				'select' => 'city'
 			),
 			'school' => array(
-				'alias'=>'school',
-				'select'=>'school_name'
+				'alias' => 'school',
+				'select' => 'school_name'
 			),
 			'creation' => array(
-				'alias'=>'creation',
-				'select'=>'displayname'
+				'alias' => 'creation',
+				'select' => 'displayname'
 			),
 		);
 		if(Yii::app()->getRequest()->getParam('year'))
@@ -375,7 +375,7 @@ class PsbRegisters extends CActiveRecord
 				$this->defaultColumns[] = array(
 					'name' => 'year_search',
 					'value' => '$data->batch_relation->year->years',
-					'filter'=> PsbYears::getYear(),
+					'filter' => PsbYears::getYear(),
 					'type' => 'raw',
 				);				
 			}
@@ -403,7 +403,7 @@ class PsbRegisters extends CActiveRecord
 				'htmlOptions' => array(
 					'class' => 'center',
 				),
-				'filter'=>array(
+				'filter' =>array(
 					'male'=>Yii::t('phrase', 'Laki-laki'),
 					'female'=>Yii::t('phrase', 'Perempuan'),
 				),

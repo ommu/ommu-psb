@@ -148,8 +148,8 @@ class PsbSettings extends CActiveRecord
 		// Custom Search
 		$criteria->with = array(
 			'modified' => array(
-				'alias'=>'modified',
-				'select'=>'displayname',
+				'alias' => 'modified',
+				'select' => 'displayname',
 			),
 		);
 		$criteria->compare('modified.displayname', strtolower($this->modified_search), true);

@@ -179,16 +179,16 @@ class PsbYearBatch extends CActiveRecord
 		// Custom Search
 		$criteria->with = array(
 			'year' => array(
-				'alias'=>'year',
-				'select'=>'years'
+				'alias' => 'year',
+				'select' => 'years'
 			),
 			'creation' => array(
-				'alias'=>'creation',
-				'select'=>'displayname'
+				'alias' => 'creation',
+				'select' => 'displayname'
 			),
 			'modified' => array(
-				'alias'=>'modified',
-				'select'=>'displayname'
+				'alias' => 'modified',
+				'select' => 'displayname'
 			),
 		);
 		$criteria->compare('year.years', strtolower($this->year_search), true);
@@ -307,7 +307,7 @@ class PsbYearBatch extends CActiveRecord
 				'htmlOptions' => array(
 					'class' => 'center',
 				),
-				'filter'=>array(
+				'filter' =>array(
 					1=>Yii::t('phrase', 'Ujian Nasional'),
 					0=>Yii::t('phrase', 'Raport'),
 				),

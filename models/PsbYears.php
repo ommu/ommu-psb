@@ -163,12 +163,12 @@ class PsbYears extends CActiveRecord
 		// Custom Search
 		$criteria->with = array(
 			'creation' => array(
-				'alias'=>'creation',
-				'select'=>'displayname'
+				'alias' => 'creation',
+				'select' => 'displayname'
 			),
 			'modified' => array(
-				'alias'=>'modified',
-				'select'=>'displayname'
+				'alias' => 'modified',
+				'select' => 'displayname'
 			),
 		);
 		$criteria->compare('creation.displayname', strtolower($this->creation_search), true);

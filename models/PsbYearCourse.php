@@ -149,16 +149,16 @@ class PsbYearCourse extends CActiveRecord
 		// Custom Search
 		$criteria->with = array(
 			'year_relation' => array(
-				'alias'=>'year_relation',
-				'select'=>'years'
+				'alias' => 'year_relation',
+				'select' => 'years'
 			),
 			'course' => array(
-				'alias'=>'course',
-				'select'=>'course_name'
+				'alias' => 'course',
+				'select' => 'course_name'
 			),
 			'creation_relation' => array(
-				'alias'=>'creation_relation',
-				'select'=>'displayname'
+				'alias' => 'creation_relation',
+				'select' => 'displayname'
 			),
 		);
 		$criteria->compare('year_relation.years', strtolower($this->year_search), true);

@@ -142,12 +142,12 @@ class AdminController extends Controller
 		else {
 			$criteria->with = array(
 				'batch_relation' => array(
-					'alias'=>'batch_relation',
-					'select'=>'batch_id, year_id, batch_name'
+					'alias' => 'batch_relation',
+					'select' => 'batch_id, year_id, batch_name'
 				),
 				'batch_relation.year' => array(
-					'alias'=>'year',
-					'select'=>'year_id, years'
+					'alias' => 'year',
+					'select' => 'year_id, years'
 				),
 			);
 			$criteria->compare('year.year_id',$id);
