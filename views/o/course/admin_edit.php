@@ -14,7 +14,7 @@
 	$this->breadcrumbs=array(
 		'Psb Courses'=>array('manage'),
 		$model->course_id=>array('view','id'=>$model->course_id),
-		'Update',
+		Yii::t('phrase', 'Update'),
 	);
 ?>
 

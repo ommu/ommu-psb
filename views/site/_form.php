@@ -16,7 +16,6 @@
 <?php $form=$this->beginWidget('application.libraries.yii-traits.system.OActiveForm', array(
 	'id'=>'psb-registers-form',
 	'enableAjaxValidation'=>true,
-	//'htmlOptions' => array('enctype' => 'multipart/form-data')
 )); ?>
 
 <?php //begin.Messages ?>
@@ -211,7 +210,7 @@ echo $form->hiddenField($model,'batch_id'); ?>
 		<div class="desc">
 			<?php echo $form->dropDownList($school,'school_status', array(
 				1=>'Negeri',
-				0=>'Swasta',					
+				0=>'Swasta',
 			)); ?>
 			<?php echo $form->error($school,'school_status'); ?>
 		</div>

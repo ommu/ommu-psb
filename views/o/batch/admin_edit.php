@@ -14,7 +14,7 @@
 	$this->breadcrumbs=array(
 		'Psb Year Batches'=>array('manage'),
 		$model->batch_id=>array('view','id'=>$model->batch_id),
-		'Update',
+		Yii::t('phrase', 'Update'),
 	);
 ?>
 

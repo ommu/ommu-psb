@@ -251,7 +251,7 @@ class PsbCourses extends CActiveRecord
 			if(!Yii::app()->getRequest()->getParam('type')) {
 				$this->defaultColumns[] = array(
 					'name' => 'defaults',
-					'value' => 'Utility::getPublish(Yii::app()->controller->createUrl("default", array("id"=>$data->course_id)), $data->defaults, 1)',
+					'value' => 'Utility::getPublish(Yii::app()->controller->createUrl(\'default\', array(\'id\'=>$data->course_id)), $data->defaults, 1)',
 					'htmlOptions' => array(
 						'class' => 'center',
 					),
@@ -262,7 +262,7 @@ class PsbCourses extends CActiveRecord
 			if(!Yii::app()->getRequest()->getParam('type')) {
 				$this->defaultColumns[] = array(
 					'name' => 'publish',
-					'value' => 'Utility::getPublish(Yii::app()->controller->createUrl("publish", array("id"=>$data->course_id)), $data->publish, 1)',
+					'value' => 'Utility::getPublish(Yii::app()->controller->createUrl(\'publish\', array(\'id\'=>$data->course_id)), $data->publish, 1)',
 					'htmlOptions' => array(
 						'class' => 'center',
 					),

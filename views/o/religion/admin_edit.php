@@ -16,7 +16,7 @@
 	$this->breadcrumbs=array(
 		'Psb Religions'=>array('manage'),
 		$model->religion_id=>array('view','id'=>$model->religion_id),
-		'Update',
+		Yii::t('phrase', 'Update'),
 	);
 ?>
 

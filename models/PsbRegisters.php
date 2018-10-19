@@ -424,7 +424,7 @@ class PsbRegisters extends CActiveRecord
 			/*
 			$this->defaultColumns[] = array(
 				'name' => 'creation_search',
-				'value' => '$data->creation_id != 0 ? $data->creation->displayname : "-"',
+				'value' => '$data->creation_id != 0 ? $data->creation->displayname : \'-\'',
 			);
 			$this->defaultColumns[] = array(
 				'name' => 'creation_date',
@@ -437,7 +437,7 @@ class PsbRegisters extends CActiveRecord
 			if(!Yii::app()->getRequest()->getParam('type')) {
 				$this->defaultColumns[] = array(
 					'name' => 'status',
-					'value' => 'Utility::getPublish(Yii::app()->controller->createUrl("status", array("id"=>$data->register_id)), $data->status, 1)',
+					'value' => 'Utility::getPublish(Yii::app()->controller->createUrl(\'status\', array(\'id\'=>$data->register_id)), $data->status, 1)',
 					'htmlOptions' => array(
 						'class' => 'center',
 					),

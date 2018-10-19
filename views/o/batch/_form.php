@@ -17,7 +17,6 @@
 <?php $form=$this->beginWidget('application.libraries.yii-traits.system.OActiveForm', array(
 	'id'=>'psb-year-batch-form',
 	'enableAjaxValidation'=>true,
-	//'htmlOptions' => array('enctype' => 'multipart/form-data')
 )); ?>
 <div class="dialog-content">
 	<fieldset>
@@ -102,7 +101,7 @@
 			<div class="desc">
 				<?php echo $form->dropDownList($model,'batch_valuation', array(
 					1=>Yii::t('phrase', 'Ujian Nasional'),
-					0=>Yii::t('phrase', 'Raport'),					
+					0=>Yii::t('phrase', 'Raport'),
 				)); ?>
 				<?php echo $form->error($model,'batch_valuation'); ?>
 				<?php /*<div class="small-px silent"></div>*/?>

@@ -14,7 +14,7 @@
 	$this->breadcrumbs=array(
 		'Psb Years'=>array('manage'),
 		$model->year_id=>array('view','id'=>$model->year_id),
-		'Update',
+		Yii::t('phrase', 'Update'),
 	);
 ?>
 
@@ -22,7 +22,6 @@
 <?php $form=$this->beginWidget('application.libraries.yii-traits.system.OActiveForm', array(
 	'id'=>'psb-years-form',
 	'enableAjaxValidation'=>true,
-	//'htmlOptions' => array('enctype' => 'multipart/form-data')
 )); ?>
 	<fieldset>
 		<?php //begin.Messages ?>

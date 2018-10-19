@@ -243,7 +243,7 @@ class PsbYears extends CActiveRecord
 			);
 			$this->defaultColumns[] = array(
 				'header' => 'registers',
-				'value' => 'CHtml::link($data->view->registers != null ? $data->view->registers : "0", Yii::app()->controller->createUrl("o/admin/manage", array("year"=>$data->year_id)))',
+				'value' => 'CHtml::link($data->view->registers != null ? $data->view->registers : "0", Yii::app()->controller->createUrl(\'o/admin/manage\', array("year"=>$data->year_id)))',
 				'htmlOptions' => array(
 					'class' => 'center',
 				),
@@ -272,7 +272,7 @@ class PsbYears extends CActiveRecord
 			if(!Yii::app()->getRequest()->getParam('type')) {
 				$this->defaultColumns[] = array(
 					'name' => 'publish',
-					'value' => 'Utility::getPublish(Yii::app()->controller->createUrl("publish", array("id"=>$data->year_id)), $data->publish, 1)',
+					'value' => 'Utility::getPublish(Yii::app()->controller->createUrl(\'publish\', array(\'id\'=>$data->year_id)), $data->publish, 1)',
 					'htmlOptions' => array(
 						'class' => 'center',
 					),

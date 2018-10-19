@@ -248,7 +248,7 @@ class PsbSchools extends CActiveRecord
 			);
 			$this->defaultColumns[] = array(
 				'header' => 'registers',
-				'value' => 'CHtml::link($data->view->registers, Yii::app()->controller->createUrl("o/admin/manage", array("school"=>$data->school_id)))',
+				'value' => 'CHtml::link($data->view->registers, Yii::app()->controller->createUrl(\'o/admin/manage\', array("school"=>$data->school_id)))',
 				'type' => 'raw',
 			);
 			$this->defaultColumns[] = array(
@@ -266,7 +266,7 @@ class PsbSchools extends CActiveRecord
 			if(!Yii::app()->getRequest()->getParam('type')) {
 				$this->defaultColumns[] = array(
 					'name' => 'publish',
-					'value' => 'Utility::getPublish(Yii::app()->controller->createUrl("publish", array("id"=>$data->school_id)), $data->publish, 1)',
+					'value' => 'Utility::getPublish(Yii::app()->controller->createUrl(\'publish\', array(\'id\'=>$data->school_id)), $data->publish, 1)',
 					'htmlOptions' => array(
 						'class' => 'center',
 					),

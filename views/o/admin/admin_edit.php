@@ -16,7 +16,7 @@
 	$this->breadcrumbs=array(
 		'Psb Registers'=>array('manage'),
 		$model->register_id=>array('view','id'=>$model->register_id),
-		'Update',
+		Yii::t('phrase', 'Update'),
 	);
 ?>
 

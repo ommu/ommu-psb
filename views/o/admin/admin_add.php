@@ -15,7 +15,7 @@
 
 	$this->breadcrumbs=array(
 		'Psb Registers'=>array('manage'),
-		'Create',
+		Yii::t('phrase', 'Create'),
 	);
 ?>
 
